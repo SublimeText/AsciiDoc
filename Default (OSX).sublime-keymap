@@ -1,23 +1,23 @@
 [
-	{ "keys": ["cmd+b"], "command": "insert_snippet", "args": {"contents": "*${0:$SELECTION}*"}, "context":
+	{ "keys": ["super+b"], "command": "insert_snippet", "args": {"contents": "*${0:$SELECTION}*"}, "context":
 		[
 			{"key": "selection_empty", "operator": "equal", "operand": false},
 			{"key": "selector", "operator": "equal", "operand": "text.html.asciidoc"}
 		]
 	},
-	{ "keys": ["cmd+i"], "command": "insert_snippet", "args": {"contents": "_${0:$SELECTION}_"}, "context":
+	{ "keys": ["super+i"], "command": "insert_snippet", "args": {"contents": "_${0:$SELECTION}_"}, "context":
 		[
 			{"key": "selection_empty", "operator": "equal", "operand": false},
 			{"key": "selector", "operator": "equal", "operand": "text.html.asciidoc"}
 		]
 	},
-	{ "keys": ["cmd+k", "cmd+k"], "command": "insert_snippet", "args": {"contents": "+${0:$SELECTION}+"}, "context":
+	{ "keys": ["super+k", "super+k"], "command": "insert_snippet", "args": {"contents": "+${0:$SELECTION}+"}, "context":
 		[
 			{"key": "selection_empty", "operator": "equal", "operand": false},
 			{"key": "selector", "operator": "equal", "operand": "text.html.asciidoc"}
 		]
 	},
-	{ "keys": ["cmd+k", "cmd+f"], "command": "insert_snippet", "args": {"contents": "[role=\"filename\"]`${0:$SELECTION}`"}, "context":
+	{ "keys": ["super+k", "super+f"], "command": "insert_snippet", "args": {"contents": "[role=\"filename\"]`${0:$SELECTION}`"}, "context":
 		[
 			{"key": "selection_empty", "operator": "equal", "operand": false},
 			{"key": "selector", "operator": "equal", "operand": "text.html.asciidoc"}
