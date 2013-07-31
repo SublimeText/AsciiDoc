@@ -10,6 +10,8 @@
 	<key>fileTypes</key>
 	<array>
 		<string>asc</string>
+		<string>asciidoc</string>
+		<string>adoc</string>
 	</array>
 	<key>foldingStartMarker</key>
 	<string>(?x)
