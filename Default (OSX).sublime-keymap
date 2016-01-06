@@ -24,9 +24,9 @@
 		]
 	},
 	{  "keys": ["super+alt+v"], "command": "adoc_paste_as_link", "context":
-			[
-				{"key": "selection_empty", "operator": "equal", "operand": false},
-				{"key": "selector", "operator": "equal", "operand": "text.html.asciidoc"}
-			]
-		}
+		[
+			{"key": "selection_empty", "operator": "equal", "operand": false},
+			{"key": "selector", "operator": "equal", "operand": "text.html.asciidoc"}
+		]
+	}
 ]

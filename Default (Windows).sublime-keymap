@@ -22,5 +22,11 @@
 			{"key": "selection_empty", "operator": "equal", "operand": false},
 			{"key": "selector", "operator": "equal", "operand": "text.html.asciidoc"}
 		]
+	},
+	{  "keys": ["ctrl+alt+v"], "command": "adoc_paste_as_link", "context":
+		[
+			{"key": "selection_empty", "operator": "equal", "operand": false},
+			{"key": "selector", "operator": "equal", "operand": "text.html.asciidoc"}
+		]
 	}
 ]
