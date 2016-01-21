@@ -561,14 +561,14 @@
 					<key>name</key>
 					<string>punctuation.definition.raw.asciidoc</string>
 				</dict>
-				<key>3</key>
+				<key>2</key>
 				<dict>
 					<key>name</key>
 					<string>punctuation.definition.raw.asciidoc</string>
 				</dict>
 			</dict>
 			<key>match</key>
-			<string>(`+)([^`]|(?!(?&lt;!`)\1(?!`))`)*+(\1)</string>
+			<string>(`+)(?:[^`]|(?!(?&lt;!`)\1(?!`))`)*+(\1)</string>
 			<key>name</key>
 			<string>markup.raw.inline.asciidoc</string>
 		</dict>
