@@ -12,6 +12,8 @@
 		<string>adoc</string>
 		<string>asciidoc</string>
 		<string>asc</string>
+		<string>asciidoc</string>
+		<string>adoc</string>
 	</array>
 	<key>foldingStartMarker</key>
 	<string>(?x)
