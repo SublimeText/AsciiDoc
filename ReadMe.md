@@ -3,9 +3,9 @@ AsciiDoc Package for Sublime Text
 
 **Currently looking for a maintainer!**
 
-This is an [AsciiDoc](http://www.methods.co.nz/asciidoc/) package for [Sublime Text 2 editor](http://www.sublimetext.com/). It adds syntax highlighting and snippets for AsciiDoc language to Sublime Text 2 editor.
+This is an [AsciiDoc](http://www.methods.co.nz/asciidoc/) package for [Sublime Tex](http://www.sublimetext.com/). It adds syntax highlighting and snippets for AsciiDoc language to Sublime Text.
 
-Sublime Text 2 is compatible with the Textmate editor for OS X snippets, preferences and languages file. However, even though Sublime can recognize the Textmate snippets, some features such as tab completion and shortcut commands do not work out of the box. This package overcomes these limitations. 
+Sublime Text is compatible with the Textmate editor for OS X snippets, preferences and languages file. However, even though Sublime can recognize the Textmate snippets, some features such as tab completion and shortcut commands do not work out of the box. This package overcomes these limitations. 
 
 All the files provided here should work in Windows 7 and OS X Lion. 
 
