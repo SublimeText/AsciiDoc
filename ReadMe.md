@@ -1,6 +1,7 @@
-AsciiDoc Package for Sublime Text 2
+AsciiDoc Package for Sublime Text
 ===================================
-INFO: Also works quite well with Sublime 3.
+
+**Currently looking for a maintainer!**
 
 This is an [AsciiDoc](http://www.methods.co.nz/asciidoc/) package for [Sublime Text 2 editor](http://www.sublimetext.com/). It adds syntax highlighting and snippets for AsciiDoc language to Sublime Text 2 editor.
 
@@ -8,25 +9,26 @@ Sublime Text 2 is compatible with the Textmate editor for OS X snippets, prefere
 
 All the files provided here should work in Windows 7 and OS X Lion. 
 
-Installation - Sublime 2
-------------------------
-To install the package, follow these steps:
+Installation (Package Control)
+------------------------------
+
+Find the package on Package Control under the name [`AsciiDoc`](https://packagecontrol.io/packages/AsciiDoc).
+
+Installation (Manual)
+---------------------
+To install the package manually, follow these steps:
 
  - Download the zip containing src files.
  - Extract the files to *AsciiDoc* folder (create this folder if not present already) under:
-	- Windows: `%APPDATA%\Sublime Text 2\Packages\`    
-	- OS X: `~/Library/Application Support/Sublime Text 2/Packages`
-	- Linux: `~/.config/sublime-text-2/Packages`
+	- Windows: `%APPDATA%\Sublime Text 3\Packages\`    
+	- OS X: `~/Library/Application Support/Sublime Text 3/Packages`
+	- Linux: `~/.config/sublime-text-3/Packages`
 	- Portable Installation: `Sublime Text 2/Data`   
- - Close all instances of Sublime Text 2 editor and relaunch the editor.  
+ - Close all instances of Sublime Text and relaunch the editor.  
 
 If successful, you should see **AsciiDoc** entry under `View > Syntax` and under `Tools > Snippets`.
 
 **Note**: Snippets may take few seconds to load under Windows.
-
-Installation - Sublime 3
-------------------------
-TBD
 
 Configure Variables: TM_FULLNAME, TM_EMAIL, etc.
 ------------------------------------------------
