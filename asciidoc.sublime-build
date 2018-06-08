@@ -1,0 +1,6 @@
+{
+	"working_dir": "/path/to/asciidoc-8.6.8",
+	"cmd": ["/path/to/python", "asciidoc.py", "$file"],
+	"selector": "text.html.asciidoc",
+	"shell":true
+}

@@ -1,9 +1,10 @@
 <snippet>
    <description>Quote Block</description>
-   <content><![CDATA[____________________________________________________________________________
-$1
+   <content><![CDATA[[quote,${1:author},${2:citation}]
 ____________________________________________________________________________
-$0]]></content>
-   <tabTrigger>__</tabTrigger>
+$0
+____________________________________________________________________________
+]]></content>
+   <tabTrigger>""</tabTrigger>
    <scope>text.html.asciidoc</scope>
 </snippet>

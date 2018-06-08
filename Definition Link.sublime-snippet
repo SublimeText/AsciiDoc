@@ -1,0 +1,6 @@
+<snippet>
+   <description>Definition Link</description>
+   <content><![CDATA[<<def-${1/[^-0-9A-Za-z]//g},${1:term}>>]]></content>
+   <tabTrigger>&lt;&lt;</tabTrigger>
+   <scope>text.html.asciidoc</scope>
+</snippet>

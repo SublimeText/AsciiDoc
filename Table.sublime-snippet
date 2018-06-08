@@ -1,9 +1,9 @@
 <snippet>
    <description>Table</description>
    <content><![CDATA[.${1:Legend}
-[width="${2:100%}",cols="$3",options="$4"]
+[width="${2:100%}",cols="$3",options="${4:header}"]
 |===
-|$5
+|$0
 |===]]></content>
    <tabTrigger>|=</tabTrigger>
    <scope>text.html.asciidoc</scope>
