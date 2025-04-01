@@ -1,0 +1,174 @@
+// SYNTAX TEST "Packages/AsciiDoc/AsciiDoc.sublime-syntax"
+
+  // A single-line comment
+//^^^^^^^^^^^^^^^^^^^^^^^^ comment.line.double-slash.asciidoc
+//^^ punctuation.definition.comment.begin.asciidoc
+
+  ////
+//^^^^ comment.block.quad-slash.asciidoc
+//^^^^ punctuation.definition.comment.begin.asciidoc
+  A comment block.
+
+  Notice it's a delimited block.
+  ////
+//^^^^ comment.block.quad-slash.asciidoc
+//^^^^ punctuation.definition.comment.end.asciidoc
+
+= Document Title
+//^^^^^^^^^^^^^^ markup.heading.0.asciidoc
+//^^^^^^^^^^^^^^ entity.name.section.asciidoc
+
+Paragraphs don't require special markup in AsciiDoc.
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+A paragraph is defined by one or more consecutive lines of text.
+Line breaks within a paragraph are not displayed.
+
+Leave at least one empty line to begin a new paragraph.
+
+Line with `'curvy`' `"quotes`"
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//        ^^ constant.character.escape.asciidoc
+//               ^^ constant.character.escape.asciidoc
+//                  ^^ constant.character.escape.asciidoc
+//                          ^^ constant.character.escape.asciidoc
+Line with *bold*
+//^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//        ^^^^^^ markup.bold.asciidoc
+//        ^ punctuation.definition.bold.begin.asciidoc
+//             ^ punctuation.definition.bold.end.asciidoc
+Line with _italics_
+//^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//        ^^^^^^^^^ markup.italic.asciidoc
+//        ^ punctuation.definition.italic.begin.asciidoc
+//                ^ punctuation.definition.italic.end.asciidoc
+Line with `raw code`
+//^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//        ^^^^^^^^^^ markup.raw.inline.asciidoc
+//        ^ punctuation.definition.raw.begin.asciidoc
+//                 ^ punctuation.definition.raw.end.asciidoc
+Line with `+raw code+`
+//^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//        ^^^^^^^^^^^^ markup.raw.inline.asciidoc
+//        ^^ punctuation.definition.raw.begin.asciidoc
+//         ^ keyword.control.passthrough.asciidoc
+//                  ^^ punctuation.definition.raw.end.asciidoc
+//                  ^ keyword.control.passthrough.asciidoc
+Line with #highlight#
+//^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//        ^^^^^^^^^^^ markup.bold.highlight.asciidoc
+//        ^ punctuation.definition.highlight.begin.asciidoc
+//                  ^ punctuation.definition.highlight.end.asciidoc
+Line with ~subscript~
+//^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//        ^^^^^^^^^^^ markup.italic.subscript.asciidoc
+//        ^ punctuation.definition.subscript.begin.asciidoc
+//                  ^ punctuation.definition.subscript.end.asciidoc
+Line with ^superscript^
+//^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//        ^^^^^^^^^^^^^ markup.italic.superscript.asciidoc
+//        ^ punctuation.definition.superscript.begin.asciidoc
+//                    ^ punctuation.definition.superscript.end.asciidoc
+
+Line with unconstrained **bold**
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//                      ^^^^^^^^ markup.bold.asciidoc
+//                      ^^ punctuation.definition.bold.begin.asciidoc
+//                            ^^ punctuation.definition.bold.end.asciidoc
+Line with unconstrained __italics__
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//                      ^^^^^^^^^^^ markup.italic.asciidoc
+//                      ^^ punctuation.definition.italic.begin.asciidoc
+//                               ^^ punctuation.definition.italic.end.asciidoc
+Line with unconstrained ``raw code``
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//                      ^^^^^^^^^^^^ markup.raw.inline.asciidoc
+//                      ^^ punctuation.definition.raw.begin.asciidoc
+//                                ^^ punctuation.definition.raw.end.asciidoc
+Line with unconstrained ##highlight##
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//                      ^^^^^^^^^^^^^ markup.bold.highlight.asciidoc
+//                      ^^ punctuation.definition.highlight.begin.asciidoc
+//                                 ^^ punctuation.definition.highlight.end.asciidoc
+Line with unconstrained ~~subscript~~
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//                      ^^^^^^^^^^^^^ markup.italic.subscript.asciidoc
+//                      ^^ punctuation.definition.subscript.begin.asciidoc
+//                                 ^^ punctuation.definition.subscript.end.asciidoc
+Line with unconstrained ^^superscript^^
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//                      ^^^^^^^^^^^^^^^ markup.italic.superscript.asciidoc
+//                      ^^ punctuation.definition.superscript.begin.asciidoc
+//                                   ^^ punctuation.definition.superscript.end.asciidoc
+
+* circles
+//^^^^^^^ meta.paragraph.list.asciidoc
+** all
+*** the
+**** way
+//^^^^^^ meta.paragraph.list.asciidoc
+//^^ punctuation.definition.list_item.asciidoc
+***** down
+
+. Protons
+. Electrons
+//^^^^^^^^^ meta.paragraph.list.asciidoc
+. Neutrons
+
+1. Protons
+2. Electrons
+3. Neutrons
+
+. Step 1
+. Step 2
+.. Step 2a
+//^^^^^^^^ meta.paragraph.list.asciidoc
+.. Step 2b
+. Step 3
+
+include::partial.adoc[]
+//^^^^^ keyword.control.import.asciidoc
+//     ^^ punctuation.separator.asciidoc
+//       ^^^^^^^^^^^^ string.unquoted.asciidoc
+//                   ^ punctuation.section.group.parameters.begin.asciidoc
+//                    ^ punctuation.section.group.parameters.end.asciidoc
+
+ifdef::env-github[]
+//^^^^^^^^^^^^^^^^^ meta.block.conditional.asciidoc
+//^^^ keyword.control.conditional.if.asciidoc
+//   ^^ punctuation.separator.asciidoc
+//     ^^^^^^^^^^ variable.other.readwrite.asciidoc
+//               ^^ punctuation.section.group.asciidoc
+This content is for GitHub only.
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.block.conditional.asciidoc meta.paragraph.asciidoc
+endif::[]
+//^^^^^^^ meta.block.conditional.asciidoc
+//^^^ keyword.control.conditional.end.asciidoc
+//   ^^ punctuation.separator.asciidoc
+//     ^^ punctuation.section.group.asciidoc
+
+ifdef::revnumber[]
+This document has a version number of {revnumber}.
+endif::[]
+
+A normal paragraph.
+
+ A literal paragraph.
+ One or more consecutive lines indented by at least one space.
+
+ The text is shown in a fixed-width (typically monospace) font.
+ The lines are preformatted (i.e., as formatted in the source).
+ Spaces and newlines,
+ like the ones in this sentence,
+ are preserved.
+
+Roses are red, +
+violets are blue.
+
+[%hardbreaks]
+A ruby is red.
+Java is black.
+
+[.lead]
+This text will be styled as a lead paragraph (i.e., larger font).
+
+This paragraph will not be.
