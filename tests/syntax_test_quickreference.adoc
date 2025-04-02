@@ -526,11 +526,42 @@ include::example.adoc[]
 
 === Include content by tagged regions or lines
 include::filename.txt[tag=definition]
+//^^^^^ keyword.control.import.asciidoc
+//     ^^ punctuation.separator.asciidoc
+//       ^^^^^^^^^^^^ string.unquoted.asciidoc
+//                   ^^^^^^^^^^^^^^^^ meta.brackets.asciidoc
+//                   ^ punctuation.section.group.parameters.begin.asciidoc
+//                    ^^^^^^^^^^^^^^ meta.attribute-with-value.asciidoc
+//                    ^^^ meta.mapping.key.asciidoc entity.other.attribute-name.asciidoc
+//                       ^ punctuation.separator.key-value.asciidoc
+//                        ^^^^^^^^^^ meta.mapping.value.asciidoc
+//                                  ^ punctuation.section.group.parameters.end.asciidoc
 
 include::filename.txt[lines=5..10]
+//^^^^^ keyword.control.import.asciidoc
+//     ^^ punctuation.separator.asciidoc
+//       ^^^^^^^^^^^^ string.unquoted.asciidoc
+//                   ^^^^^^^^^^^^^ meta.brackets.asciidoc
+//                   ^ punctuation.section.group.parameters.begin.asciidoc
+//                    ^^^^^^^ meta.attribute-with-value.asciidoc
+//                    ^^^^^ meta.mapping.key.asciidoc entity.other.attribute-name.asciidoc
+//                         ^ punctuation.separator.key-value.asciidoc
+//                          ^ meta.mapping.value.asciidoc
+//                               ^ punctuation.section.group.parameters.end.asciidoc
 
 === Include content from a URL
 include::https://raw.githubusercontent.com/asciidoctor/asciidoctor/main/README.adoc[]
+//^^^^^ keyword.control.import.asciidoc
+//     ^^ punctuation.separator.asciidoc
+//       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ string.unquoted.asciidoc
+//             ^^ punctuation.separator.sequence.asciidoc
+//                                        ^ punctuation.separator.sequence.asciidoc
+//                                                    ^ punctuation.separator.sequence.asciidoc
+//                                                                ^ punctuation.separator.sequence.asciidoc
+//                                                                     ^ punctuation.separator.sequence.asciidoc
+//                                                                                 ^^ meta.brackets.asciidoc
+//                                                                                 ^ punctuation.section.group.parameters.begin.asciidoc
+//                                                                                  ^ punctuation.section.group.parameters.end.asciidoc
 
 
 == Lists
