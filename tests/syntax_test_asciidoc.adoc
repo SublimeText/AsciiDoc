@@ -49,10 +49,11 @@ Line with `raw code`
 Line with `+raw code+`
 //^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
 //        ^^^^^^^^^^^^ markup.raw.inline.asciidoc
-//        ^^ punctuation.definition.raw.begin.asciidoc
-//         ^ keyword.control.passthrough.asciidoc
-//                  ^^ punctuation.definition.raw.end.asciidoc
-//                  ^ keyword.control.passthrough.asciidoc
+//        ^ punctuation.definition.raw.begin.asciidoc
+//         ^^^^^^^^^^ markup.raw.inline.asciidoc
+//         ^ keyword.control.passthrough.begin.asciidoc
+//                  ^ keyword.control.passthrough.end.asciidoc
+//                   ^ punctuation.definition.raw.end.asciidoc
 Line with #highlight#
 //^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
 //        ^^^^^^^^^^^ markup.bold.highlight.asciidoc

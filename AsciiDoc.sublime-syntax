@@ -30,10 +30,46 @@ contexts:
     - include: description-lists
     - include: passthrough-blocks
     - include: verbatims-and-source-blocks
+    - include: tables
+    - include: admonitions
     - include: sidebars
     - include: example-blocks
     - include: verses
     - include: blockquotes
+    - include: open-blocks
+    - include: block-images
+    - include: audios-and-videos
+    - include: attribute-lists
+
+    # TODO: Figure out where this belongs
+    - match: ^(\.)
+      scope: punctuation.section.block.asciidoc
+      push:
+        - meta_content_scope: markup.bold.asciidoc
+        - include: eol-pop
+
+    # Paragraphs at the end
+    - include: literal-paragraphs
+    - include: paragraphs
+
+  indented-blocks:
+    - include: comments
+    - include: includes
+    - include: conditionals
+    - include: document-attribute-declarations
+    - include: breaks
+    - include: section-titles
+    - include: lists
+    - include: description-lists
+    - include: passthrough-blocks
+    - include: verbatims-and-source-blocks
+    - include: tables
+    - include: admonitions
+    - include: sidebars
+    - include: example-blocks
+    - include: verses
+    - include: blockquotes
+    - include: open-blocks
     - include: block-images
     - include: audios-and-videos
     - include: attribute-lists
@@ -48,7 +84,17 @@ contexts:
     # Paragraphs at the end
     - include: paragraphs
 
+  continued-block:
+    - include: pop-blank-line
+    - match: ^(?=\+$)
+      scope: punctuation.separator.continuation.line.asciidoc
+      pop: 1
+    - include: blocks
+
   inlines:
+    - match: ^\+$
+      scope: punctuation.separator.continuation.line.asciidoc
+      push: continued-block
     - match: (\+)\s*$
       captures:
         1: constant.character.break.asciidoc
@@ -60,6 +106,7 @@ contexts:
     - include: passthrough-inlines
     - include: text-formatting
     - include: cross-references
+    - include: footnotes
 
 ###[ DOCUMENT ATTRIBUTES ]#####################################################
 
@@ -73,8 +120,10 @@ contexts:
 
   maybe-document-attribute-assignment:
     - meta_content_scope: string.unquoted.asciidoc
+    - match: \\\n?
+      scope: punctuation.separator.continuation.line.asciidoc
     - include: eol-pop
-    - include: document-attributes
+    - include: inlines
 
   document-attributes:
     - match: ({)empty(})
@@ -101,20 +150,54 @@ contexts:
     - match: \]
       scope: punctuation.section.group.parameters.end.asciidoc
       pop: 1
+    - match: \G{{admonition}}
+      scope: support.type.admonition.asciidoc
+    - match: \G{{block_type}}
+      scope: support.type.block.asciidoc
     - include: comma-separator
     - include: named-attributes
+    - include: attribute-anchors
+    - include: attribute-roles
+    - include: attribute-options
+    - include: document-attributes
 
   named-attributes:
     - match: \b([\w-]+)(=)
       captures:
         1: meta.mapping.key.asciidoc entity.other.attribute-name.asciidoc
         2: punctuation.separator.key-value.asciidoc
+      push: named-attribute-value
 
   named-attribute-value:
     - meta_scope: meta.attribute-with-value.asciidoc
     - meta_content_scope: meta.mapping.value.asciidoc
-    - match: (?=[,\]])
+    - match: (?=[,\]#.%])
       pop: 1
+    - match: \G"
+      scope: punctuation.definition.string.begin.asciidoc
+      push:
+        - meta_scope: meta.string.asciidoc string.quoted.double.asciidoc
+        - match: '"'
+          scope: punctuation.definition.string.end.asciidoc
+          pop: 1
+
+  attribute-anchors:
+    - match: (#){{identifier}}
+      scope: entity.name.reference.link.asciidoc
+      captures:
+        1: punctuation.definition.asciidoc
+
+  attribute-roles:
+    - match: (\.){{identifier}}
+      scope: storage.modifier.role.asciidoc
+      captures:
+        1: punctuation.definition.asciidoc
+
+  attribute-options:
+    - match: (%){{identifier}}
+      scope: keyword.other.option.asciidoc
+      captures:
+        1: punctuation.definition.keyword.asciidoc
 
   comma-separator:
     - match: ','
@@ -199,7 +282,20 @@ contexts:
     - meta_scope: meta.paragraph.asciidoc
     - match: ^$
       pop: 1
-    - match: ^(?=:|==|\*{4}|include|endif|if(?:n?def|eval))
+    - match: ^(?=:|[=|,]=|\*{4}|include|endif|if(?:n?def|eval))
+      pop: 1
+    - include: comments-inline
+    - include: inlines
+
+  literal-paragraphs:
+    - match: ^\s+(?=\S)
+      push: literal-paragraph-body
+
+  literal-paragraph-body:
+    - meta_scope: meta.paragraph.asciidoc markup.raw.block.asciidoc
+    - match: ^$
+      pop: 1
+    - match: ^(?=:|[=|,]=|\*{4}|include|endif|if(?:n?def|eval))
       pop: 1
     - include: comments-inline
     - include: inlines
@@ -249,7 +345,7 @@ contexts:
     - match: \*\B
       scope: punctuation.definition.bold.end.asciidoc
       pop: 1
-    - include: illegal-new-block
+    - include: pop-blank-line-illegal
     - include: inlines
 
   text-italic:
@@ -262,7 +358,7 @@ contexts:
     - match: _\b
       scope: punctuation.definition.italic.end.asciidoc
       pop: 1
-    - include: illegal-new-block
+    - include: pop-blank-line-illegal
     - include: inlines
 
   text-monospace:
@@ -279,7 +375,7 @@ contexts:
       captures:
         1: keyword.control.passthrough.asciidoc
       pop: 1
-    - include: illegal-new-block
+    - include: pop-blank-line-illegal
     - include: inlines
 
   text-highlight:
@@ -292,7 +388,7 @@ contexts:
     - match: '#\B'
       scope: punctuation.definition.highlight.end.asciidoc
       pop: 1
-    - include: illegal-new-block
+    - include: pop-blank-line-illegal
     - include: inlines
 
   text-subscript:
@@ -302,10 +398,10 @@ contexts:
 
   text-subscript-body:
     - meta_scope: markup.italic.subscript.asciidoc
-    - match: ~\B
+    - match: '~'
       scope: punctuation.definition.subscript.end.asciidoc
       pop: 1
-    - include: illegal-new-block
+    - include: pop-blank-line-illegal
     - include: inlines
 
   text-superscript:
@@ -315,10 +411,10 @@ contexts:
 
   text-superscript-body:
     - meta_scope: markup.italic.superscript.asciidoc
-    - match: \^\B
+    - match: \^
       scope: punctuation.definition.superscript.end.asciidoc
       pop: 1
-    - include: illegal-new-block
+    - include: pop-blank-line-illegal
     - include: inlines
 
   text-formatting-unconstrained:
@@ -339,7 +435,7 @@ contexts:
     - match: \*\*
       scope: punctuation.definition.bold.end.asciidoc
       pop: 1
-    - include: illegal-new-block
+    - include: pop-blank-line-illegal
     - include: inlines
 
   text-italic-unconstrained:
@@ -352,7 +448,7 @@ contexts:
     - match: __
       scope: punctuation.definition.italic.end.asciidoc
       pop: 1
-    - include: illegal-new-block
+    - include: pop-blank-line-illegal
     - include: inlines
 
   text-monospace-unconstrained:
@@ -365,7 +461,7 @@ contexts:
     - match: '``'
       scope: punctuation.definition.raw.end.asciidoc
       pop: 1
-    - include: illegal-new-block
+    - include: pop-blank-line-illegal
 
   text-highlight-unconstrained:
     - match: '##'
@@ -377,7 +473,7 @@ contexts:
     - match: '##'
       scope: punctuation.definition.highlight.end.asciidoc
       pop: 1
-    - include: illegal-new-block
+    - include: pop-blank-line-illegal
     - include: inlines
 
   text-subscript-unconstrained:
@@ -390,7 +486,7 @@ contexts:
     - match: ~~
       scope: punctuation.definition.subscript.end.asciidoc
       pop: 1
-    - include: illegal-new-block
+    - include: pop-blank-line-illegal
     - include: inlines
 
   text-superscript-unconstrained:
@@ -403,7 +499,7 @@ contexts:
     - match: \^\^
       scope: punctuation.definition.superscript.end.asciidoc
       pop: 1
-    - include: illegal-new-block
+    - include: pop-blank-line-illegal
     - include: inlines
 
 ###[ LISTS ]###################################################################
@@ -420,18 +516,23 @@ contexts:
     - meta_scope: meta.paragraph.list.asciidoc
     - match: ^(?=$|\s*[.*-])
       pop: 1
+    - match: \G(\[)([*xX ])(\])
+      captures:
+        1: markup.checkbox.begin.asciidoc punctuation.definition.checkbox.begin.asciidoc
+        2: markup.checkbox.mark.asciidoc
+        3: markup.checkbox.end.asciidoc punctuation.definition.checkbox.end.asciidoc
     - include: comments-inline
     - include: inlines
 
 ###[ DESCRIPTION LISTS ]#######################################################
 
   description-lists:
-    - match: ^(?=.+(?:;;|:{2,4})$)
+    - match: ^(?=.+{{description_list_marker}}$)
       push: description-list-term
 
   description-list-term:
     - meta_scope: meta.mapping.key.asciidoc
-    - match: (?:;;|:{2,4})$
+    - match: '{{description_list_marker}}$'
       scope: punctuation.separator.key-value.asciidoc
       pop: 1
     - include: inlines
@@ -452,6 +553,36 @@ contexts:
       pop: 1
 
 ###[ FOOTNOTES ]###############################################################
+
+  footnotes:
+    - match: \b(footnote)(:)
+      captures:
+        1: keyword.control.flow.asciidoc
+        2: punctuation.separator.asciidoc
+      push:
+        - footnote-content
+        - footnote-type
+
+  footnote-type:
+    - meta_content_scope: storage.modifier.asciidoc
+    - match: (?=\[)
+      pop: 1
+    - match: (?=\s)
+      pop: 1
+
+  footnote-content:
+    - match: \[
+      scope: punctuation.definition.string.begin.asciidoc
+      push: footnote-content-body
+    - include: else-pop
+
+  footnote-content-body:
+    - meta_scope: string.unquoted.asciidoc
+    - match: \]
+      scope: punctuation.definition.string.end.asciidoc
+      pop: 1
+    - include: inlines
+
 ###[ IMAGES ]##################################################################
 
   block-images:
@@ -480,7 +611,16 @@ contexts:
 ###[ ICONS ]###################################################################
 ###[ KEYBOARD MACRO ]##########################################################
 ###[ BUTTON AND MENU UI MACROS ]###############################################
+
 ###[ ADMONITIONS ]#############################################################
+
+  admonitions:
+    - match: ^({{admonition}})(:)
+      captures:
+        1: support.type.admonition.asciidoc
+        2: punctuation.separator.key-value.asciidoc
+      push: paragraph-body
+
 ###[ SIDEBARS ]################################################################
 
   sidebars:
@@ -569,8 +709,63 @@ contexts:
       pop: 1
 
 ###[ TABLES ]##################################################################
+
+  tables:
+    - match: ^\|===$
+      scope: punctuation.section.block.table.begin.asciidoc
+      push: table-body
+    - match: ^,===$
+      scope: punctuation.section.block.table.begin.asciidoc
+      push: table-body-csv
+    - match: ^:===$
+      scope: punctuation.section.block.table.begin.asciidoc
+      push: table-body-dsv
+
+  table-body:
+    - meta_scope: meta.table.asciidoc
+    - match: ^\|===$
+      scope: punctuation.section.block.table.end.asciidoc
+      pop: 1
+    # TODO: Cell formatting
+    - match: \|
+      scope: punctuation.separator.table-cell.asciidoc
+    - include: blocks
+
+  table-body-csv:
+    - meta_scope: meta.table.asciidoc
+    - match: ^,===$
+      scope: punctuation.section.block.table.end.asciidoc
+      pop: 1
+    - match: ','
+      scope: punctuation.separator.table-cell.asciidoc
+    - include: comments-inline
+    - include: includes
+
+  table-body-dsv:
+    - meta_scope: meta.table.asciidoc
+    - match: ^:===$
+      scope: punctuation.section.block.table.end.asciidoc
+      pop: 1
+    - match: ':'
+      scope: punctuation.separator.table-cell.asciidoc
+    - include: comments-inline
+    - include: includes
+
 ###[ EQUATIONS AND FORMULAE ]##################################################
+
 ###[ OPEN BLOCKS ]#############################################################
+
+  open-blocks:
+    - match: ^--$
+      scope: punctuation.section.block.begin.asciidoc
+      push: open-block-body
+
+  open-block-body:
+    - meta_scope: meta.block.open.asciidoc
+    - match: ^--$
+      scope: punctuation.section.block.end.asciidoc
+      pop: 1
+
 ###[ COLLAPSIBLE BLOCKS ]######################################################
 
 ###[ COMMENTS ]################################################################
@@ -626,6 +821,7 @@ contexts:
       set: attribute-list-body
     - match: /
       scope: punctuation.separator.sequence.asciidoc
+    - include: document-attributes
 
 ###[ CONDITIONALS ]############################################################
 
@@ -662,37 +858,53 @@ contexts:
   passthrough-blocks:
     - match: ^(\+{4})\s*$
       captures:
-        1: punctuation.definition.raw.passthrough.begin.asciidoc
+        1: keyword.control.passthrough.begin.asciidoc
       push: passthrough-block-body
 
   passthrough-block-body:
     - meta_content_scope: markup.raw.passthrough.asciidoc
     - match: ^\+{4}$
-      scope: punctuation.definition.raw.passthrough.end.asciidoc
+      scope: keyword.control.passthrough.end.asciidoc
       pop: 1
 
   passthrough-inlines:
     - match: (\+{2,3})(?=\S)
-      scope: punctuation.definition.raw.passthrough.begin.asciidoc
+      scope: keyword.control.passthrough.begin.asciidoc
       push: passthrough-inline-body-unconstrained
     - match: \B\+(?=\S)
-      scope: punctuation.definition.raw.passthrough.begin.asciidoc
+      scope: keyword.control.passthrough.begin.asciidoc
       push: passthrough-inline-body
+    - match: \b(pass)(:)
+      captures:
+        1: keyword.control.passthrough.asciidoc
+        2: punctuation.separator.asciidoc
+      push: pass-inline-content
 
   passthrough-inline-body:
     - meta_scope: markup.raw.inline.asciidoc
     - match: \+\B
-      scope: punctuation.definition.raw.passthrough.end.asciidoc
+      scope: keyword.control.passthrough.end.asciidoc
       pop: 1
-    - include: illegal-new-block
+    - include: pop-blank-line-illegal
 
   passthrough-inline-body-unconstrained:
     - meta_scope: markup.raw.inline.asciidoc
     - match: \1
-      scope: punctuation.definition.raw.passthrough.end.asciidoc
+      scope: keyword.control.passthrough.end.asciidoc
       pop: 1
-    - include: illegal-new-block
+    - include: pop-blank-line-illegal
 
+  pass-inline-content:
+    - match: \[
+      scope: punctuation.definition.string.begin.asciidoc
+      push: pass-inline-content-body
+    - include: else-pop
+
+  pass-inline-content-body:
+    - meta_scope: markup.raw.inline.asciidoc
+    - match: \]
+      scope: punctuation.definition.string.end.asciidoc
+      pop: 1
 
 ###[ PROTOTYPE ]###############################################################
 
@@ -700,7 +912,15 @@ contexts:
     - match: $\n?
       pop: 1
 
-  illegal-new-block:
+  else-pop:
+    - match: (?=\S)
+      pop: 1
+
+  pop-blank-line:
+    - match: ^$\n?
+      pop: 1
+
+  pop-blank-line-illegal:
     - match: ^$\n?
       scope: invalid.illegal.new-block.asciidoc
       pop: 1
@@ -1011,3 +1231,6 @@ contexts:
 
 variables:
   identifier: (?:[a-z](?:[a-z0-9-]*[a-z0-9])?)
+  admonition: \b(?:NOTE|IMPORTANT|TIP|CAUTION|WARNING)\b
+  block_type: \b(?:source|quote|discrete|qanda)\b
+  description_list_marker: (?:;;|:{2,4})

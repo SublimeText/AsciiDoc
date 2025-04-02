@@ -136,8 +136,14 @@ A [.myrole]#custom role# must be fulfilled by the theme.
 
 === Superscript and subscript
 ^super^script
+//^^^^^^^^^^^ meta.paragraph.asciidoc
+//^^^^^ markup.italic.superscript.asciidoc
+//    ^ punctuation.definition.superscript.end.asciidoc
 
 ~sub~script
+//^^^^^^^^^ meta.paragraph.asciidoc
+//^^^ markup.italic.subscript.asciidoc
+//  ^ punctuation.definition.subscript.end.asciidoc
 
 
 === Smart quotes and apostrophes
@@ -423,8 +429,20 @@ include::https://raw.githubusercontent.com/asciidoctor/asciidoctor/main/README.a
 
 === Checklist
 * [*] checked
+//^^^^^^^^^^^ meta.paragraph.list.asciidoc
+//^ markup.checkbox.begin.asciidoc punctuation.definition.checkbox.begin.asciidoc
+// ^ markup.checkbox.mark.asciidoc
+//  ^ markup.checkbox.end.asciidoc punctuation.definition.checkbox.end.asciidoc
 * [x] also checked
+//^^^^^^^^^^^^^^^^ meta.paragraph.list.asciidoc
+//^ markup.checkbox.begin.asciidoc punctuation.definition.checkbox.begin.asciidoc
+// ^ markup.checkbox.mark.asciidoc
+//  ^ markup.checkbox.end.asciidoc punctuation.definition.checkbox.end.asciidoc
 * [ ] not checked
+//^^^^^^^^^^^^^^^ meta.paragraph.list.asciidoc
+//^ markup.checkbox.begin.asciidoc punctuation.definition.checkbox.begin.asciidoc
+// ^ markup.checkbox.mark.asciidoc
+//  ^ markup.checkbox.end.asciidoc punctuation.definition.checkbox.end.asciidoc
 * normal list item
 
 === Description list
@@ -650,20 +668,23 @@ Select a file in the file navigator and click btn:[Open].
 Output literal monospace text, such as `+{backtick}+` or `+http://localhost:8080+`, by enclosing the text in a pair of pluses surrounded by a pair backticks.
 //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
 //                                     ^^^^^^^^^^^^^^ markup.raw.inline.asciidoc
-//                                     ^^ punctuation.definition.raw.begin.asciidoc
-//                                      ^ keyword.control.passthrough.asciidoc
-//                                                 ^^ punctuation.definition.raw.end.asciidoc
-//                                                 ^ keyword.control.passthrough.asciidoc
+//                                     ^ punctuation.definition.raw.begin.asciidoc
+//                                      ^^^^^^^^^^^^ markup.raw.inline.asciidoc
+//                                      ^ keyword.control.passthrough.begin.asciidoc
+//                                                 ^ keyword.control.passthrough.end.asciidoc
+//                                                  ^ punctuation.definition.raw.end.asciidoc
 //                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^ markup.raw.inline.asciidoc
-//                                                       ^^ punctuation.definition.raw.begin.asciidoc
-//                                                        ^ keyword.control.passthrough.asciidoc
-//                                                                              ^^ punctuation.definition.raw.end.asciidoc
-//                                                                              ^ keyword.control.passthrough.asciidoc
+//                                                       ^ punctuation.definition.raw.begin.asciidoc
+//                                                        ^^^^^^^^^^^^^^^^^^^^^^^ markup.raw.inline.asciidoc
+//                                                        ^ keyword.control.passthrough.begin.asciidoc
+//                                                                              ^ keyword.control.passthrough.end.asciidoc
+//                                                                               ^ punctuation.definition.raw.end.asciidoc
 
 === Literal paragraph
 Normal line.
 
  Indent line by one space to create a literal line.
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc markup.raw.block.asciidoc
 
 Normal line.
 
@@ -765,6 +786,19 @@ include::app.rb[]
 [source,java]
 ----
 include::{sourcedir}/org/asciidoctor/Asciidoctor.java[]
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.raw.code-fence.asciidoc
+//^^^^^ keyword.control.import.asciidoc
+//     ^^ punctuation.separator.asciidoc
+//       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ string.unquoted.asciidoc
+//       ^^^^^^^^^^^ variable.other.readwrite.asciidoc
+//       ^ punctuation.definition.variable.begin.asciidoc
+//                 ^ punctuation.definition.variable.end.asciidoc
+//                  ^ punctuation.separator.sequence.asciidoc
+//                      ^ punctuation.separator.sequence.asciidoc
+//                                  ^ punctuation.separator.sequence.asciidoc
+//                                                   ^^ meta.brackets.asciidoc
+//                                                   ^ punctuation.section.group.parameters.begin.asciidoc
+//                                                    ^ punctuation.section.group.parameters.end.asciidoc
 ----
 
 === Source block content included from file relative to source directory
@@ -793,6 +827,8 @@ This is normal content.
 
 === Admonition paragraph
 NOTE: An admonition draws the reader's attention to auxiliary information.
+//^^ support.type.admonition.asciidoc
+//  ^ punctuation.separator.key-value.asciidoc
 
 Here are the other built-in admonition types:
 
@@ -805,9 +841,14 @@ CAUTION: Slippery when wet.
 WARNING: The software you're about to use is untested.
 
 IMPORTANT: Sign off before stepping away from your computer.
+//^^^^^^^ support.type.admonition.asciidoc
+//       ^ punctuation.separator.key-value.asciidoc
 
 === Admonition block
 [NOTE]
+//^^^^ meta.brackets.asciidoc
+//^^^ support.type.admonition.asciidoc
+//   ^ punctuation.section.group.parameters.end.asciidoc
 ====
 An admonition block may contain complex content.
 
@@ -915,7 +956,10 @@ That means you can include raw HTML, like this embedded Gist:
 === Table with a title, two columns, a header row, and two rows of content
 .Table Title
 |===
+//^^ meta.table.asciidoc punctuation.section.block.table.begin.asciidoc
 |Column 1, Header Row |Column 2, Header Row
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.table.asciidoc
+//                    ^ punctuation.separator.table-cell.asciidoc
 
 |Cell in column 1, row 1
 |Cell in column 2, row 1
@@ -942,18 +986,23 @@ That means you can include raw HTML, like this embedded Gist:
 [cols="1,1,2"]
 |===
 |Name |Category |Description
+//^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.table.asciidoc
+//    ^ punctuation.separator.table-cell.asciidoc
+//              ^ punctuation.separator.table-cell.asciidoc
 
 |Firefox
 |Browser
 |Mozilla Firefox is an open source web browser.
 It's designed for standards compliance,
 performance, portability.
+//^^^^^^^^^^^^^^^^^^^^^^^ meta.table.asciidoc meta.paragraph.asciidoc
 
 |Arquillian
 |Testing
 |An innovative and highly extensible testing platform.
 Empowers developers to easily create real, automated tests.
 |===
+//^^ meta.table.asciidoc punctuation.section.block.table.end.asciidoc
 
 === Table with column containing AsciiDoc content
 [cols="2,2,5a"]
@@ -967,6 +1016,7 @@ It's designed for:
 * standards compliance
 * performance
 * portability
+//^^^^^^^^^^^ meta.table.asciidoc meta.paragraph.list.asciidoc
 
 https://getfirefox.com[Get Firefox]!
 |===
@@ -989,11 +1039,22 @@ The Lumineers,Ho Hey,Folk Rock
 === Table from CSV data included from file
 ,===
 include::customers.csv[]
+//^^^^^^^^^^^^^^^^^^^^^^ meta.table.asciidoc
+//^^^^^ keyword.control.import.asciidoc
+//     ^^ punctuation.separator.asciidoc
+//       ^^^^^^^^^^^^^ string.unquoted.asciidoc
+//                    ^^ meta.brackets.asciidoc
+//                    ^ punctuation.section.group.parameters.begin.asciidoc
+//                     ^ punctuation.section.group.parameters.end.asciidoc
 ,===
 
 === Table from DSV data using shorthand
 :===
+//^^ meta.table.asciidoc punctuation.section.block.table.begin.asciidoc
 Artist:Track:Genre
+//^^^^^^^^^^^^^^^^ meta.table.asciidoc
+//    ^ punctuation.separator.table-cell.asciidoc
+//          ^ punctuation.separator.table-cell.asciidoc
 
 Robyn:Indestructible:Dance
 :===
@@ -1086,6 +1147,9 @@ after
 
 === Attribute declaration and usage
 :url-home: https://asciidoctor.org
+//^^^^^^^^ variable.other.readwrite.asciidoc
+//       ^ punctuation.definition.variable.end.asciidoc
+//         ^^^^^^^^^^^^^^^^^^^^^^^ string.unquoted.asciidoc
 :link-docs: https://asciidoctor.org/docs[documentation]
 :summary: AsciiDoc is a mature, plain-text document format for \
        writing notes, articles, documentation, books, and more. \
@@ -1125,71 +1189,86 @@ Be sure to read the {link-docs} too!
 
 === Backslash
 In /items/\{id}, the id attribute isn't replaced.
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//        ^^ constant.character.escape.asciidoc
 The curly braces around it are preserved.
 
 \*Stars* isn't displayed as bold text.
+// <- meta.paragraph.asciidoc constant.character.escape.asciidoc
 The asterisks around it are preserved.
 
 \&sect; appears as an entity reference.
+// <- meta.paragraph.asciidoc constant.character.escape.asciidoc
 It's not converted into the section symbol (&sect;).
 
 \=> The backslash prevents the equals sign followed by a greater
+// <- meta.paragraph.asciidoc constant.character.escape.asciidoc
 than sign from combining to form a double arrow character (=>).
 
 \[[Word]] is not interpreted as an anchor.
+// <- meta.paragraph.asciidoc constant.character.escape.asciidoc
 The double brackets around it are preserved.
 
 [\[[Word]]] is not interpreted as a bibliography anchor.
 The triple brackets around it are preserved.
 
 \((DD AND CC) OR (DD AND EE)) is not interpreted as a flow index term.
+// <- meta.paragraph.asciidoc constant.character.escape.asciidoc
 The double brackets around it are preserved.
 
 The URL \https://example.org isn't converted into an active link.
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//      ^^ constant.character.escape.asciidoc
 
 === Single and double plus inline passthroughs
 A word or phrase between single pluses, such as +/user/{id}+,
 //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
 //                                              ^^^^^^^^^^^^ markup.raw.inline.asciidoc
-//                                              ^ punctuation.definition.raw.passthrough.begin.asciidoc
-//                                                         ^ punctuation.definition.raw.passthrough.end.asciidoc
+//                                              ^ keyword.control.passthrough.begin.asciidoc
+//                                                         ^ keyword.control.passthrough.end.asciidoc
 is not substituted.
 However, the special characters like +<+ and +>+ are still
 //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
 //                                   ^^^ markup.raw.inline.asciidoc
-//                                   ^ punctuation.definition.raw.passthrough.begin.asciidoc
-//                                     ^ punctuation.definition.raw.passthrough.end.asciidoc
+//                                   ^ keyword.control.passthrough.begin.asciidoc
+//                                     ^ keyword.control.passthrough.end.asciidoc
 //                                           ^^^ markup.raw.inline.asciidoc
-//                                           ^ punctuation.definition.raw.passthrough.begin.asciidoc
-//                                             ^ punctuation.definition.raw.passthrough.end.asciidoc
+//                                           ^ keyword.control.passthrough.begin.asciidoc
+//                                             ^ keyword.control.passthrough.end.asciidoc
 escaped in the output.
 
 An attribute reference within a word, such as dev++{conf}++,
 //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
 //                                               ^^^^^^^^^^ markup.raw.inline.asciidoc
-//                                               ^^ punctuation.definition.raw.passthrough.begin.asciidoc
-//                                                       ^^ punctuation.definition.raw.passthrough.end.asciidoc
+//                                               ^^ keyword.control.passthrough.begin.asciidoc
+//                                                       ^^ keyword.control.passthrough.end.asciidoc
 is not replaced.
 
 A plus passthrough will escape standalone formatting marks,
 like +``+, or formatting marks within a word, like all-natural++*++.
 //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
 //   ^^^^ markup.raw.inline.asciidoc
-//   ^ punctuation.definition.raw.passthrough.begin.asciidoc
-//      ^ punctuation.definition.raw.passthrough.end.asciidoc
+//   ^ keyword.control.passthrough.begin.asciidoc
+//      ^ keyword.control.passthrough.end.asciidoc
 //                                                            ^^^^^ markup.raw.inline.asciidoc
-//                                                            ^^ punctuation.definition.raw.passthrough.begin.asciidoc
-//                                                               ^^ punctuation.definition.raw.passthrough.end.asciidoc
+//                                                            ^^ keyword.control.passthrough.begin.asciidoc
+//                                                               ^^ keyword.control.passthrough.end.asciidoc
 
 
 === Triple plus inline passthrough and inline pass macro
 +++<u>underline me</u>+++ is underlined.
 //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
 //^^^^^^^^^^^^^^^^^^^^^^^ markup.raw.inline.asciidoc
-//^ punctuation.definition.raw.passthrough.begin.asciidoc
-//                    ^^^ punctuation.definition.raw.passthrough.end.asciidoc
+//^ keyword.control.passthrough.begin.asciidoc
+//                    ^^^ keyword.control.passthrough.end.asciidoc
 
 pass:[<u>underline me</u>] is also underlined.
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//^^ keyword.control.passthrough.asciidoc
+//  ^ punctuation.separator.asciidoc
+//   ^^^^^^^^^^^^^^^^^^^^^ markup.raw.inline.asciidoc
+//   ^ punctuation.definition.string.begin.asciidoc
+//                       ^ punctuation.definition.string.end.asciidoc
 
 
 == Bibliography
