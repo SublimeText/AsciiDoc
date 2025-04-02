@@ -1047,6 +1047,7 @@ contexts:
         2: punctuation.separator.asciidoc
         3: variable.other.readwrite.asciidoc
         4: punctuation.section.group.asciidoc
+      pop: 1
     - include: blocks
 
 ###[ SUBSTITUTIONS ]###########################################################

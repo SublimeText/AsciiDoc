@@ -147,12 +147,13 @@ endif::[]
 //   ^^ punctuation.separator.asciidoc
 //     ^^ punctuation.section.group.asciidoc
 
+// ^ - meta.block.conditional
+
 ifdef::revnumber[]
 This document has a version number of {revnumber}.
 endif::[]
 
 `git diff [<options>] [--] [<path>...]`::
-//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.block.conditional.asciidoc meta.block.conditional.asciidoc
 //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.mapping.key.asciidoc markup.raw.inline.asciidoc
 //        ^^^^^^^^^^^ meta.brackets.asciidoc
 //        ^ punctuation.section.group.parameters.begin.asciidoc
@@ -169,7 +170,7 @@ endif::[]
   This form is to view the changes you made relative to
   the index (staging area for the next commit).  In other
   words, the differences are what you _could_ tell Git to
-//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.block.conditional.asciidoc meta.block.conditional.asciidoc meta.mapping.value.asciidoc
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.mapping.value.asciidoc
 //                                    ^^^^^^^ markup.italic.asciidoc
 //                                    ^ punctuation.definition.italic.begin.asciidoc
 //                                          ^ punctuation.definition.italic.end.asciidoc
