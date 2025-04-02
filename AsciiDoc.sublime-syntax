@@ -280,10 +280,7 @@ contexts:
 
   paragraph-body:
     - meta_scope: meta.paragraph.asciidoc
-    - match: ^$
-      pop: 1
-    - match: ^(?=:|[=|,]=|\*{4}|include|endif|if(?:n?def|eval))
-      pop: 1
+    - include: paragraph-body-pops
     - include: comments-inline
     - include: inlines
 
@@ -293,12 +290,17 @@ contexts:
 
   literal-paragraph-body:
     - meta_scope: meta.paragraph.asciidoc markup.raw.block.asciidoc
+    - include: paragraph-body-pops
+    - include: comments-inline
+    - include: inlines
+
+  paragraph-body-pops:
     - match: ^$
       pop: 1
     - match: ^(?=:|[=|,]=|\*{4}|include|endif|if(?:n?def|eval))
       pop: 1
-    - include: comments-inline
-    - include: inlines
+    - match: ^(?=.+{{description_list_marker}}\s|$)
+      pop: 1
 
 ###[ DISCRETE HEADINGS ]#######################################################
 
@@ -516,6 +518,8 @@ contexts:
     - meta_scope: meta.paragraph.list.asciidoc
     - match: ^(?=$|\s*[.*-])
       pop: 1
+    - match: ^(?=.+{{description_list_marker}}\s|$)
+      pop: 1
     - match: \G(\[)([*xX ])(\])
       captures:
         1: markup.checkbox.begin.asciidoc punctuation.definition.checkbox.begin.asciidoc
@@ -527,14 +531,33 @@ contexts:
 ###[ DESCRIPTION LISTS ]#######################################################
 
   description-lists:
-    - match: ^(?=.+{{description_list_marker}}$)
+    - match: ^(?=.+{{description_list_marker}}\s)
       push: description-list-term
 
   description-list-term:
-    - meta_scope: meta.mapping.key.asciidoc
-    - match: '{{description_list_marker}}$'
+    - meta_content_scope: meta.mapping.key.asciidoc
+    - match: '{{description_list_marker}}(?=\s|$)'
       scope: punctuation.separator.key-value.asciidoc
+      set: description-list-value
+    - include: inlines
+
+  description-list-value:
+    - meta_content_scope: meta.mapping.value.asciidoc
+    # If there's a blank line, we might be in indented blocks
+    - match: ^$
+      set: maybe-indented-description-list-value
+    # Pop before next desc-list
+    - match: ^(?=.+{{description_list_marker}}\s|$)
       pop: 1
+    - include: comments-inline
+    - include: inlines
+    - include: lists
+
+  maybe-indented-description-list-value:
+    - meta_content_scope: meta.mapping.value.asciidoc
+    - match: ^(?=\S)
+      pop: 1
+    - include: indented-blocks
     - include: inlines
 
 ###[ LINKS ]###################################################################

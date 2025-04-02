@@ -463,27 +463,35 @@ No.
 
 === Mixed
 Operating Systems::
-//^^^^^^^^^^^^^^^^^ meta.mapping.key.asciidoc
+//^^^^^^^^^^^^^^^ meta.mapping.key.asciidoc
 //               ^^ punctuation.separator.key-value.asciidoc
   Linux:::
-//^^^^^^^^ meta.mapping.key.asciidoc
+//^^^^^ meta.mapping.key.asciidoc
 //     ^^^ punctuation.separator.key-value.asciidoc
     . Fedora
-//^^^^^^^^^^ meta.paragraph.list.asciidoc
+//^^^^^^^^^^ meta.mapping.value.asciidoc meta.paragraph.list.asciidoc
 //  ^ punctuation.definition.list_item.asciidoc
       * Desktop
-//^^^^^^^^^^^^^ meta.paragraph.list.asciidoc
+//^^^^^^^^^^^^^ meta.mapping.value.asciidoc meta.paragraph.list.asciidoc
 //    ^ punctuation.definition.list_item.asciidoc
     . Ubuntu
       * Desktop
       * Server
+//^^^^^^^^^^^^ meta.mapping.value.asciidoc meta.paragraph.list.asciidoc
+//    ^ punctuation.definition.list_item.asciidoc
   BSD:::
+//^^^ meta.mapping.key.asciidoc
+//   ^^^ punctuation.separator.key-value.asciidoc
     . FreeBSD
+//^^^^^^^^^^^ meta.mapping.value.asciidoc meta.paragraph.list.asciidoc
+//  ^ punctuation.definition.list_item.asciidoc
     . NetBSD
 
 Cloud Providers::
   PaaS:::
     . OpenShift
+//^^^^^^^^^^^^^ meta.mapping.value.asciidoc meta.paragraph.list.asciidoc
+//  ^ punctuation.definition.list_item.asciidoc
     . CloudBees
   IaaS:::
     . Amazon EC2
@@ -497,6 +505,16 @@ Additional paragraphs or blocks are adjoined by putting
 a list continuation on a line adjacent to both blocks.
 +
 list continuation:: a plus sign (`{plus}`) on a line by itself
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.list.asciidoc meta.paragraph.asciidoc
+//^^^^^^^^^^^^^^^ meta.mapping.key.asciidoc
+//               ^^ punctuation.separator.key-value.asciidoc
+//                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.mapping.value.asciidoc
+//                               ^^^^^^^^ markup.raw.inline.asciidoc
+//                               ^ punctuation.definition.raw.begin.asciidoc
+//                                ^^^^^^ variable.other.readwrite.asciidoc
+//                                ^ punctuation.definition.variable.begin.asciidoc
+//                                     ^ punctuation.definition.variable.end.asciidoc
+//                                      ^ punctuation.definition.raw.end.asciidoc
 
 * A literal paragraph does not require a list continuation.
 
