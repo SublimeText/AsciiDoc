@@ -17,47 +17,77 @@ contexts:
     - include: blocks
     # - include: old-main
 
-###[ COMMENTS ]################################################################
+###[ BLOCKS ]##################################################################
 
-  # https://docs.asciidoctor.org/asciidoc/latest/comments/
-  comments:
-    - include: comments-block
-    - include: comments-inline
+  blocks:
+    - include: comments
+    - include: includes
+    - include: conditionals
+    - include: breaks
+    - include: section-titles
+    - include: lists
+    - include: description-lists
+    - include: passthrough-blocks
+    - include: verbatims
+    - include: attribute-lists
 
-  comments-inline:
-    - match: //
-      scope: punctuation.definition.comment.begin.asciidoc
-      push: comment-inline-body
+    # TODO: Figure out where this belongs
+    - match: ^(\.)
+      scope: punctuation.section.block.asciidoc
+      push:
+        - meta_content_scope: markup.bold.asciidoc
+        - include: eol-pop
 
-  comment-inline-body:
-    - meta_scope: comment.line.double-slash.asciidoc
-    - include: eol-pop
+    # Paragraphs at the end
+    - include: paragraphs
 
-  comments-block:
-    - include: comments-block-delimited
-    # TODO: [comment] block and paragraph
-
-  comments-block-delimited:
-    - match: ^\s*(////)
+  inlines:
+    - match: (\+)\s*$
       captures:
-        1: punctuation.definition.comment.begin.asciidoc
-      push: comment-block-delimited-body
+        1: constant.character.break.asciidoc
+    - match: '{empty}'
+      scope: constant.language.null.asciidoc
+    - include: attribute-lists
+    - include: text-formatting
+    - include: cross-references
 
-  comment-block-delimited-body:
-    - meta_scope: comment.block.quad-slash.asciidoc
-    - match: ^\s*(////)
-      captures:
-        1: punctuation.definition.comment.end.asciidoc
-      pop: 1
+###[ DOCUMENT ATTRIBUTES ]#####################################################
 
-###[ ATTRIBUTES ]##############################################################
+###[ ELEMENT ATTRIBUTES ]######################################################
+
+  attribute-lists:
+    - match: \[
+      scope: punctuation.section.group.parameters.begin.asciidoc
+      push: attribute-list-body
 
   attribute-list-body:
     - match: \]
       scope: punctuation.section.group.parameters.end.asciidoc
       pop: 1
+    - include: comma-separator
+    - include: named-attributes
 
-###[ SECTION TITLES ]##########################################################
+  named-attributes:
+    - match: \b([\w-]+)(=)
+      captures:
+        1: meta.mapping.key.asciidoc entity.other.attribute-name.asciidoc
+        2: punctuation.separator.key-value.asciidoc
+
+  named-attribute-value:
+    - meta_scope: meta.attribute-with-value.asciidoc
+    - meta_content_scope: meta.mapping.value.asciidoc
+    - match: (?=[,\]])
+      pop: 1
+
+  comma-separator:
+    - match: ','
+      scope: punctuation.separator.sequence.asciidoc
+
+###[ DOCUMENT HEADER ]#########################################################
+
+###[ DOCUMENT TYPE ]###########################################################
+
+###[ SECTIONS ]################################################################
 
   # https://docs.asciidoctor.org/asciidoc/latest/sections/titles-and-levels/
   section-titles:
@@ -137,27 +167,29 @@ contexts:
     - include: comments-inline
     - include: inlines
 
+###[ DISCRETE HEADINGS ]#######################################################
+
 ###[ BREAKS ]##################################################################
 
   # https://docs.asciidoctor.org/asciidoc/latest/blocks/breaks/
   breaks:
     - include: thematic-breaks
-    - include: page-preaks
+    - include: page-breaks
 
   thematic-breaks:
-    - match: (?:'''|\*\*\*|---|\* \* \*|- - -)
+    - match: ^(?:'''|\*\*\*|---|\* \* \*|- - -)$
       scope: punctuation.section.block.thematic.asciidoc
 
   page-breaks:
-    - match: <<<
+    - match: ^<<<$
       scope: keyword.control.flow.break.asciidoc
 
-###[ TEXT FORMATTING ]#########################################################
+###[ TEXT FORMATTING AND PUNCTUATION ]#########################################
 
   text-formatting:
-    - match: '`"'
+    - match: '`"|"`'
       scope: constant.character.escape.asciidoc
-    - match: "`'"
+    - match: "`'|'`"
       scope: constant.character.escape.asciidoc
     - include: text-formatting-unconstrained
     - include: text-formatting-constrained
@@ -366,6 +398,8 @@ contexts:
       pop: 1
     - include: inlines
 
+###[ LINKS ]###################################################################
+
 ###[ CROSS-REFERENCES ]########################################################
 
   cross-references:
@@ -378,6 +412,81 @@ contexts:
     - match: '>>'
       scope: punctuation.definition.reference.end.asciidoc
       pop: 1
+
+###[ FOOTNOTES ]###############################################################
+###[ IMAGES ]##################################################################
+###[ AUDIO AND VIDEO ]#########################################################
+###[ ICONS ]###################################################################
+###[ KEYBOARD MACRO ]##########################################################
+###[ BUTTON AND MENU UI MACROS ]###############################################
+###[ ADMONITIONS ]#############################################################
+###[ SIDEBARS ]################################################################
+###[ EXAMPLE BLOCKS ]##########################################################
+###[ BLOCKQUOTES ]#############################################################
+###[ VERSES ]##################################################################
+###[ VERBATIM AND SOURCE BLOCKS ]##############################################
+
+  verbatims:
+    - match: ^(-{4})\s*$
+      captures:
+        1: punctuation.definition.raw.code-fence.begin.asciidoc
+      push: verbatim-body
+
+  verbatim-body:
+    - meta_content_scope: markup.raw.code-fence.asciidoc
+    - match: ^-{4}$
+      scope: punctuation.definition.raw.code-fence.end.asciidoc
+      pop: 1
+    - include: verbatim-line-annotations
+
+  verbatim-line-annotations:
+    - match: (<(?:!--)?)\d+((?:--)?>)
+      scope: comment.block.asciidoc
+      captures:
+        1: punctuation.definition.comment.begin.asciidoc
+        2: punctuation.definition.comment.end.asciidoc
+
+###[ TABLES ]##################################################################
+###[ EQUATIONS AND FORMULAE ]##################################################
+###[ OPEN BLOCKS ]#############################################################
+###[ COLLAPSIBLE BLOCKS ]######################################################
+
+###[ COMMENTS ]################################################################
+
+  # https://docs.asciidoctor.org/asciidoc/latest/comments/
+  comments:
+    - include: comments-block
+    - include: comments-inline
+
+  comments-inline:
+    - match: ^\s*(//)
+      captures:
+        1: punctuation.definition.comment.begin.asciidoc
+      push: comment-inline-body
+
+  comment-inline-body:
+    - meta_scope: comment.line.double-slash.asciidoc
+    - include: eol-pop
+
+  comments-block:
+    - include: comments-block-delimited
+    # TODO: [comment] block and paragraph
+
+  comments-block-delimited:
+    - match: ^\s*(////)
+      captures:
+        1: punctuation.definition.comment.begin.asciidoc
+      push: comment-block-delimited-body
+
+  comment-block-delimited-body:
+    - meta_scope: comment.block.quad-slash.asciidoc
+    - match: ^\s*(////)
+      captures:
+        1: punctuation.definition.comment.end.asciidoc
+      pop: 1
+
+###[ AUTOMATIC TABLE OF CONTENTS ]#############################################
+###[ DOCINFO FILES ]###########################################################
 
 ###[ INCLUDES ]################################################################
 
@@ -425,27 +534,22 @@ contexts:
         4: punctuation.section.group.asciidoc
     - include: blocks
 
-###[ PROTOTYPE ]###############################################################
+###[ SUBSTITUTIONS ]###########################################################
+###[ PASSTHROUGHS ]############################################################
 
-  blocks:
-    - include: comments
-    - include: includes
-    - include: conditionals
-    - include: section-titles
-    - include: lists
-    - include: breaks
-    - include: description-lists
-
-    - include: paragraphs
-
-  inlines:
-    - match: (\+)\s*$
+  passthrough-blocks:
+    - match: ^(\+{4})\s*$
       captures:
-        1: constant.character.break.asciidoc
-    - match: '{empty}'
-      scope: constant.language.null.asciidoc
-    - include: text-formatting
-    - include: cross-references
+        1: punctuation.definition.raw.passthrough.begin.asciidoc
+      push: passthrough-block-body
+
+  passthrough-block-body:
+    - meta_content_scope: markup.raw.passthrough.asciidoc
+    - match: ^\+{4}$
+      scope: punctuation.definition.raw.passthrough.end.asciidoc
+      pop: 1
+
+###[ PROTOTYPE ]###############################################################
 
   eol-pop:
     - match: $\n?
