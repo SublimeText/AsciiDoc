@@ -855,19 +855,21 @@ contexts:
 
 ###[ VERBATIM AND SOURCE BLOCKS ]##############################################
 
+  # TODO: Maybe detect and inject language syntax?
+
   verbatims-and-source-blocks:
     - include: verbatims
     - include: literal-blocks
 
   verbatims:
-    - match: ^(-{4})\s*$
+    - match: ^(-{4,})\s*$
       captures:
         1: punctuation.definition.raw.code-fence.begin.asciidoc
       push: verbatim-body
 
   verbatim-body:
     - meta_content_scope: markup.raw.code-fence.asciidoc
-    - match: ^-{4}$
+    - match: ^\1$
       scope: punctuation.definition.raw.code-fence.end.asciidoc
       pop: 1
     - include: verbatim-line-annotations
