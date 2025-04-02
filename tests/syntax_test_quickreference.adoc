@@ -543,16 +543,22 @@ Normal line.
 
 === Literal block
 ....
+//^^ punctuation.definition.raw.literal.begin.asciidoc
 error: 1954 Forbidden search
+//^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.raw.code-fence.asciidoc
 absolutely fatal: operation lost in the dodecahedron of doom
 
 Would you like to try again? y/n
 ....
+//^^ punctuation.definition.raw.code-fence.end.asciidoc
 
 === Listing block with title
 .Gemfile.lock
+//^^^^^^^^^^^ markup.bold.asciidoc
 ----
+//^^ punctuation.definition.raw.code-fence.begin.asciidoc
 GEM
+//^ markup.raw.code-fence.asciidoc
   remote: https://rubygems.org/
   specs:
     asciidoctor (2.0.15)
@@ -563,23 +569,38 @@ PLATFORMS
 DEPENDENCIES
   asciidoctor (~> 2.0.15)
 ----
+//^^ punctuation.definition.raw.code-fence.end.asciidoc
 
 
 === Source block with title and syntax highlighting
 .Some Ruby code
+//^^^^^^^^^^^^^ markup.bold.asciidoc
 [source,ruby]
+//^^^^^^^^^^^ meta.brackets.asciidoc
+//     ^ punctuation.separator.sequence.asciidoc
+//          ^ punctuation.section.group.parameters.end.asciidoc
 ----
+//^^ punctuation.definition.raw.code-fence.begin.asciidoc
 require 'sinatra'
+//^^^^^^^^^^^^^^^ markup.raw.code-fence.asciidoc
 
 get '/hi' do
   "Hello World!"
 end
 ----
+//^^ punctuation.definition.raw.code-fence.end.asciidoc
 
 === Source block with callouts
 [source,ruby]
+//^^^^^^^^^^^ meta.brackets.asciidoc
+//     ^ punctuation.separator.sequence.asciidoc
+//          ^ punctuation.section.group.parameters.end.asciidoc
 ----
 require 'sinatra' // <1>
+//^^^^^^^^^^^^^^^^^^^^^^ markup.raw.code-fence.asciidoc
+//                   ^^^ comment.block.asciidoc
+//                   ^ punctuation.definition.comment.begin.asciidoc
+//                     ^ punctuation.definition.comment.end.asciidoc
 
 get '/hi' do // <2>
   "Hello World!" // <3>
@@ -605,6 +626,13 @@ line of code <!--4-->
 [,ruby]
 ----
 include::app.rb[]
+//^^^^^^^^^^^^^^^ markup.raw.code-fence.asciidoc
+//^^^^^ keyword.control.import.asciidoc
+//     ^^ punctuation.separator.asciidoc
+//       ^^^^^^ string.unquoted.asciidoc
+//             ^^ meta.brackets.asciidoc
+//             ^ punctuation.section.group.parameters.begin.asciidoc
+//              ^ punctuation.section.group.parameters.end.asciidoc
 ----
 
 === :sourcedir: src/main/java
@@ -677,7 +705,9 @@ that supplement the main text.
 
 === Example block
 ====
+//^^ meta.quote.asciidoc punctuation.definition.blockquote.begin.asciidoc
 Here's a sample AsciiDoc document:
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.quote.asciidoc meta.paragraph.asciidoc
 
 ----
 = Title of Document

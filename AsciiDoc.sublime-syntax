@@ -28,7 +28,8 @@ contexts:
     - include: lists
     - include: description-lists
     - include: passthrough-blocks
-    - include: verbatims
+    - include: verbatims-and-source-blocks
+    - include: blockquotes
     - include: attribute-lists
 
     # TODO: Figure out where this belongs
@@ -61,6 +62,7 @@ contexts:
       push: attribute-list-body
 
   attribute-list-body:
+    - meta_scope: meta.brackets.asciidoc
     - match: \]
       scope: punctuation.section.group.parameters.end.asciidoc
       pop: 1
@@ -162,7 +164,7 @@ contexts:
     - meta_scope: meta.paragraph.asciidoc
     - match: ^$
       pop: 1
-    - match: ^(?=include|endif|if(?:n?def|eval))
+    - match: ^(?===|include|endif|if(?:n?def|eval))
       pop: 1
     - include: comments-inline
     - include: inlines
@@ -422,9 +424,27 @@ contexts:
 ###[ ADMONITIONS ]#############################################################
 ###[ SIDEBARS ]################################################################
 ###[ EXAMPLE BLOCKS ]##########################################################
+
 ###[ BLOCKQUOTES ]#############################################################
+
+  blockquotes:
+    - match: ^={4}$
+      scope: punctuation.definition.blockquote.begin.asciidoc
+      push: blockquote-body
+
+  blockquote-body:
+    - meta_scope: meta.quote.asciidoc
+    - match: ^={4}$
+      scope: punctuation.definition.blockquote.end.asciidoc
+      pop: 1
+    - include: blocks
+
 ###[ VERSES ]##################################################################
 ###[ VERBATIM AND SOURCE BLOCKS ]##############################################
+
+  verbatims-and-source-blocks:
+    - include: verbatims
+    - include: literal-blocks
 
   verbatims:
     - match: ^(-{4})\s*$
@@ -438,6 +458,7 @@ contexts:
       scope: punctuation.definition.raw.code-fence.end.asciidoc
       pop: 1
     - include: verbatim-line-annotations
+    - include: includes
 
   verbatim-line-annotations:
     - match: (<(?:!--)?)\d+((?:--)?>)
@@ -445,6 +466,21 @@ contexts:
       captures:
         1: punctuation.definition.comment.begin.asciidoc
         2: punctuation.definition.comment.end.asciidoc
+
+  literal-blocks:
+    - include: delimited-literal-blocks
+
+  delimited-literal-blocks:
+    - match: ^(\.{4})\s*$
+      captures:
+        1: punctuation.definition.raw.literal.begin.asciidoc
+      push: delimited-literal-blocks-body
+
+  delimited-literal-blocks-body:
+    - meta_content_scope: markup.raw.code-fence.asciidoc
+    - match: ^\.{4}$
+      scope: punctuation.definition.raw.code-fence.end.asciidoc
+      pop: 1
 
 ###[ TABLES ]##################################################################
 ###[ EQUATIONS AND FORMULAE ]##################################################
