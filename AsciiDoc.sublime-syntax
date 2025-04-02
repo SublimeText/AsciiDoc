@@ -410,7 +410,7 @@ contexts:
     - include: inlines
 
   text-highlight:
-    - match: \B#(?=\S)
+    - match: \B#(?=\S.*#)
       scope: punctuation.definition.highlight.begin.asciidoc
       push: text-highlight-body
 
