@@ -178,30 +178,99 @@ Olaf had been with the company since the `'00s.
 
 === Autolinks, URL macro, and mailto macro
 https://asciidoctor.org - automatic!
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//^^^^^^^^^^^^^^^^^^^^^ markup.underline.link.asciidoc
 
 https://asciidoctor.org[Asciidoctor]
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//^^^^^^^^^^^^^^^^^^^^^ markup.underline.link.asciidoc
+//                     ^^^^^^^^^^^^^ meta.brackets.asciidoc
+//                     ^ punctuation.section.group.parameters.begin.asciidoc
+//                                 ^ punctuation.section.group.parameters.end.asciidoc
 
 devel@discuss.example.org
 
 mailto:devel@discuss.example.org[Discuss]
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.underline.link.asciidoc
+//                              ^^^^^^^^^ meta.brackets.asciidoc
+//                              ^ punctuation.section.group.parameters.begin.asciidoc
+//                                      ^ punctuation.section.group.parameters.end.asciidoc
 
 mailto:join@discuss.example.org[Subscribe,Subscribe me,I want to join!]
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.underline.link.asciidoc
+//                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.brackets.asciidoc
+//                             ^ punctuation.section.group.parameters.begin.asciidoc
+//                                       ^ punctuation.separator.sequence.asciidoc
+//                                                    ^ punctuation.separator.sequence.asciidoc
+//                                                                    ^ punctuation.section.group.parameters.end.asciidoc
 
 === URL macros with attributes
 https://chat.asciidoc.org[Discuss AsciiDoc,role=external,window=_blank]
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//^^^^^^^^^^^^^^^^^^^^^^^ markup.underline.link.asciidoc
+//   ^ punctuation.separator.sequence.asciidoc
+//                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.brackets.asciidoc
+//                       ^ punctuation.section.group.parameters.begin.asciidoc
+//                                        ^ punctuation.separator.sequence.asciidoc
+//                                         ^^^^^^^^^^^^^ meta.attribute-with-value.asciidoc
+//                                         ^^^^ meta.mapping.key.asciidoc entity.other.attribute-name.asciidoc
+//                                             ^ punctuation.separator.key-value.asciidoc
+//                                              ^^^^^^^^ meta.mapping.value.asciidoc
+//                                                      ^ punctuation.separator.sequence.asciidoc
+//                                                       ^^^^^^^^^^^^^ meta.attribute-with-value.asciidoc
+//                                                       ^^^^^^ meta.mapping.key.asciidoc entity.other.attribute-name.asciidoc
+//                                                             ^ punctuation.separator.key-value.asciidoc
+//                                                              ^^^^^^ meta.mapping.value.asciidoc
+//                                                                    ^ punctuation.section.group.parameters.end.asciidoc
 
 https://chat.asciidoc.org[Discuss AsciiDoc^]
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//^^^^^^^^^^^^^^^^^^^^^^^ markup.underline.link.asciidoc
+//   ^ punctuation.separator.sequence.asciidoc
+//                       ^^^^^^^^^^^^^^^^^^^ meta.brackets.asciidoc
+//                       ^ punctuation.section.group.parameters.begin.asciidoc
+//                                         ^ punctuation.section.group.parameters.end.asciidoc
 
 === URLs with spaces and special characters
 link:++https://example.org/?q=[a b]++[URL with special characters]
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//^^ keyword.control.import.asciidoc
+//  ^ punctuation.separator.asciidoc
+//   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.underline.link.asciidoc markup.raw.inline.asciidoc
+//   ^^ keyword.control.passthrough.begin.asciidoc
+//                                 ^^ keyword.control.passthrough.end.asciidoc
+//                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.brackets.asciidoc
+//                                   ^ punctuation.section.group.parameters.begin.asciidoc
+//                                                               ^ punctuation.section.group.parameters.end.asciidoc
 
 https://example.org/?q=%5Ba%20b%5D[URL with special characters]
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.underline.link.asciidoc
+//                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.brackets.asciidoc
+//                                ^ punctuation.section.group.parameters.begin.asciidoc
+//                                                            ^ punctuation.section.group.parameters.end.asciidoc
 
 === Link to relative file
 link:index.html[Docs]
+//^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//^^ keyword.control.import.asciidoc
+//  ^ punctuation.separator.asciidoc
+//   ^^^^^^^^^^ markup.underline.link.asciidoc
+//             ^^^^^^ meta.brackets.asciidoc
+//             ^ punctuation.section.group.parameters.begin.asciidoc
+//                  ^ punctuation.section.group.parameters.end.asciidoc
 
 === Link using a Windows UNC path
 link:\\server\share\whitepaper.pdf[Whitepaper]
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//^^ keyword.control.import.asciidoc
+//  ^ punctuation.separator.asciidoc
+//   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.underline.link.asciidoc
+//                                ^^^^^^^^^^^^ meta.brackets.asciidoc
+//                                ^ punctuation.section.group.parameters.begin.asciidoc
+//                                           ^ punctuation.section.group.parameters.end.asciidoc
 
 === Inline anchors
 [[bookmark-a]]Inline anchors make arbitrary content referenceable.
@@ -223,8 +292,23 @@ Learn how to organize the document into <<section-titles,sections>>.
 
 === Inter-document cross references
 Refer to xref:document-b.adoc#section-b[Section B of Document B] for more information.
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//       ^^^^ keyword.control.import.asciidoc
+//           ^ punctuation.separator.asciidoc
+//            ^^^^^^^^^^^^^^^^^^^^^^^^^ markup.underline.link.asciidoc
+//                           ^ punctuation.separator.sequence.asciidoc
+//                                     ^^^^^^^^^^^^^^^^^^^^^^^^^ meta.brackets.asciidoc
+//                                     ^ punctuation.section.group.parameters.begin.asciidoc
+//                                                             ^ punctuation.section.group.parameters.end.asciidoc
 
 If you never return from xref:document-b.adoc[Document B], we'll send help.
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//                       ^^^^ keyword.control.import.asciidoc
+//                           ^ punctuation.separator.asciidoc
+//                            ^^^^^^^^^^^^^^^ markup.underline.link.asciidoc
+//                                           ^^^^^^^^^^^^ meta.brackets.asciidoc
+//                                           ^ punctuation.section.group.parameters.begin.asciidoc
+//                                                      ^ punctuation.section.group.parameters.end.asciidoc
 
 
 == Document header
@@ -663,6 +747,12 @@ video::67480300[vimeo]
 |Shortcut |Purpose
 
 |kbd:[F11]
+//^^^^^^^^ meta.table.asciidoc
+//^^ support.function.asciidoc
+//  ^ punctuation.separator.asciidoc
+//   ^ punctuation.definition.string.begin.asciidoc
+//    ^^^ string.unquoted.asciidoc
+//       ^ punctuation.definition.string.end.asciidoc
 |Toggle fullscreen
 
 |kbd:[Ctrl+T]
@@ -671,13 +761,41 @@ video::67480300[vimeo]
 
 === Menu macro
 To save the file, select menu:File[Save].
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//                       ^^^^ keyword.control.import.asciidoc
+//                           ^ punctuation.separator.asciidoc
+//                            ^^^^ entity.name.class.asciidoc
+//                                ^ punctuation.definition.string.begin.asciidoc
+//                                 ^^^^ entity.name.class.asciidoc
+//                                     ^ punctuation.definition.string.end.asciidoc
 
 Select menu:View[Zoom > Reset] to reset the zoom level to the default setting.
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//     ^^^^ keyword.control.import.asciidoc
+//         ^ punctuation.separator.asciidoc
+//          ^^^^ entity.name.class.asciidoc
+//              ^ punctuation.definition.string.begin.asciidoc
+//               ^^^^^ entity.name.class.asciidoc
+//                    ^ punctuation.separator.sequence.asciidoc
+//                     ^^^^^^ entity.name.class.asciidoc
+//                           ^ punctuation.definition.string.end.asciidoc
 
 === Button macro
 Press the btn:[OK] button when you are finished.
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//        ^^^ keyword.control.import.asciidoc
+//           ^ punctuation.separator.asciidoc
+//            ^ punctuation.definition.string.begin.asciidoc
+//             ^^ entity.name.class.asciidoc
+//               ^ punctuation.definition.string.end.asciidoc
 
 Select a file in the file navigator and click btn:[Open].
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//                                            ^^^ keyword.control.import.asciidoc
+//                                               ^ punctuation.separator.asciidoc
+//                                                ^ punctuation.definition.string.begin.asciidoc
+//                                                 ^^^^ entity.name.class.asciidoc
+//                                                     ^ punctuation.definition.string.end.asciidoc
 
 
 == Literals and source code

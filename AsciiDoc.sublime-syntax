@@ -104,9 +104,12 @@ contexts:
     - include: inline-images
     - include: attribute-lists
     - include: passthrough-inlines
+    - include: links
     - include: text-formatting
     - include: cross-references
     - include: footnotes
+    - include: keyboard-macro
+    - include: button-menu-macro
     - include: substitutions
 
 ###[ DOCUMENT ATTRIBUTES ]#####################################################
@@ -563,12 +566,51 @@ contexts:
 
 ###[ LINKS ]###################################################################
 
+  links:
+    - include: autolinks
+    - include: link-macros
+
+  link-macros:
+    - match: \b(link)(:)
+      captures:
+        1: keyword.control.import.asciidoc
+        2: punctuation.separator.asciidoc
+      push: link-macro-arguments
+
+  link-macro-arguments:
+    - meta_content_scope: markup.underline.link.asciidoc
+    - match: \[
+      scope: punctuation.section.group.parameters.begin.asciidoc
+      set: attribute-list-body
+    - include: passthrough-inlines
+    - include: link-special-characters
+    - include: document-attributes
+
+  autolinks:
+    - match: '{{autolink_scheme}}'
+      push: link-body
+
+  link-body:
+    - meta_scope: markup.underline.link.asciidoc
+    - match: (?=\.?{{link_pop}})
+      pop: 1
+    - include: link-special-characters
+
+  link-special-characters:
+    - match: '[:?#@]'
+      scope: punctuation.separator.sequence.asciidoc
+
 ###[ CROSS-REFERENCES ]########################################################
 
   cross-references:
     - match: <<
       scope: punctuation.definition.reference.begin.asciidoc
       push: cross-reference-natural-body
+    - match: \b(xref)(:)
+      captures:
+        1: keyword.control.import.asciidoc
+        2: punctuation.separator.asciidoc
+      push: link-macro-arguments
 
   cross-reference-natural-body:
     - meta_content_scope: meta.link.reference.metadata.asciidoc markup.underline.link.asciidoc
@@ -633,8 +675,52 @@ contexts:
       push: include-arguments
 
 ###[ ICONS ]###################################################################
+
+  # Nothing to do here
+
 ###[ KEYBOARD MACRO ]##########################################################
+
+  keyboard-macro:
+    - match: \b(kbd)(:)(\[)
+      captures:
+        1: support.function.asciidoc
+        2: punctuation.separator.asciidoc
+        3: punctuation.definition.string.begin.asciidoc
+      push: keyboard-macro-body
+
+  keyboard-macro-body:
+    - meta_content_scope: string.unquoted.asciidoc
+    - include: eol-pop
+    - match: \+
+      scope: punctuation.separator.sequence.asciidoc
+    - match: \]
+      scope: punctuation.definition.string.end.asciidoc
+      pop: 1
+
 ###[ BUTTON AND MENU UI MACROS ]###############################################
+
+  button-menu-macro:
+    - match: \b(btn|menu)(:)
+      captures:
+        1: keyword.control.import.asciidoc
+        2: punctuation.separator.asciidoc
+      push: button-menu-arguments
+
+  button-menu-arguments:
+    - meta_content_scope: entity.name.class.asciidoc
+    - match: \[
+      scope: punctuation.definition.string.begin.asciidoc
+      set: button-menu-body
+    - include: eol-pop
+
+  button-menu-body:
+    - match: \]
+      scope: punctuation.definition.string.end.asciidoc
+      pop: 1
+    - match: '>'
+      scope: punctuation.separator.sequence.asciidoc
+    - match: '[^\]>]'
+      scope: entity.name.class.asciidoc
 
 ###[ ADMONITIONS ]#############################################################
 
@@ -675,6 +761,7 @@ contexts:
 
 ###[ BLOCKQUOTES ]#############################################################
 
+  # Blockquotes are the same as Verses
   blockquotes: []
 
 ###[ VERSES ]##################################################################
@@ -754,6 +841,7 @@ contexts:
     - match: \|
       scope: punctuation.separator.table-cell.asciidoc
     - include: blocks
+    - include: inlines
 
   table-body-csv:
     - meta_scope: meta.table.asciidoc
@@ -792,6 +880,8 @@ contexts:
 
 ###[ COLLAPSIBLE BLOCKS ]######################################################
 
+  # Collapsible blocks use the same format as example blocks
+
 ###[ COMMENTS ]################################################################
 
   # https://docs.asciidoctor.org/asciidoc/latest/comments/
@@ -827,7 +917,12 @@ contexts:
       pop: 1
 
 ###[ AUTOMATIC TABLE OF CONTENTS ]#############################################
+
+  # Nothing to do here.
+
 ###[ DOCINFO FILES ]###########################################################
+
+  # Nothing to do here.
 
 ###[ INCLUDES ]################################################################
 
@@ -881,6 +976,7 @@ contexts:
   substitutions:
     - match: \(C\)|\(R\)|\(TM\)|--(?!-)|\.\.\.(?!\.)|->|<-|=>|<=
       scope: constant.character.asciidoc
+    # TODO: Check HTML entities
 
 ###[ PASSTHROUGHS ]############################################################
 
@@ -1263,3 +1359,5 @@ variables:
   admonition: \b(?:NOTE|IMPORTANT|TIP|CAUTION|WARNING)\b
   block_type: \b(?:source|quote|discrete|qanda)\b
   description_list_marker: (?:;;|:{2,4})
+  autolink_scheme: \b(?:https?|ftp|irc|mailto)\b
+  link_pop: (?:$|[\s\[\]()'"])
