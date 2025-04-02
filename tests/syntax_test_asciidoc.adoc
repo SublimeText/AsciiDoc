@@ -150,25 +150,3 @@ ifdef::revnumber[]
 This document has a version number of {revnumber}.
 endif::[]
 
-A normal paragraph.
-
- A literal paragraph.
- One or more consecutive lines indented by at least one space.
-
- The text is shown in a fixed-width (typically monospace) font.
- The lines are preformatted (i.e., as formatted in the source).
- Spaces and newlines,
- like the ones in this sentence,
- are preserved.
-
-Roses are red, +
-violets are blue.
-
-[%hardbreaks]
-A ruby is red.
-Java is black.
-
-[.lead]
-This text will be styled as a lead paragraph (i.e., larger font).
-
-This paragraph will not be.

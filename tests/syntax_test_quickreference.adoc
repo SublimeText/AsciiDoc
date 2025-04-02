@@ -1,0 +1,1103 @@
+// SYNTAX TEST "Packages/AsciiDoc/AsciiDoc.sublime-syntax"
+
+= AsciiDoc Syntax Quick Reference
+
+== Paragraphs
+
+=== Paragraph
+Paragraphs don't require special markup in AsciiDoc.
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+A paragraph is defined by one or more consecutive lines of text.
+Line breaks within a paragraph are not displayed.
+
+// ^^ - meta.paragraph
+Leave at least one empty line to begin a new paragraph.
+
+=== Literal paragraph
+A normal paragraph.
+
+ A literal paragraph.
+ One or more consecutive lines indented by at least one space.
+
+ The text is shown in a fixed-width (typically monospace) font.
+ The lines are preformatted (i.e., as formatted in the source).
+ Spaces and newlines,
+ like the ones in this sentence,
+ are preserved.
+
+=== Hard line breaks
+Roses are red, +
+//^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//             ^ constant.character.break.asciidoc
+violets are blue.
+
+[%hardbreaks]
+A ruby is red.
+Java is black.
+
+=== Lead paragraph
+[.lead]
+This text will be styled as a lead paragraph (i.e., larger font).
+
+This paragraph will not be.
+
+
+== Text formatting
+
+=== Constrained bold, italic, and monospace
+It has *strong* significance to me.
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//     ^^^^^^^^ markup.bold.asciidoc
+//     ^ punctuation.definition.bold.begin.asciidoc
+//            ^ punctuation.definition.bold.end.asciidoc
+
+I _cannot_ stress this enough.
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//^^^^^^^^ markup.italic.asciidoc
+//^ punctuation.definition.italic.begin.asciidoc
+//       ^ punctuation.definition.italic.end.asciidoc
+
+Type `OK` to accept.
+//^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//   ^^^^ markup.raw.inline.asciidoc
+//   ^ punctuation.definition.raw.begin.asciidoc
+//      ^ punctuation.definition.raw.end.asciidoc
+
+That *_really_* has to go.
+//^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//   ^^^^^^^^^^ markup.bold.asciidoc
+//   ^ punctuation.definition.bold.begin.asciidoc
+//    ^^^^^^^^ markup.italic.asciidoc
+//    ^ punctuation.definition.italic.begin.asciidoc
+//           ^ punctuation.definition.italic.end.asciidoc
+//            ^ punctuation.definition.bold.end.asciidoc
+
+Can't pick one? Let's use them `*_all_*`.
+
+=== Unconstrained bold, italic, and monospace
+**C**reate, **R**ead, **U**pdate, and **D**elete (CRUD)
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//^^^ markup.bold.asciidoc
+// ^^ punctuation.definition.bold.end.asciidoc
+//          ^^^^^ markup.bold.asciidoc
+//          ^^ punctuation.definition.bold.begin.asciidoc
+//             ^^ punctuation.definition.bold.end.asciidoc
+//                    ^^^^^ markup.bold.asciidoc
+//                    ^^ punctuation.definition.bold.begin.asciidoc
+//                       ^^ punctuation.definition.bold.end.asciidoc
+//                                    ^^^^^ markup.bold.asciidoc
+//                                    ^^ punctuation.definition.bold.begin.asciidoc
+//                                       ^^ punctuation.definition.bold.end.asciidoc
+
+That's fan__freakin__tastic!
+//^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//        ^^^^^^^^^^^ markup.italic.asciidoc
+//        ^^ punctuation.definition.italic.begin.asciidoc
+//                 ^^ punctuation.definition.italic.end.asciidoc
+
+Don't pass generic ``Object``s to methods that accept ``String``s!
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//                 ^^^^^^^^^^ markup.raw.inline.asciidoc
+//                 ^^ punctuation.definition.raw.begin.asciidoc
+//                         ^^ punctuation.definition.raw.end.asciidoc
+//                                                    ^^^^^^^^^^ markup.raw.inline.asciidoc
+//                                                    ^^ punctuation.definition.raw.begin.asciidoc
+//                                                            ^^ punctuation.definition.raw.end.asciidoc
+
+It was Beatle**__mania__**!
+//^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//           ^^^^^^^^^^^^^ markup.bold.asciidoc
+//           ^^ punctuation.definition.bold.begin.asciidoc
+//             ^^^^^^^^^ markup.italic.asciidoc
+//             ^^ punctuation.definition.italic.begin.asciidoc
+//                    ^^ punctuation.definition.italic.end.asciidoc
+//                      ^^ punctuation.definition.bold.end.asciidoc
+
+=== Highlight, underline, strikethrough, and custom role
+Mark my words, #automation is essential#.
+
+##Mark##up refers to text that contains formatting ##mark##s.
+
+Where did all the [.underline]#cores# go?
+
+We need [.line-through]#ten# twenty VMs.
+
+A [.myrole]#custom role# must be fulfilled by the theme.
+
+=== Superscript and subscript
+^super^script
+
+~sub~script
+
+
+=== Smart quotes and apostrophes
+"`double curved quotes`"
+//^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//                    ^^ constant.character.escape.asciidoc
+
+'`single curved quotes`'
+//^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//                    ^^ constant.character.escape.asciidoc
+
+Olaf's desk was a mess.
+//^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc - constant
+
+A ``std::vector```'s size is the number of items it contains.
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//^^^^^^^^^^^^^^^ markup.raw.inline.asciidoc
+//^^ punctuation.definition.raw.begin.asciidoc
+//             ^^ punctuation.definition.raw.end.asciidoc
+//               ^^ constant.character.escape.asciidoc
+
+All of the werewolves`' desks were a mess.
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//                   ^^ constant.character.escape.asciidoc
+
+Olaf had been with the company since the `'00s.
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//                                       ^^ constant.character.escape.asciidoc
+
+
+== Links
+
+=== Autolinks, URL macro, and mailto macro
+https://asciidoctor.org - automatic!
+
+https://asciidoctor.org[Asciidoctor]
+
+devel@discuss.example.org
+
+mailto:devel@discuss.example.org[Discuss]
+
+mailto:join@discuss.example.org[Subscribe,Subscribe me,I want to join!]
+
+=== URL macros with attributes
+https://chat.asciidoc.org[Discuss AsciiDoc,role=external,window=_blank]
+
+https://chat.asciidoc.org[Discuss AsciiDoc^]
+
+=== URLs with spaces and special characters
+link:++https://example.org/?q=[a b]++[URL with special characters]
+
+https://example.org/?q=%5Ba%20b%5D[URL with special characters]
+
+=== Link to relative file
+link:index.html[Docs]
+
+=== Link using a Windows UNC path
+link:\\server\share\whitepaper.pdf[Whitepaper]
+
+=== Inline anchors
+[[bookmark-a]]Inline anchors make arbitrary content referenceable.
+
+[#bookmark-b]#Inline anchors can be applied to a phrase like this one.#
+
+anchor:bookmark-c[]Use a cross reference to link to this location.
+
+[[bookmark-d,last paragraph]]The xreflabel attribute will be used as link text in the cross-reference link.
+
+=== Cross references
+See <<paragraphs>> to learn how to write paragraphs.
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//  ^^ punctuation.definition.reference.begin.asciidoc
+//    ^^^^^^^^^^ meta.link.reference.metadata.asciidoc markup.underline.link.asciidoc
+//              ^^ punctuation.definition.reference.end.asciidoc
+
+Learn how to organize the document into <<section-titles,sections>>.
+
+=== Inter-document cross references
+Refer to xref:document-b.adoc#section-b[Section B of Document B] for more information.
+
+If you never return from xref:document-b.adoc[Document B], we'll send help.
+
+
+== Document header
+
+=== Title
+= Document Title
+//^^^^^^^^^^^^^^ markup.heading.0.asciidoc
+//^^^^^^^^^^^^^^ entity.name.section.asciidoc
+
+This document provides...
+
+=== Title and author line
+= Document Title
+Author Name <author@email.org>
+
+This document provides...
+
+=== Title, author line, and revision line
+= Document Title
+Author Name <author@email.org>; Another Author <a.author@email.org>
+v2.0, 2019-03-22
+
+This document provides...
+
+=== Document header with attribute entries
+= Document Title
+Author Name <author@email.org>
+v2.0, 2019-03-22
+:toc:
+:homepage: https://example.org
+
+This document provides...
+
+
+== Section Titles
+
+=== Article section levels
+= Document Title (Level 0)
+//^^^^^^^^^^^^^^^^^^^^^^^^ markup.heading.0.asciidoc
+//^^^^^^^^^^^^^^^^^^^^^^^^ entity.name.section.asciidoc
+
+== Level 1 Section Title
+//^^^^^^^^^^^^^^^^^^^^^^ markup.heading.1.asciidoc
+// ^^^^^^^^^^^^^^^^^^^^^ entity.name.section.asciidoc
+
+=== Level 2 Section Title
+//^^^^^^^^^^^^^^^^^^^^^^^ markup.heading.2.asciidoc
+//^ punctuation.definition.heading.begin.asciidoc
+//  ^^^^^^^^^^^^^^^^^^^^^ entity.name.section.asciidoc
+
+==== Level 3 Section Title
+//^^^^^^^^^^^^^^^^^^^^^^^^ markup.heading.3.asciidoc
+//^^ punctuation.definition.heading.begin.asciidoc
+//   ^^^^^^^^^^^^^^^^^^^^^ entity.name.section.asciidoc
+
+===== Level 4 Section Title
+//^^^^^^^^^^^^^^^^^^^^^^^^^ markup.heading.3.asciidoc
+//^^^ punctuation.definition.heading.begin.asciidoc
+//    ^^^^^^^^^^^^^^^^^^^^^ entity.name.section.asciidoc
+
+====== Level 5 Section Title
+//^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.heading.3.asciidoc
+//^^^^ punctuation.definition.heading.begin.asciidoc
+//     ^^^^^^^^^^^^^^^^^^^^^ entity.name.section.asciidoc
+
+== Another Level 1 Section Title
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.heading.1.asciidoc
+// ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ entity.name.section.asciidoc
+
+=== Book section levels
+= Document Title (Level 0)
+
+== Level 1 Section Title
+
+= Level 0 Section Title (Part)
+
+== Level 1 Section Title
+
+=== Level 2 Section Title
+
+==== Level 3 Section Title
+
+===== Level 4 Section Title
+
+====== Level 5 Section Title
+
+= Another Level 0 Section Title (Part)
+
+=== Discrete heading (not a section)
+[discrete]
+=== I'm an independent heading!
+
+This paragraph is its sibling, not its child.
+
+
+== Automatic TOC
+
+=== Activate Table of Contents for a document
+= Document Title
+Doc Writer <doc.writer@email.org>
+:toc:
+
+
+== Includes
+
+=== Include document parts
+= Reference Documentation
+Lead Developer
+
+This is documentation for project X.
+
+include::basics.adoc[]
+//^^^^^ keyword.control.import.asciidoc
+//     ^^ punctuation.separator.asciidoc
+//       ^^^^^^^^^^^ string.unquoted.asciidoc
+//                  ^ punctuation.section.group.parameters.begin.asciidoc
+//                   ^ punctuation.section.group.parameters.end.asciidoc
+
+include::installation.adoc[]
+//^^^^^ keyword.control.import.asciidoc
+//     ^^ punctuation.separator.asciidoc
+//       ^^^^^^^^^^^^^^^^^ string.unquoted.asciidoc
+//                        ^ punctuation.section.group.parameters.begin.asciidoc
+//                         ^ punctuation.section.group.parameters.end.asciidoc
+
+include::example.adoc[]
+//^^^^^ keyword.control.import.asciidoc
+//     ^^ punctuation.separator.asciidoc
+//       ^^^^^^^^^^^^ string.unquoted.asciidoc
+//                   ^ punctuation.section.group.parameters.begin.asciidoc
+//                    ^ punctuation.section.group.parameters.end.asciidoc
+
+=== Include content by tagged regions or lines
+include::filename.txt[tag=definition]
+
+include::filename.txt[lines=5..10]
+
+=== Include content from a URL
+include::https://raw.githubusercontent.com/asciidoctor/asciidoctor/main/README.adoc[]
+
+
+== Lists
+
+=== Unordered list
+* List item
+** Nested list item
+*** Deeper nested list item
+* List item
+ ** Another nested list item
+* List item
+
+=== Unordered list max level nesting
+* Level 1 list item
+** Level 2 list item
+*** Level 3 list item
+**** Level 4 list item
+***** Level 5 list item
+****** etc.
+* Level 1 list item
+
+=== Ordered list
+. Step 1
+. Step 2
+.. Step 2a
+.. Step 2b
+. Step 3
+
+=== Ordered list max level nesting
+. Level 1 list item
+.. Level 2 list item
+... Level 3 list item
+.... Level 4 list item
+..... Level 5 list item
+. Level 1 list item
+
+=== Checklist
+* [*] checked
+* [x] also checked
+* [ ] not checked
+* normal list item
+
+=== Description list
+First term:: The description can be placed on the same line
+as the term.
+Second term::
+Description of the second term.
+The description can also start on its own line.
+
+=== Question and answer list
+[qanda]
+What is the answer?::
+This is the answer.
+
+Are cameras allowed?::
+Are backpacks allowed?::
+No.
+
+=== Mixed
+Operating Systems::
+//^^^^^^^^^^^^^^^^^ meta.mapping.key.asciidoc
+//               ^^ punctuation.separator.key-value.asciidoc
+  Linux:::
+//^^^^^^^^ meta.mapping.key.asciidoc
+//     ^^^ punctuation.separator.key-value.asciidoc
+    . Fedora
+//^^^^^^^^^^ meta.paragraph.list.asciidoc
+//  ^ punctuation.definition.list_item.asciidoc
+      * Desktop
+//^^^^^^^^^^^^^ meta.paragraph.list.asciidoc
+//    ^ punctuation.definition.list_item.asciidoc
+    . Ubuntu
+      * Desktop
+      * Server
+  BSD:::
+    . FreeBSD
+    . NetBSD
+
+Cloud Providers::
+  PaaS:::
+    . OpenShift
+    . CloudBees
+  IaaS:::
+    . Amazon EC2
+    . Rackspace
+
+=== Complex content in outline lists
+* Every list item has at least one paragraph of content,
+  which may be wrapped, even using a hanging indent.
++
+Additional paragraphs or blocks are adjoined by putting
+a list continuation on a line adjacent to both blocks.
++
+list continuation:: a plus sign (`{plus}`) on a line by itself
+
+* A literal paragraph does not require a list continuation.
+
+ $ cd projects/my-book
+
+* AsciiDoc lists may contain any complex content.
++
+|===
+|Column 1, Header Row |Column 2, Header Row
+
+|Column 1, Row 1
+|Column 2, Row 1
+|===
+
+
+== Images
+
+=== Block image macro
+image::sunset.jpg[]
+
+image::sunset.jpg[Sunset]
+
+.A mountain sunset
+[#img-sunset,caption="Figure 1: ",link=https://www.flickr.com/photos/javh/5448336655]
+image::macros:sunset.jpg[Sunset,200,100]
+
+image::https://asciidoctor.org/images/octocat.jpg[GitHub mascot]
+
+=== Inline image macro
+Click image:play.png[] to get the party started.
+
+Click image:pause.png[title=Pause] when you need a break.
+
+=== Inline image macro with positioning role
+= Document Title
+:data-uri:
+
+
+== Videos
+
+=== Block video macro
+video::video-file.mp4[]
+
+video::video-file.mp4[width=640,start=60,opts=autoplay]
+
+=== Embedded YouTube video
+video::RvRhUHTV_8k[youtube]
+
+=== Embedded Vimeo video
+video::67480300[vimeo]
+
+
+== Keyboard, button, and menu macros
+
+=== Keyboard macro
+|===
+|Shortcut |Purpose
+
+|kbd:[F11]
+|Toggle fullscreen
+
+|kbd:[Ctrl+T]
+|Open a new tab
+|===
+
+=== Menu macro
+To save the file, select menu:File[Save].
+
+Select menu:View[Zoom > Reset] to reset the zoom level to the default setting.
+
+=== Button macro
+Press the btn:[OK] button when you are finished.
+
+Select a file in the file navigator and click btn:[Open].
+
+
+== Literals and source code
+
+=== Inline literal monospace
+Output literal monospace text, such as `+{backtick}+` or `+http://localhost:8080+`, by enclosing the text in a pair of pluses surrounded by a pair backticks.
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//                                     ^^^^^^^^^^^^^^ markup.raw.inline.asciidoc
+//                                     ^^ punctuation.definition.raw.begin.asciidoc
+//                                      ^ keyword.control.passthrough.asciidoc
+//                                                 ^^ punctuation.definition.raw.end.asciidoc
+//                                                 ^ keyword.control.passthrough.asciidoc
+//                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^ markup.raw.inline.asciidoc
+//                                                       ^^ punctuation.definition.raw.begin.asciidoc
+//                                                        ^ keyword.control.passthrough.asciidoc
+//                                                                              ^^ punctuation.definition.raw.end.asciidoc
+//                                                                              ^ keyword.control.passthrough.asciidoc
+
+=== Literal paragraph
+Normal line.
+
+ Indent line by one space to create a literal line.
+
+Normal line.
+
+=== Literal block
+....
+error: 1954 Forbidden search
+absolutely fatal: operation lost in the dodecahedron of doom
+
+Would you like to try again? y/n
+....
+
+=== Listing block with title
+.Gemfile.lock
+----
+GEM
+  remote: https://rubygems.org/
+  specs:
+    asciidoctor (2.0.15)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  asciidoctor (~> 2.0.15)
+----
+
+
+=== Source block with title and syntax highlighting
+.Some Ruby code
+[source,ruby]
+----
+require 'sinatra'
+
+get '/hi' do
+  "Hello World!"
+end
+----
+
+=== Source block with callouts
+[source,ruby]
+----
+require 'sinatra' // <1>
+
+get '/hi' do // <2>
+  "Hello World!" // <3>
+end
+----
+<1> Library import
+<2> URL mapping
+<3> HTTP response body
+
+=== Make callouts non-selectable
+----
+line of code // <1>
+line of code # <2>
+line of code ;; <3>
+line of code <!--4-->
+----
+<1> A callout behind a line comment for C-style languages.
+<2> A callout behind a line comment for Ruby, Python, Perl, etc.
+<3> A callout behind a line comment for Clojure.
+<4> A callout behind a line comment for XML or SGML languages like HTML.
+
+=== Source block content included from a file
+[,ruby]
+----
+include::app.rb[]
+----
+
+=== :sourcedir: src/main/java
+[source,java]
+----
+include::{sourcedir}/org/asciidoctor/Asciidoctor.java[]
+----
+
+=== Source block content included from file relative to source directory
+:sourcedir: src/main/java
+
+[source,java]
+----
+include::{sourcedir}/org/asciidoctor/Asciidoctor.java[]
+----
+
+=== Strip leading indentation from partial file content
+[source,ruby]
+----
+include::lib/app.rb[tag=main,indent=0]
+----
+
+=== Source paragraph (no empty lines)
+[source,xml]
+<meta name="viewport"
+  content="width=device-width, initial-scale=1.0">
+
+This is normal content.
+
+
+== Admonitions
+
+=== Admonition paragraph
+NOTE: An admonition draws the reader's attention to auxiliary information.
+
+Here are the other built-in admonition types:
+
+IMPORTANT: Don't forget the children!
+
+TIP: Look for the warp zone under the bridge.
+
+CAUTION: Slippery when wet.
+
+WARNING: The software you're about to use is untested.
+
+IMPORTANT: Sign off before stepping away from your computer.
+
+=== Admonition block
+[NOTE]
+====
+An admonition block may contain complex content.
+
+.A list
+- one
+- two
+- three
+
+Another paragraph.
+====
+
+
+== More delimited blocks
+
+=== Sidebar block
+.Optional Title
+****
+Sidebars are used to visually separate auxiliary bits of content
+that supplement the main text.
+****
+
+=== Example block
+====
+Here's a sample AsciiDoc document:
+
+----
+= Title of Document
+Doc Writer
+:toc:
+
+This guide provides...
+----
+
+The document header is useful, but not required.
+====
+
+=== Blockquotes
+[quote,Abraham Lincoln,Address delivered at the dedication of the Cemetery at Gettysburg]
+____
+Four score and seven years ago our fathers brought forth
+on this continent a new nation...
+____
+
+[quote,Albert Einstein]
+A person who never made a mistake never tried anything new.
+
+____
+A person who never made a mistake never tried anything new.
+____
+
+[quote,Charles Lutwidge Dodgson,'Mathematician and author, also known as https://en.wikipedia.org/wiki/Lewis_Carroll[Lewis Carroll]']
+____
+If you don't know where you are going, any road will get you there.
+____
+
+"I hold it that a little rebellion now and then is a good thing,
+and as necessary in the political world as storms in the physical."
+-- Thomas Jefferson, Papers of Thomas Jefferson: Volume 11
+
+=== Open blocks
+--
+An open block can be an anonymous container,
+or it can masquerade as any other block.
+--
+
+[source]
+--
+puts "I'm a source block!"
+--
+
+=== Passthrough block
+++++
+<p>
+Content in a passthrough block is passed to the output unprocessed.
+That means you can include raw HTML, like this embedded Gist:
+</p>
+
+<script src="https://gist.github.com/mojavelinux/5333524.js">
+</script>
+++++
+
+=== Customize block substitutions
+:release-version: 2.4.3
+
+[source,xml,subs=attributes+]
+----
+<dependency>
+  <groupId>org.asciidoctor</groupId>
+  <artifactId>asciidoctorj</artifactId>
+  <version>{release-version}</version>
+</dependency>
+----
+
+
+== Tables
+
+=== Table with a title, two columns, a header row, and two rows of content
+.Table Title
+|===
+|Column 1, Header Row |Column 2, Header Row
+
+|Cell in column 1, row 1
+|Cell in column 2, row 1
+
+|Cell in column 1, row 2
+|Cell in column 2, row 2
+|===
+
+=== Table with two columns, a header row, and two rows of content
+[%header,cols=2*]
+|===
+|Name of Column 1
+|Name of Column 2
+
+|Cell in column 1, row 1
+|Cell in column 2, row 1
+
+|Cell in column 1, row 2
+|Cell in column 2, row 2
+|===
+
+=== Table with three columns, a header row, and two rows of content
+.Applications
+[cols="1,1,2"]
+|===
+|Name |Category |Description
+
+|Firefox
+|Browser
+|Mozilla Firefox is an open source web browser.
+It's designed for standards compliance,
+performance, portability.
+
+|Arquillian
+|Testing
+|An innovative and highly extensible testing platform.
+Empowers developers to easily create real, automated tests.
+|===
+
+=== Table with column containing AsciiDoc content
+[cols="2,2,5a"]
+|===
+|Firefox
+|Browser
+|Mozilla Firefox is an open source web browser.
+
+It's designed for:
+
+* standards compliance
+* performance
+* portability
+
+https://getfirefox.com[Get Firefox]!
+|===
+
+=== Table from CSV data using shorthand
+,===
+Artist,Track,Genre
+
+Baauer,Harlem Shake,Hip Hop
+,===
+
+=== Table from CSV data
+[%header,format=csv]
+|===
+Artist,Track,Genre
+Baauer,Harlem Shake,Hip Hop
+The Lumineers,Ho Hey,Folk Rock
+|===
+
+=== Table from CSV data included from file
+,===
+include::customers.csv[]
+,===
+
+=== Table from DSV data using shorthand
+:===
+Artist:Track:Genre
+
+Robyn:Indestructible:Dance
+:===
+
+=== Table with formatted, aligned and merged cells
+[cols="e,m,^,>s",width="25%"]
+|===
+|1 >s|2 |3 |4
+^|5 2.2+^.^|6 .3+<.>m|7
+^|8
+|9 2+>|10
+|===
+
+
+
+== IDs, roles, and options
+
+=== Shorthand method for assigning block ID (anchor) and role
+[#goals.incremental]
+* Goal 1
+* Goal 2
+
+
+=== Formal method for assigning block ID (anchor) and role
+[id="goals",role="incremental"]
+* Goal 1
+* Goal 2
+
+=== Explicit section ID (anchor)
+[#null-values]
+== Primitive types and null values
+
+
+=== Assign ID (anchor) and role to inline formatted text
+[#id-name.role-name]`monospace text`
+
+[#free-world.goals]*free the world*
+
+
+=== Shorthand method for assigning block options
+[%header%footer%autowidth]
+|===
+|Header A |Header B
+|Footer A |Footer B
+|===
+
+=== Formal method for assigning block options
+[options="header,footer,autowidth"]
+|===
+|Header A |Header B
+|Footer A |Footer B
+|===
+
+// options can be shorted to opts
+[opts="header,footer,autowidth"]
+|===
+|Header A |Header B
+|Footer A |Footer B
+|===
+
+
+== Comments
+
+=== Line and block comments
+// A single-line comment
+//^^^^^^^^^^^^^^^^^^^^^^ comment.line.double-slash.asciidoc
+
+////
+//^^ comment.block.quad-slash.asciidoc punctuation.definition.comment.begin.asciidoc
+A multi-line comment.
+
+Notice it's a delimited block.
+////
+//^^ comment.block.quad-slash.asciidoc punctuation.definition.comment.end.asciidoc
+
+
+== Breaks
+
+=== Thematic break (aka horizontal rule)
+before
+
+'''
+//^ punctuation.section.block.thematic.asciidoc
+
+after
+
+=== Page break
+<<<
+//^ keyword.control.flow.break.asciidoc
+
+
+== Attributes and substitutions
+
+=== Attribute declaration and usage
+:url-home: https://asciidoctor.org
+:link-docs: https://asciidoctor.org/docs[documentation]
+:summary: AsciiDoc is a mature, plain-text document format for \
+       writing notes, articles, documentation, books, and more. \
+       It's also a text processor & toolchain for translating \
+       documents into various output formats (i.e., backends), \
+       including HTML, DocBook, PDF and ePub.
+:checkedbox: pass:normal[{startsb}&#10004;{endsb}]
+
+Check out {url-home}[Asciidoctor]!
+
+{summary}
+
+Be sure to read the {link-docs} too!
+
+{checkedbox} That's done!
+
+=== Counter attributes
+.Parts{counter2:index:0}
+|===
+|Part Id |Description
+
+|PX-{counter:index}
+|Description of PX-{index}
+
+|PX-{counter:index}
+|Description of PX-{index}
+|===
+
+
+== Text replacements
+
+=== Textual symbol replacements
+(C) (R) (TM) -- ... -> => <- <=
+
+
+== Escaping substitutions
+
+=== Backslash
+In /items/\{id}, the id attribute isn't replaced.
+The curly braces around it are preserved.
+
+\*Stars* isn't displayed as bold text.
+The asterisks around it are preserved.
+
+\&sect; appears as an entity reference.
+It's not converted into the section symbol (&sect;).
+
+\=> The backslash prevents the equals sign followed by a greater
+than sign from combining to form a double arrow character (=>).
+
+\[[Word]] is not interpreted as an anchor.
+The double brackets around it are preserved.
+
+[\[[Word]]] is not interpreted as a bibliography anchor.
+The triple brackets around it are preserved.
+
+\((DD AND CC) OR (DD AND EE)) is not interpreted as a flow index term.
+The double brackets around it are preserved.
+
+The URL \https://example.org isn't converted into an active link.
+
+=== Single and double plus inline passthroughs
+A word or phrase between single pluses, such as +/user/{id}+,
+is not substituted.
+However, the special characters like +<+ and +>+ are still
+escaped in the output.
+
+An attribute reference within a word, such as dev++{conf}++,
+is not replaced.
+
+A plus passthrough will escape standalone formatting marks,
+like +``+, or formatting marks within a word, like all-natural++*++.
+
+
+=== Triple plus inline passthrough and inline pass macro
++++<u>underline me</u>+++ is underlined.
+
+pass:[<u>underline me</u>] is also underlined.
+
+
+== Bibliography
+
+=== Bibliography with inbound references
+_The Pragmatic Programmer_ <<pp>> should be required reading for all developers.
+To learn all about design patterns, refer to the book by the "`Gang of Four`" <<gof>>.
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//                                                           ^^ constant.character.escape.asciidoc
+//                                                                         ^^ constant.character.escape.asciidoc
+//                                                                            ^^ punctuation.definition.reference.begin.asciidoc
+//                                                                              ^^^ meta.link.reference.metadata.asciidoc markup.underline.link.asciidoc
+//                                                                                 ^^ punctuation.definition.reference.end.asciidoc
+
+[bibliography]
+== References
+
+* [[[pp]]] Andy Hunt & Dave Thomas. The Pragmatic Programmer:
+From Journeyman to Master. Addison-Wesley. 1999.
+* [[[gof,gang]]] Erich Gamma, Richard Helm, Ralph Johnson & John Vlissides.
+Design Patterns: Elements of Reusable Object-Oriented Software. Addison-Wesley. 1994.
+
+
+== Footnotes
+
+=== Normal and reusable footnotes
+A statement.footnote:[Clarification about this statement.]
+
+A bold statement!footnote:disclaimer[Opinions are my own.]
+
+Another bold statement.footnote:disclaimer[]
+
+
+== Markdown compatibility
+
+=== Markdown-style headings
+# Document Title (Level 0)
+//^^^^^^^^^^^^^^^^^^^^^^^^ markup.heading.0.asciidoc
+//^^^^^^^^^^^^^^^^^^^^^^^^ entity.name.section.asciidoc
+
+## Section Level 1
+//^^^^^^^^^^^^^^^^ markup.heading.1.asciidoc
+// ^^^^^^^^^^^^^^^ entity.name.section.asciidoc
+
+### Section Level 2
+//^^^^^^^^^^^^^^^^^ markup.heading.2.asciidoc
+//^ punctuation.definition.heading.begin.asciidoc
+//  ^^^^^^^^^^^^^^^ entity.name.section.asciidoc
+
+#### Section Level 3
+//^^^^^^^^^^^^^^^^^^ markup.heading.3.asciidoc
+//^^ punctuation.definition.heading.begin.asciidoc
+//   ^^^^^^^^^^^^^^^ entity.name.section.asciidoc
+
+##### Section Level 4
+//^^^^^^^^^^^^^^^^^^^ markup.heading.3.asciidoc
+//^^^ punctuation.definition.heading.begin.asciidoc
+//    ^^^^^^^^^^^^^^^ entity.name.section.asciidoc
+
+###### Section Level 5
+//^^^^^^^^^^^^^^^^^^^^ markup.heading.3.asciidoc
+//^^^^ punctuation.definition.heading.begin.asciidoc
+//     ^^^^^^^^^^^^^^^ entity.name.section.asciidoc
+
+=== Markdown-style blockquote
+> I hold it that a little rebellion now and then is a good thing,
+> and as necessary in the political world as storms in the physical.
+> -- Thomas Jefferson, Papers of Thomas Jefferson: Volume 11
+
+=== Markdown-style blockquote with block content
+> > What's new?
+>
+> I've got Markdown in my AsciiDoc!
+>
+> > Like what?
+>
+> * Blockquotes
+> * Headings
+> * Fenced code blocks
+>
+> > Is there more?
+>
+> Yep. AsciiDoc and Markdown share a lot of common syntax already.
+
+=== Markdown-style thematic breaks
+---
+//^ punctuation.section.block.thematic.asciidoc
+
+- - -
+//^^^ punctuation.section.block.thematic.asciidoc
+
+***
+//^ punctuation.section.block.thematic.asciidoc
+
+* * *
+//^^^ punctuation.section.block.thematic.asciidoc
