@@ -21,6 +21,8 @@ contexts:
 
   blocks:
     - include: comments
+    - match: ^\+$
+      scope: punctuation.separator.continuation.line.asciidoc
     - include: includes
     - include: conditionals
     - include: document-attribute-declarations
@@ -54,6 +56,8 @@ contexts:
 
   indented-blocks:
     - include: comments
+    - match: ^\+$
+      scope: punctuation.separator.continuation.line.asciidoc
     - include: includes
     - include: conditionals
     - include: document-attribute-declarations
@@ -84,18 +88,8 @@ contexts:
     # Paragraphs at the end
     - include: paragraphs
 
-  continued-block:
-    - include: pop-blank-line
-    - match: ^(?=\+$)
-      scope: punctuation.separator.continuation.line.asciidoc
-      pop: 1
-    - include: blocks
-
   inlines:
-    - match: ^\+$
-      scope: punctuation.separator.continuation.line.asciidoc
-      push: continued-block
-    - match: (\+)\s*$
+    - match: (?!^)(\+)\s*$
       captures:
         1: constant.character.break.asciidoc
     - match: \\.
@@ -141,7 +135,6 @@ contexts:
       captures:
         1: punctuation.definition.variable.begin.asciidoc
         2: punctuation.definition.variable.end.asciidoc
-
 
 ###[ ELEMENT ATTRIBUTES ]######################################################
 
@@ -332,8 +325,7 @@ contexts:
   paragraph-body-pops:
     - match: ^$
       pop: 1
-    - match: ^(?=:|[=|,]=|\*{4}|include|endif|if(?:n?def|eval))
-      pop: 1
+    - include: pop-block-anyway
     - match: ^(?=.+{{description_list_marker}}\s|$)
       pop: 1
 
@@ -549,14 +541,22 @@ contexts:
       captures:
         1: punctuation.definition.list_item.asciidoc
       push: list-item
-    # TODO: ordered list numbers
+    - match: ([ \t]*)(\d{1,9}(\.))(\s)
+      captures:
+        1: markup.list.numbered.markdown
+        2: markup.list.numbered.bullet.markdown
+        3: punctuation.definition.list_item.markdown
+        4: markup.list.numbered.markdown
+      push: list-item
 
   list-item:
     - meta_scope: meta.paragraph.list.asciidoc
-    - match: ^(?=$|\s*[.*-])
+    - match: ^(?=\s*(?:[.*-]|\d+\.))
       pop: 1
-    - match: ^(?=.+{{description_list_marker}}\s|$)
-      pop: 1
+    # If there's a blank line, we might be in indented blocks
+    - match: ^$
+      set: maybe-indented-list-value
+    - include: pop-block-anyway
     - match: \G(\[)([*xX ])(\])
       captures:
         1: markup.checkbox.begin.asciidoc punctuation.definition.checkbox.begin.asciidoc
@@ -582,15 +582,13 @@ contexts:
     - meta_content_scope: meta.mapping.value.asciidoc
     # If there's a blank line, we might be in indented blocks
     - match: ^$
-      set: maybe-indented-description-list-value
-    # Pop before next desc-list
-    - match: ^(?=.+{{description_list_marker}}\s|$)
-      pop: 1
+      set: maybe-indented-list-value
+    - include: pop-block-anyway
     - include: comments-inline
     - include: inlines
     - include: lists
 
-  maybe-indented-description-list-value:
+  maybe-indented-list-value:
     - meta_content_scope: meta.mapping.value.asciidoc
     - match: ^(?=\S)
       pop: 1
@@ -955,6 +953,8 @@ contexts:
     - match: ^--$
       scope: punctuation.section.block.end.asciidoc
       pop: 1
+    # Assume for now that it's still AsciiDoc
+    - include: indented-blocks
 
 ###[ COLLAPSIBLE BLOCKS ]######################################################
 
@@ -1075,7 +1075,7 @@ contexts:
     - match: (\+{2,3})(?=\S)
       scope: keyword.control.passthrough.begin.asciidoc
       push: passthrough-inline-body-unconstrained
-    - match: \B\+(?=\S)
+    - match: \B\+(?=\S.*\+)
       scope: keyword.control.passthrough.begin.asciidoc
       push: passthrough-inline-body
     - match: \b(pass)(:)
@@ -1127,6 +1127,12 @@ contexts:
   pop-blank-line-illegal:
     - match: ^$\n?
       scope: invalid.illegal.new-block.asciidoc
+      pop: 1
+
+  pop-block-anyway:
+    - match: ^(?=.+{{description_list_marker}}\s|$)
+      pop: 1
+    - match: ^(?=:|[=|,]=|--|\*{4}|\+$|include|endif|if(?:n?def|eval))
       pop: 1
 
 ###[ OLD ]#####################################################################

@@ -645,7 +645,6 @@ Additional paragraphs or blocks are adjoined by putting
 a list continuation on a line adjacent to both blocks.
 +
 list continuation:: a plus sign (`{plus}`) on a line by itself
-//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.list.asciidoc meta.paragraph.asciidoc
 //^^^^^^^^^^^^^^^ meta.mapping.key.asciidoc
 //               ^^ punctuation.separator.key-value.asciidoc
 //                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.mapping.value.asciidoc
