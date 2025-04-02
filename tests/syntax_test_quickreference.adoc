@@ -73,6 +73,16 @@ That *_really_* has to go.
 //            ^ punctuation.definition.bold.end.asciidoc
 
 Can't pick one? Let's use them `*_all_*`.
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//                             ^^^^^^^^^ markup.raw.inline.asciidoc
+//                             ^ punctuation.definition.raw.begin.asciidoc
+//                              ^^^^^^^ markup.bold.asciidoc
+//                              ^ punctuation.definition.bold.begin.asciidoc
+//                               ^^^^^ markup.italic.asciidoc
+//                               ^ punctuation.definition.italic.begin.asciidoc
+//                                   ^ punctuation.definition.italic.end.asciidoc
+//                                    ^ punctuation.definition.bold.end.asciidoc
+//                                     ^ punctuation.definition.raw.end.asciidoc
 
 === Unconstrained bold, italic, and monospace
 **C**reate, **R**ead, **U**pdate, and **D**elete (CRUD)
@@ -238,7 +248,12 @@ This document provides...
 Author Name <author@email.org>
 v2.0, 2019-03-22
 :toc:
+//^^^ variable.other.readwrite.asciidoc
+//  ^ punctuation.definition.variable.end.asciidoc
 :homepage: https://example.org
+//^^^^^^^^ variable.other.readwrite.asciidoc
+//       ^ punctuation.definition.variable.end.asciidoc
+//         ^^^^^^^^^^^^^^^^^^^ string.unquoted.asciidoc
 
 This document provides...
 
@@ -280,22 +295,44 @@ This document provides...
 
 === Book section levels
 = Document Title (Level 0)
+//^^^^^^^^^^^^^^^^^^^^^^^^ markup.heading.0.asciidoc
+//^^^^^^^^^^^^^^^^^^^^^^^^ entity.name.section.asciidoc
 
 == Level 1 Section Title
+//^^^^^^^^^^^^^^^^^^^^^^ markup.heading.1.asciidoc
+// ^^^^^^^^^^^^^^^^^^^^^ entity.name.section.asciidoc
 
 = Level 0 Section Title (Part)
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.heading.0.asciidoc
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^ entity.name.section.asciidoc
 
 == Level 1 Section Title
+//^^^^^^^^^^^^^^^^^^^^^^ markup.heading.1.asciidoc
+// ^^^^^^^^^^^^^^^^^^^^^ entity.name.section.asciidoc
 
 === Level 2 Section Title
+//^^^^^^^^^^^^^^^^^^^^^^^ markup.heading.2.asciidoc
+//^ punctuation.definition.heading.begin.asciidoc
+//  ^^^^^^^^^^^^^^^^^^^^^ entity.name.section.asciidoc
 
 ==== Level 3 Section Title
+//^^^^^^^^^^^^^^^^^^^^^^^^ markup.heading.3.asciidoc
+//^^ punctuation.definition.heading.begin.asciidoc
+//   ^^^^^^^^^^^^^^^^^^^^^ entity.name.section.asciidoc
 
 ===== Level 4 Section Title
+//^^^^^^^^^^^^^^^^^^^^^^^^^ markup.heading.3.asciidoc
+//^^^ punctuation.definition.heading.begin.asciidoc
+//    ^^^^^^^^^^^^^^^^^^^^^ entity.name.section.asciidoc
 
 ====== Level 5 Section Title
+//^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.heading.3.asciidoc
+//^^^^ punctuation.definition.heading.begin.asciidoc
+//     ^^^^^^^^^^^^^^^^^^^^^ entity.name.section.asciidoc
 
 = Another Level 0 Section Title (Part)
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.heading.0.asciidoc
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ entity.name.section.asciidoc
 
 === Discrete heading (not a section)
 [discrete]
@@ -461,37 +498,126 @@ list continuation:: a plus sign (`{plus}`) on a line by itself
 
 === Block image macro
 image::sunset.jpg[]
+//^^^ keyword.control.import.asciidoc
+//   ^^ punctuation.separator.asciidoc
+//     ^^^^^^^^^^ string.unquoted.asciidoc
+//               ^^ meta.brackets.asciidoc
+//               ^ punctuation.section.group.parameters.begin.asciidoc
+//                ^ punctuation.section.group.parameters.end.asciidoc
 
 image::sunset.jpg[Sunset]
+//^^^ keyword.control.import.asciidoc
+//   ^^ punctuation.separator.asciidoc
+//     ^^^^^^^^^^ string.unquoted.asciidoc
+//               ^^^^^^^^ meta.brackets.asciidoc
+//               ^ punctuation.section.group.parameters.begin.asciidoc
+//                      ^ punctuation.section.group.parameters.end.asciidoc
 
 .A mountain sunset
 [#img-sunset,caption="Figure 1: ",link=https://www.flickr.com/photos/javh/5448336655]
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.brackets.asciidoc
+//          ^ punctuation.separator.sequence.asciidoc
+//           ^^^^^^^ meta.mapping.key.asciidoc entity.other.attribute-name.asciidoc
+//                  ^ punctuation.separator.key-value.asciidoc
+//                               ^ punctuation.separator.sequence.asciidoc
+//                                ^^^^ meta.mapping.key.asciidoc entity.other.attribute-name.asciidoc
+//                                    ^ punctuation.separator.key-value.asciidoc
+//                                                                                  ^ punctuation.section.group.parameters.end.asciidoc
 image::macros:sunset.jpg[Sunset,200,100]
+//^^^ keyword.control.import.asciidoc
+//   ^^ punctuation.separator.asciidoc
+//     ^^^^^^^^^^^^^^^^^ string.unquoted.asciidoc
+//                      ^^^^^^^^^^^^^^^^ meta.brackets.asciidoc
+//                      ^ punctuation.section.group.parameters.begin.asciidoc
+//                             ^ punctuation.separator.sequence.asciidoc
+//                                 ^ punctuation.separator.sequence.asciidoc
+//                                     ^ punctuation.section.group.parameters.end.asciidoc
 
 image::https://asciidoctor.org/images/octocat.jpg[GitHub mascot]
+//^^^ keyword.control.import.asciidoc
+//   ^^ punctuation.separator.asciidoc
+//     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ string.unquoted.asciidoc
+//           ^^ punctuation.separator.sequence.asciidoc
+//                            ^ punctuation.separator.sequence.asciidoc
+//                                   ^ punctuation.separator.sequence.asciidoc
+//                                               ^^^^^^^^^^^^^^^ meta.brackets.asciidoc
+//                                               ^ punctuation.section.group.parameters.begin.asciidoc
+//                                                             ^ punctuation.section.group.parameters.end.asciidoc
 
 === Inline image macro
 Click image:play.png[] to get the party started.
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//    ^^^^^ keyword.control.import.asciidoc
+//         ^ punctuation.separator.asciidoc
+//          ^^^^^^^^ string.unquoted.asciidoc
+//                  ^^ meta.brackets.asciidoc
+//                  ^ punctuation.section.group.parameters.begin.asciidoc
+//                   ^ punctuation.section.group.parameters.end.asciidoc
 
 Click image:pause.png[title=Pause] when you need a break.
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//    ^^^^^ keyword.control.import.asciidoc
+//         ^ punctuation.separator.asciidoc
+//          ^^^^^^^^^ string.unquoted.asciidoc
+//                   ^^^^^^^^^^^^^ meta.brackets.asciidoc
+//                   ^ punctuation.section.group.parameters.begin.asciidoc
+//                    ^^^^^ meta.mapping.key.asciidoc entity.other.attribute-name.asciidoc
+//                         ^ punctuation.separator.key-value.asciidoc
+//                               ^ punctuation.section.group.parameters.end.asciidoc
 
 === Inline image macro with positioning role
 = Document Title
+//^^^^^^^^^^^^^^ markup.heading.0.asciidoc
+//^^^^^^^^^^^^^^ entity.name.section.asciidoc
 :data-uri:
+//^^^^^^^^ variable.other.readwrite.asciidoc
+//       ^ punctuation.definition.variable.end.asciidoc
 
 
 == Videos
 
 === Block video macro
 video::video-file.mp4[]
+//^^^ keyword.control.import.asciidoc
+//   ^^ punctuation.separator.asciidoc
+//     ^^^^^^^^^^^^^^ string.unquoted.asciidoc
+//                   ^^ meta.brackets.asciidoc
+//                   ^ punctuation.section.group.parameters.begin.asciidoc
+//                    ^ punctuation.section.group.parameters.end.asciidoc
 
 video::video-file.mp4[width=640,start=60,opts=autoplay]
+//^^^ keyword.control.import.asciidoc
+//   ^^ punctuation.separator.asciidoc
+//     ^^^^^^^^^^^^^^ string.unquoted.asciidoc
+//                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.brackets.asciidoc
+//                   ^ punctuation.section.group.parameters.begin.asciidoc
+//                    ^^^^^ meta.mapping.key.asciidoc entity.other.attribute-name.asciidoc
+//                         ^ punctuation.separator.key-value.asciidoc
+//                             ^ punctuation.separator.sequence.asciidoc
+//                              ^^^^^ meta.mapping.key.asciidoc entity.other.attribute-name.asciidoc
+//                                   ^ punctuation.separator.key-value.asciidoc
+//                                      ^ punctuation.separator.sequence.asciidoc
+//                                       ^^^^ meta.mapping.key.asciidoc entity.other.attribute-name.asciidoc
+//                                           ^ punctuation.separator.key-value.asciidoc
+//                                                    ^ punctuation.section.group.parameters.end.asciidoc
 
 === Embedded YouTube video
 video::RvRhUHTV_8k[youtube]
+//^^^ keyword.control.import.asciidoc
+//   ^^ punctuation.separator.asciidoc
+//     ^^^^^^^^^^^ string.unquoted.asciidoc
+//                ^^^^^^^^^ meta.brackets.asciidoc
+//                ^ punctuation.section.group.parameters.begin.asciidoc
+//                        ^ punctuation.section.group.parameters.end.asciidoc
 
 === Embedded Vimeo video
 video::67480300[vimeo]
+//^^^ keyword.control.import.asciidoc
+//   ^^ punctuation.separator.asciidoc
+//     ^^^^^^^^ string.unquoted.asciidoc
+//             ^^^^^^^ meta.brackets.asciidoc
+//             ^ punctuation.section.group.parameters.begin.asciidoc
+//                   ^ punctuation.section.group.parameters.end.asciidoc
 
 
 == Keyboard, button, and menu macros
@@ -699,17 +825,20 @@ Another paragraph.
 === Sidebar block
 .Optional Title
 ****
+//^^ meta.block.sidebar.asciidoc punctuation.section.sidebar.begin.asciidoc
 Sidebars are used to visually separate auxiliary bits of content
 that supplement the main text.
 ****
+//^^ meta.block.sidebar.asciidoc punctuation.section.sidebar.end.asciidoc
 
 === Example block
 ====
-//^^ meta.quote.asciidoc punctuation.definition.blockquote.begin.asciidoc
+//^^ meta.block.example.asciidoc punctuation.section.example.begin.asciidoc
 Here's a sample AsciiDoc document:
-//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.quote.asciidoc meta.paragraph.asciidoc
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.block.example.asciidoc meta.paragraph.asciidoc
 
 ----
+//^^ meta.block.example.asciidoc punctuation.definition.raw.code-fence.begin.asciidoc
 = Title of Document
 Doc Writer
 :toc:
@@ -719,13 +848,16 @@ This guide provides...
 
 The document header is useful, but not required.
 ====
+//^^ meta.block.example.asciidoc punctuation.section.example.end.asciidoc
 
 === Blockquotes
 [quote,Abraham Lincoln,Address delivered at the dedication of the Cemetery at Gettysburg]
 ____
+//^^ meta.block.verse.asciidoc punctuation.section.verse.begin.asciidoc
 Four score and seven years ago our fathers brought forth
 on this continent a new nation...
 ____
+//^^ meta.block.verse.asciidoc punctuation.section.verse.end.asciidoc
 
 [quote,Albert Einstein]
 A person who never made a mistake never tried anything new.
@@ -876,14 +1008,12 @@ Robyn:Indestructible:Dance
 |===
 
 
-
 == IDs, roles, and options
 
 === Shorthand method for assigning block ID (anchor) and role
 [#goals.incremental]
 * Goal 1
 * Goal 2
-
 
 === Formal method for assigning block ID (anchor) and role
 [id="goals",role="incremental"]
@@ -899,7 +1029,6 @@ Robyn:Indestructible:Dance
 [#id-name.role-name]`monospace text`
 
 [#free-world.goals]*free the world*
-
 
 === Shorthand method for assigning block options
 [%header%footer%autowidth]
@@ -1020,19 +1149,45 @@ The URL \https://example.org isn't converted into an active link.
 
 === Single and double plus inline passthroughs
 A word or phrase between single pluses, such as +/user/{id}+,
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//                                              ^^^^^^^^^^^^ markup.raw.inline.asciidoc
+//                                              ^ punctuation.definition.raw.passthrough.begin.asciidoc
+//                                                         ^ punctuation.definition.raw.passthrough.end.asciidoc
 is not substituted.
 However, the special characters like +<+ and +>+ are still
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//                                   ^^^ markup.raw.inline.asciidoc
+//                                   ^ punctuation.definition.raw.passthrough.begin.asciidoc
+//                                     ^ punctuation.definition.raw.passthrough.end.asciidoc
+//                                           ^^^ markup.raw.inline.asciidoc
+//                                           ^ punctuation.definition.raw.passthrough.begin.asciidoc
+//                                             ^ punctuation.definition.raw.passthrough.end.asciidoc
 escaped in the output.
 
 An attribute reference within a word, such as dev++{conf}++,
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//                                               ^^^^^^^^^^ markup.raw.inline.asciidoc
+//                                               ^^ punctuation.definition.raw.passthrough.begin.asciidoc
+//                                                       ^^ punctuation.definition.raw.passthrough.end.asciidoc
 is not replaced.
 
 A plus passthrough will escape standalone formatting marks,
 like +``+, or formatting marks within a word, like all-natural++*++.
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//   ^^^^ markup.raw.inline.asciidoc
+//   ^ punctuation.definition.raw.passthrough.begin.asciidoc
+//      ^ punctuation.definition.raw.passthrough.end.asciidoc
+//                                                            ^^^^^ markup.raw.inline.asciidoc
+//                                                            ^^ punctuation.definition.raw.passthrough.begin.asciidoc
+//                                                               ^^ punctuation.definition.raw.passthrough.end.asciidoc
 
 
 === Triple plus inline passthrough and inline pass macro
 +++<u>underline me</u>+++ is underlined.
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//^^^^^^^^^^^^^^^^^^^^^^^ markup.raw.inline.asciidoc
+//^ punctuation.definition.raw.passthrough.begin.asciidoc
+//                    ^^^ punctuation.definition.raw.passthrough.end.asciidoc
 
 pass:[<u>underline me</u>] is also underlined.
 
