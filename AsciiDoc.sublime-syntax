@@ -107,6 +107,7 @@ contexts:
     - include: text-formatting
     - include: cross-references
     - include: footnotes
+    - include: substitutions
 
 ###[ DOCUMENT ATTRIBUTES ]#####################################################
 
@@ -876,6 +877,11 @@ contexts:
     - include: blocks
 
 ###[ SUBSTITUTIONS ]###########################################################
+
+  substitutions:
+    - match: \(C\)|\(R\)|\(TM\)|--(?!-)|\.\.\.(?!\.)|->|<-|=>|<=
+      scope: constant.character.asciidoc
+
 ###[ PASSTHROUGHS ]############################################################
 
   passthrough-blocks:

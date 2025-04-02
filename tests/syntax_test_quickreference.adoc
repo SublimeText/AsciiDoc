@@ -1201,6 +1201,16 @@ Be sure to read the {link-docs} too!
 
 === Textual symbol replacements
 (C) (R) (TM) -- ... -> => <- <=
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//^ constant.character.asciidoc
+//  ^^^ constant.character.asciidoc
+//      ^^^^ constant.character.asciidoc
+//           ^^ constant.character.asciidoc
+//              ^^^ constant.character.asciidoc
+//                  ^^ constant.character.asciidoc
+//                     ^^ constant.character.asciidoc
+//                        ^^ constant.character.asciidoc
+//                           ^^ constant.character.asciidoc
 
 
 == Escaping substitutions
