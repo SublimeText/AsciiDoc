@@ -18,7 +18,6 @@ contexts:
     # - include: old-main
 
   # Stuff from old version, not implemented
-  # TODO: SETEXT headings? =, -, ~, ^
   # TODO: Mark `<`s that will be converted to &lt; in HTML
 
   # Stuff from asciidoc.org, not implemented
@@ -59,7 +58,7 @@ contexts:
 
     # Paragraphs at the end
     - include: literal-paragraphs
-    - include: paragraphs
+    - include: setext-headings-or-paragraphs
 
   indented-blocks:
     - include: comments
@@ -93,7 +92,7 @@ contexts:
         - include: eol-pop
 
     # Paragraphs at the end
-    - include: paragraphs
+    - include: setext-headings-or-paragraphs
 
   inlines:
     - match: (?!^)(\+)\s*$
@@ -367,6 +366,83 @@ contexts:
     - match: '[^\s),]+'
       scope: entity.name.reference.link.asciidoc
 
+  setext-headings-or-paragraphs:
+    # A paragraph may start with a line of equal signs which must not be matched
+    # as heading underline. This is achieved by consuming them here, which also
+    # applies `meta.paragraph` scope as expected.
+    # A line of dashes is already matched as thematic break and thus ignored.
+    - match: '{{setext_heading_or_paragraph}}'
+      branch_point: setext-headings-or-paragraphs
+      branch:
+        - paragraph-body
+        - setext-heading4
+        - setext-heading3
+        - setext-heading2
+        - setext-heading1
+
+  setext-heading1:
+    # https://spec.commonmark.org/0.30/#setext-headings
+    - meta_scope: markup.heading.1.asciidoc
+    - meta_content_scope: entity.name.section.asciidoc
+    - match: '{{setext_heading1_end}}'
+      captures:
+        1: punctuation.definition.heading.setext.asciidoc
+        2: meta.whitespace.newline.asciidoc
+      pop: 1
+
+  setext-heading2:
+    # https://spec.commonmark.org/0.30/#setext-headings
+    - meta_scope: markup.heading.2.asciidoc
+    - meta_content_scope: entity.name.section.asciidoc
+    - match: '{{setext_heading2_end}}'
+      captures:
+        1: punctuation.definition.heading.setext.asciidoc
+        2: meta.whitespace.newline.asciidoc
+      pop: 1
+    - match: '{{setext_heading1_escape}}'
+      fail: setext-headings-or-paragraphs
+
+  setext-heading3:
+    # https://spec.commonmark.org/0.30/#setext-headings
+    - meta_scope: markup.heading.3.asciidoc
+    - meta_content_scope: entity.name.section.asciidoc
+    - match: '{{setext_heading3_end}}'
+      captures:
+        1: punctuation.definition.heading.setext.asciidoc
+        2: meta.whitespace.newline.asciidoc
+      pop: 1
+    - match: '{{setext_heading2_escape}}'
+      fail: setext-headings-or-paragraphs
+    - match: '{{setext_heading1_escape}}'
+      fail: setext-headings-or-paragraphs
+
+  setext-heading4:
+    # https://spec.commonmark.org/0.30/#setext-headings
+    - meta_scope: markup.heading.4.asciidoc
+    - meta_content_scope: entity.name.section.asciidoc
+    - match: '{{setext_heading4_end}}'
+      captures:
+        1: punctuation.definition.heading.setext.asciidoc
+        2: meta.whitespace.newline.asciidoc
+      pop: 1
+    - match: '{{setext_heading3_escape}}'
+      fail: setext-headings-or-paragraphs
+    - match: '{{setext_heading2_escape}}'
+      fail: setext-headings-or-paragraphs
+    - match: '{{setext_heading1_escape}}'
+      fail: setext-headings-or-paragraphs
+
+  setext-hard-line-breaks:
+    # This context consumes what 'hard-line-breaks' does for normal
+    # paragraphs to avoid deadlock of ST's syntax engine.
+    #
+    # as workaround for
+    #    https://github.com/sublimehq/sublime_text/issues/5415
+    # causing
+    #    https://github.com/sublimehq/Packages/issues/3494
+    - match: '[ ]{2,}$'
+    - match: '\\\n'
+
 ###[ PARAGRAPHS ]##############################################################
 
   paragraphs:
@@ -375,6 +451,8 @@ contexts:
 
   paragraph-body:
     - meta_scope: meta.paragraph.asciidoc
+    - match: '{{setext_heading_escape}}'
+      fail: setext-headings-or-paragraphs
     - include: paragraph-body-pops
     - include: comments-inline
     - include: inlines
@@ -1586,3 +1664,21 @@ variables:
   autolink_scheme: \b(?:https?|ftp|irc|mailto)\b
   link_pop: (?:$|[\s\[\]()'"])
   doctype: (?:article|book|manpage|inline)
+
+  setext_min: '{3,}'  # At least 3 of char
+  setext_heading_or_paragraph: ^(?=\S)  # Any BOL non-whitespace
+  setext_heading_escape: |-
+    ^(?x)(?=              # At least N...
+      (?:
+        ={{setext_min}}   # equal signs,
+      | -{{setext_min}}   # hyphens,
+      | ~{{setext_min}}   # tildes,
+      | \^{{setext_min}}  # or carets.
+    )[ \t]*$)             # Followed by only whitespace
+  setext_heading1_escape: ^(?=={{setext_min}}[ \t]*$)   # at least N equal signs
+  setext_heading2_escape: ^(?=-{{setext_min}}[ \t]*$)   # at least N hyphens
+  setext_heading3_escape: ^(?=~{{setext_min}}[ \t]*$)   # at least N tildes
+  setext_heading1_end: ^(={{setext_min}})[ \t]*$(\n?)   # at least N equal signs
+  setext_heading2_end: ^(-{{setext_min}})[ \t]*$(\n?)   # at least N hyphens
+  setext_heading3_end: ^(~{{setext_min}})[ \t]*$(\n?)   # at least N tildes
+  setext_heading4_end: ^(\^{{setext_min}})[ \t]*$(\n?)  # at least N carets

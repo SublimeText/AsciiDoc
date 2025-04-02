@@ -480,6 +480,30 @@ This document provides...
 //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.heading.0.asciidoc
 //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ entity.name.section.asciidoc
 
+SETEXT Title 1
+==============
+//^^^^^^^^^^^^^ markup.heading.1.asciidoc
+//^^^^^^^^^^^^ punctuation.definition.heading.setext.asciidoc
+//            ^ meta.whitespace.newline.asciidoc
+
+SETEXT Title 2
+--------------
+//^^^^^^^^^^^^^ markup.heading.2.asciidoc
+//^^^^^^^^^^^^ punctuation.definition.heading.setext.asciidoc
+//            ^ meta.whitespace.newline.asciidoc
+
+SETEXT Title 3
+~~~~~~~~~~~~~~
+//^^^^^^^^^^^^^ markup.heading.3.asciidoc
+//^^^^^^^^^^^^ punctuation.definition.heading.setext.asciidoc
+//            ^ meta.whitespace.newline.asciidoc
+
+SETEXT Title 4
+^^^^^^^^^^^^^^
+//^^^^^^^^^^^^^ markup.heading.4.asciidoc
+//^^^^^^^^^^^^ punctuation.definition.heading.setext.asciidoc
+//            ^ meta.whitespace.newline.asciidoc
+
 === Discrete heading (not a section)
 [discrete]
 === I'm an independent heading!
