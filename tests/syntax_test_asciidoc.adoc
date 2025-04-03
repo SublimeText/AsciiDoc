@@ -185,3 +185,59 @@ pass:a,q[{attribute-with-formatted-text}]
 //       ^ punctuation.definition.variable.begin.asciidoc
 //                                     ^ punctuation.definition.variable.end.asciidoc
 //                                      ^ punctuation.section.group.parameters.end.asciidoc
+
+The Lady of the Lake, her arm clad in the purest shimmering samite,
+held aloft Excalibur from the bosom of the water,
+signifying by divine providence that I, ((Arthur)),
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//                                      ^^ punctuation.definition.reference.begin.asciidoc
+//                                        ^^^^^^ meta.link.reference.metadata.asciidoc entity.name.reference.link.asciidoc
+//                                              ^^ punctuation.definition.reference.end.asciidoc
+was to carry Excalibur(((Sword, Broadsword, Excalibur))).
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//                    ^^^ punctuation.definition.reference.begin.asciidoc
+//                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.link.reference.metadata.asciidoc
+//                       ^^^^^ entity.name.reference.link.asciidoc
+//                            ^ punctuation.separator.sequence.asciidoc
+//                              ^^^^^^^^^^ entity.name.reference.link.asciidoc
+//                                        ^ punctuation.separator.sequence.asciidoc
+//                                          ^^^^^^^^^ entity.name.reference.link.asciidoc
+//                                                   ^^^ punctuation.definition.reference.end.asciidoc
+That is why I am your king. Shut up! Will you shut up?!
+Burn her anyway! I'm not a witch.
+Look, my liege! We found them.
+
+indexterm2:[Lancelot] was one of the Knights of the Round Table.
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//^^^^^^^^ keyword.control.asciidoc
+//        ^ punctuation.separator.asciidoc
+//         ^ punctuation.section.group.parameters.begin.asciidoc
+//          ^^^^^^^^ entity.name.reference.link.asciidoc
+//                  ^ punctuation.section.group.parameters.end.asciidoc
+indexterm:[knight, Knight of the Round Table, Lancelot]
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//^^^^^^^ keyword.control.asciidoc
+//       ^ punctuation.separator.asciidoc
+//        ^ punctuation.section.group.parameters.begin.asciidoc
+//         ^^^^^^ entity.name.reference.link.asciidoc
+//               ^ punctuation.separator.sequence.asciidoc
+//                 ^^^^^^ entity.name.reference.link.asciidoc
+//                        ^^ entity.name.reference.link.asciidoc
+//                           ^^^ entity.name.reference.link.asciidoc
+//                               ^^^^^ entity.name.reference.link.asciidoc
+//                                     ^^^^^ entity.name.reference.link.asciidoc
+//                                          ^ punctuation.separator.sequence.asciidoc
+//                                            ^^^^^^^^ entity.name.reference.link.asciidoc
+//                                                    ^ punctuation.section.group.parameters.end.asciidoc
+
+I, King Arthur.
+(((knight, "Arthur, King")))
+//^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//^ punctuation.definition.reference.begin.asciidoc
+// ^^^^^^^^^^^^^^^^^^^^^^ meta.link.reference.metadata.asciidoc
+// ^^^^^^ entity.name.reference.link.asciidoc
+//       ^ punctuation.separator.sequence.asciidoc
+//         ^^^^^^^^^^^^^^ meta.string.asciidoc string.quoted.double.asciidoc
+//         ^ punctuation.definition.string.begin.asciidoc
+//                      ^ punctuation.definition.string.end.asciidoc
+//                       ^^^ punctuation.definition.reference.end.asciidoc

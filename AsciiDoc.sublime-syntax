@@ -105,6 +105,7 @@ contexts:
     - include: inline-images
     - include: bibliography-references
     - include: cross-references
+    - include: index-terms
     - include: attribute-lists
     - include: passthrough-inlines
     - include: links
@@ -223,10 +224,6 @@ contexts:
       captures:
         1: punctuation.definition.keyword.asciidoc
 
-  comma-separator:
-    - match: ','
-      scope: punctuation.separator.sequence.asciidoc
-
 ###[ DOCUMENT HEADER ]#########################################################
 
   # TODO: Add an author block after the document header?
@@ -310,8 +307,7 @@ contexts:
     - match: \]{3}
       scope: punctuation.definition.reference.end.asciidoc
       pop: 1
-    - match: ','
-      scope: punctuation.separator.sequence.asciidoc
+    - include: comma-separator
       set: bibliography-reference-attributes
 
   bibliography-reference-attributes:
@@ -320,6 +316,57 @@ contexts:
       scope: punctuation.definition.reference.end.asciidoc
       pop: 1
     - include: attribute-list-contents
+
+  index-terms:
+    - include: concealed-index-terms
+    - include: flow-index-terms
+
+  flow-index-terms:
+    - match: \({2}
+      scope: punctuation.definition.reference.begin.asciidoc
+      push: flow-index-term-body
+    - match: \b(indexterm2)(:)(\[)
+      captures:
+        1: keyword.control.asciidoc
+        2: punctuation.separator.asciidoc
+        3: punctuation.section.group.parameters.begin.asciidoc
+      push: index-term-macro-arguments
+
+  flow-index-term-body:
+    - meta_content_scope: meta.link.reference.metadata.asciidoc entity.name.reference.link.asciidoc
+    - match: \){2}
+      scope: punctuation.definition.reference.end.asciidoc
+      pop: 1
+
+  index-term-macro-arguments:
+    - match: \]
+      scope: punctuation.section.group.parameters.end.asciidoc
+      pop: 1
+    - include: comma-separator
+    - include: string-double-body
+    - match: '[^\s\],]+'
+      scope: entity.name.reference.link.asciidoc
+
+  concealed-index-terms:
+    - match: \({3}
+      scope: punctuation.definition.reference.begin.asciidoc
+      push: concealed-index-term-body
+    - match: \b(indexterm)(:)(\[)
+      captures:
+        1: keyword.control.asciidoc
+        2: punctuation.separator.asciidoc
+        3: punctuation.section.group.parameters.begin.asciidoc
+      push: index-term-macro-arguments
+
+  concealed-index-term-body:
+    - meta_content_scope: meta.link.reference.metadata.asciidoc
+    - match: \){3}
+      scope: punctuation.definition.reference.end.asciidoc
+      pop: 1
+    - include: comma-separator
+    - include: string-double
+    - match: '[^\s),]+'
+      scope: entity.name.reference.link.asciidoc
 
 ###[ PARAGRAPHS ]##############################################################
 
@@ -1159,6 +1206,21 @@ contexts:
       pop: 1
     - match: ^(?=:|[=|,]=|--|\*{4}|\+$|include|endif|if(?:n?def|eval))
       pop: 1
+
+  string-double:
+    - match: '"'
+      scope: punctuation.definition.string.begin.asciidoc
+      push: string-double-body
+
+  string-double-body:
+    - meta_scope: meta.string.asciidoc string.quoted.double.asciidoc
+    - match: '"'
+      scope: punctuation.definition.string.end.asciidoc
+      pop: 1
+
+  comma-separator:
+    - match: ','
+      scope: punctuation.separator.sequence.asciidoc
 
 ###[ OLD ]#####################################################################
 
