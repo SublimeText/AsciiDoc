@@ -292,3 +292,10 @@ monospace italic `_constrained_` & ``__un__``constrained
 
 // TODO: Fix mono-bold-ital
 monospace bold italic `*_constrained_*` & ``**__un__**``constrained
+
+
+Deprecated $$double-dollar$$ passthrough
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//         ^^^^^^^^^^^^^^^^^ markup.raw.inline.asciidoc
+//         ^^ keyword.control.passthrough.begin.asciidoc
+//                        ^^ keyword.control.passthrough.end.asciidoc

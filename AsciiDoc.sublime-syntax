@@ -18,9 +18,8 @@ contexts:
     # - include: old-main
 
   # Stuff from old version, not implemented
-  # TODO: "double-dollar" macro
   # TODO: SETEXT headings? =, -, ~, ^
-  # TODO: Mark `<` that will be converted
+  # TODO: Mark `<`s that will be converted to &lt; in HTML
 
   # Stuff from asciidoc.org, not implemented
   # TODO: Markdown-style blockquotes
@@ -1150,6 +1149,10 @@ contexts:
     - match: \B\+(?=\S.*\+)
       scope: keyword.control.passthrough.begin.asciidoc
       push: passthrough-inline-body
+    # Double-dollar ($$) passthrough is deprecated
+    - match: (\$\$)(?=\S)
+      scope: keyword.control.passthrough.begin.asciidoc
+      push: passthrough-inline-body-unconstrained
     - match: \b(pass)(:)
       captures:
         1: keyword.control.passthrough.asciidoc
