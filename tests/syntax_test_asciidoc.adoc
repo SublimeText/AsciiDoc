@@ -241,3 +241,54 @@ I, King Arthur.
 //         ^ punctuation.definition.string.begin.asciidoc
 //                      ^ punctuation.definition.string.end.asciidoc
 //                       ^^^ punctuation.definition.reference.end.asciidoc
+
+bold *constrained* & **un**constrained
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//   ^^^^^^^^^^^^^ markup.bold.asciidoc
+//   ^ punctuation.definition.bold.begin.asciidoc
+//               ^ punctuation.definition.bold.end.asciidoc
+//                   ^^^^^^ markup.bold.asciidoc
+//                   ^^ punctuation.definition.bold.begin.asciidoc
+//                       ^^ punctuation.definition.bold.end.asciidoc
+
+italic _constrained_ & __un__constrained
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//     ^^^^^^^^^^^^^ markup.italic.asciidoc
+//     ^ punctuation.definition.italic.begin.asciidoc
+//                 ^ punctuation.definition.italic.end.asciidoc
+//                     ^^^^^^ markup.italic.asciidoc
+//                     ^^ punctuation.definition.italic.begin.asciidoc
+//                         ^^ punctuation.definition.italic.end.asciidoc
+
+bold italic *_constrained_* & **__un__**constrained
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//          ^^^^^^^^^^^^^^^ markup.bold.asciidoc
+//          ^ punctuation.definition.bold.begin.asciidoc
+//           ^^^^^^^^^^^^^ markup.italic.asciidoc
+//           ^ punctuation.definition.italic.begin.asciidoc
+//                       ^ punctuation.definition.italic.end.asciidoc
+//                        ^ punctuation.definition.bold.end.asciidoc
+//                            ^^^^^^^^^^ markup.bold.asciidoc
+//                            ^^ punctuation.definition.bold.begin.asciidoc
+//                              ^^^^^^ markup.italic.asciidoc
+//                              ^^ punctuation.definition.italic.begin.asciidoc
+//                                  ^^ punctuation.definition.italic.end.asciidoc
+//                                    ^^ punctuation.definition.bold.end.asciidoc
+
+monospace `constrained` & ``un``constrained
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//        ^^^^^^^^^^^^^ markup.raw.inline.asciidoc
+//        ^ punctuation.definition.raw.begin.asciidoc
+//                    ^ punctuation.definition.raw.end.asciidoc
+//                        ^^^^^^ markup.raw.inline.asciidoc
+//                        ^^ punctuation.definition.raw.begin.asciidoc
+//                            ^^ punctuation.definition.raw.end.asciidoc
+
+// TODO: Fix mono-bold
+monospace bold `*constrained*` & ``**un**``constrained
+
+// TODO: Fix mono-ital
+monospace italic `_constrained_` & ``__un__``constrained
+
+// TODO: Fix mono-bold-ital
+monospace bold italic `*_constrained_*` & ``**__un__**``constrained
