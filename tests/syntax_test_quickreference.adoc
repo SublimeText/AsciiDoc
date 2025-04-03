@@ -426,12 +426,12 @@ This document provides...
 //   ^^^^^^^^^^^^^^^^^^^^^ entity.name.section.asciidoc
 
 ===== Level 4 Section Title
-//^^^^^^^^^^^^^^^^^^^^^^^^^ markup.heading.3.asciidoc
+//^^^^^^^^^^^^^^^^^^^^^^^^^ markup.heading.4.asciidoc
 //^^^ punctuation.definition.heading.begin.asciidoc
 //    ^^^^^^^^^^^^^^^^^^^^^ entity.name.section.asciidoc
 
 ====== Level 5 Section Title
-//^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.heading.3.asciidoc
+//^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.heading.5.asciidoc
 //^^^^ punctuation.definition.heading.begin.asciidoc
 //     ^^^^^^^^^^^^^^^^^^^^^ entity.name.section.asciidoc
 
@@ -467,12 +467,12 @@ This document provides...
 //   ^^^^^^^^^^^^^^^^^^^^^ entity.name.section.asciidoc
 
 ===== Level 4 Section Title
-//^^^^^^^^^^^^^^^^^^^^^^^^^ markup.heading.3.asciidoc
+//^^^^^^^^^^^^^^^^^^^^^^^^^ markup.heading.4.asciidoc
 //^^^ punctuation.definition.heading.begin.asciidoc
 //    ^^^^^^^^^^^^^^^^^^^^^ entity.name.section.asciidoc
 
 ====== Level 5 Section Title
-//^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.heading.3.asciidoc
+//^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.heading.5.asciidoc
 //^^^^ punctuation.definition.heading.begin.asciidoc
 //     ^^^^^^^^^^^^^^^^^^^^^ entity.name.section.asciidoc
 
@@ -1579,12 +1579,12 @@ Another bold statement.footnote:disclaimer[]
 //   ^^^^^^^^^^^^^^^ entity.name.section.asciidoc
 
 ##### Section Level 4
-//^^^^^^^^^^^^^^^^^^^ markup.heading.3.asciidoc
+//^^^^^^^^^^^^^^^^^^^ markup.heading.4.asciidoc
 //^^^ punctuation.definition.heading.begin.asciidoc
 //    ^^^^^^^^^^^^^^^ entity.name.section.asciidoc
 
 ###### Section Level 5
-//^^^^^^^^^^^^^^^^^^^^ markup.heading.3.asciidoc
+//^^^^^^^^^^^^^^^^^^^^ markup.heading.5.asciidoc
 //^^^^ punctuation.definition.heading.begin.asciidoc
 //     ^^^^^^^^^^^^^^^ entity.name.section.asciidoc
 

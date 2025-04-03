@@ -240,26 +240,26 @@ contexts:
       captures:
         1: punctuation.definition.heading.begin.asciidoc
       push: section-title-0-body
-    - match: (==|##)[ ]
+    - match: (=={1}|##{1})[ ]
       captures:
         1: punctuation.definition.heading.begin.asciidoc
       push: section-title-1-body
-    - match: (===|###)[ ]
+    - match: (=={2}|##{2})[ ]
       captures:
         1: punctuation.definition.heading.begin.asciidoc
       push: section-title-2-body
-    - match: (={4}|#{4})[ ]
+    - match: (=={3}|##{3})[ ]
       captures:
         1: punctuation.definition.heading.begin.asciidoc
       push: section-title-3-body
-    - match: (={5}|#{5})[ ]
+    - match: (=={4}|##{4})[ ]
       captures:
         1: punctuation.definition.heading.begin.asciidoc
-      push: section-title-3-body
-    - match: (={6}|#{6})[ ]
+      push: section-title-4-body
+    - match: (=={5}|##{5})[ ]
       captures:
         1: punctuation.definition.heading.begin.asciidoc
-      push: section-title-3-body
+      push: section-title-5-body
 
   section-title-0-body:
     - meta_scope: markup.heading.0.asciidoc
