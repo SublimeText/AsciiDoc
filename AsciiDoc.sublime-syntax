@@ -110,7 +110,7 @@ contexts:
 ###[ DOCUMENT ATTRIBUTES ]#####################################################
 
   document-attribute-declarations:
-    - match: ((:){{identifier}}(:))[ ]*
+    - match: ((:){{attribute_name}}(:))[ ]*
       captures:
         1: variable.other.readwrite.asciidoc
         2: punctuation.definition.variable.begin.asciidoc
@@ -130,7 +130,12 @@ contexts:
       captures:
         1: punctuation.definition.variable.begin.asciidoc
         2: punctuation.definition.variable.end.asciidoc
-    - match: ({){{identifier}}(})
+    - match: ({){{attribute_builtin}}(})
+      scope: support.variable.asciidoc
+      captures:
+        1: punctuation.definition.variable.begin.asciidoc
+        2: punctuation.definition.variable.end.asciidoc
+    - match: ({){{attribute_name}}(})
       scope: variable.other.readwrite.asciidoc
       captures:
         1: punctuation.definition.variable.begin.asciidoc
@@ -185,19 +190,19 @@ contexts:
           pop: 1
 
   attribute-anchors:
-    - match: (#){{identifier}}
+    - match: (#){{attribute_name}}
       scope: entity.name.reference.link.asciidoc
       captures:
         1: punctuation.definition.asciidoc
 
   attribute-roles:
-    - match: (\.){{identifier}}
+    - match: (\.){{attribute_name}}
       scope: storage.modifier.role.asciidoc
       captures:
         1: punctuation.definition.asciidoc
 
   attribute-options:
-    - match: (%){{identifier}}
+    - match: (%){{attribute_name}}
       scope: keyword.other.option.asciidoc
       captures:
         1: punctuation.definition.keyword.asciidoc
@@ -1442,7 +1447,39 @@ contexts:
   #     scope: string.unquoted.asciidoc
 
 variables:
-  identifier: (?:[a-z](?:[a-z0-9-]*[a-z0-9])?)
+  # https://docs.asciidoctor.org/asciidoc/latest/attributes/names-and-values/
+  word_char: (?i:[a-z0-9_])
+  attribute_name: (?:{{word_char}}(?:(?:{{word_char}}|-)*{{word_char}})?)
+  output_type: |-
+    \b(?xi:
+      docbook-article | xhtml11-article | html4-article | docbook-book
+    | xhtml11-book | html4-book | docbook-manpage | xhtml11-manpage
+    | html4-manpage
+    )\b
+  attribute_builtin: |-
+    \b(?xi:
+      {{output_type}}
+    | amp | asciidoc-dir | asciidoc-file | asciidoc-version | author
+    | authored | authorinitials
+    | backend-docbook | backend-xhtml11 | backend-html4 | backend
+    | backslash | basebackend | brvbar
+    | date | docdate | doctime | docname | docfile | docdir | doctitle
+    | doctype-article | doctype-book | doctype-manpage | doctype
+    | email | empty | encoding
+    | filetype | firstname
+    | gt
+    | id | indir | infile
+    | lastname | level | listindex | localdate | localtime | lt
+    | manname | manpurpose | mantitle | manvolnum | middlename
+    | nbsp
+    | outdir | outfile
+    | reftext | revision
+    | sectnum | showcomments
+    | title | two_colons | two_semicolons
+    | user-dir
+    | verbose
+    )\b
+
   admonition: \b(?:NOTE|IMPORTANT|TIP|CAUTION|WARNING)\b
   block_type: \b(?:source|quote|discrete|qanda)\b
   description_list_marker: (?:;;|:{2,4})
