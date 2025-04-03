@@ -1012,7 +1012,12 @@ include::app.rb[]
 //              ^ punctuation.section.group.parameters.end.asciidoc
 ----
 
-=== :sourcedir: src/main/java
+=== Source block content included from file relative to source directory
+:sourcedir: src/main/java
+//^^^^^^^^^ variable.other.readwrite.asciidoc
+//        ^ punctuation.definition.variable.end.asciidoc
+//          ^^^^^^^^^^^^^ string.unquoted.asciidoc
+
 [source,java]
 ----
 include::{sourcedir}/org/asciidoctor/Asciidoctor.java[]
