@@ -174,3 +174,14 @@ endif::[]
 //                                    ^^^^^^^ markup.italic.asciidoc
 //                                    ^ punctuation.definition.italic.begin.asciidoc
 //                                          ^ punctuation.definition.italic.end.asciidoc
+
+pass:a,q[{attribute-with-formatted-text}]
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//^^ keyword.control.passthrough.asciidoc
+//  ^ punctuation.separator.asciidoc
+//      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.brackets.asciidoc
+//      ^ punctuation.section.group.parameters.begin.asciidoc
+//       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ variable.other.readwrite.asciidoc
+//       ^ punctuation.definition.variable.begin.asciidoc
+//                                     ^ punctuation.definition.variable.end.asciidoc
+//                                      ^ punctuation.section.group.parameters.end.asciidoc

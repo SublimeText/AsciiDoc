@@ -17,6 +17,14 @@ contexts:
     - include: blocks
     # - include: old-main
 
+  # Stuff from old version, not implemented
+  # TODO: "double-dollar" macro
+  # TODO: SETEXT headings? =, -, ~, ^
+  # TODO: Mark `<` that will be converted
+
+  # Stuff from asciidoc.org, not implemented
+  # TODO: Markdown-style blockquotes
+
 ###[ BLOCKS ]##################################################################
 
   blocks:
@@ -26,10 +34,7 @@ contexts:
     - include: includes
     - include: conditionals
     - include: document-attribute-declarations
-    - include: breaks
     - include: section-titles
-    - include: lists
-    - include: description-lists
     - include: passthrough-blocks
     - include: verbatims-and-source-blocks
     - include: tables
@@ -39,6 +44,9 @@ contexts:
     - include: verses
     - include: blockquotes
     - include: open-blocks
+    - include: breaks
+    - include: lists
+    - include: description-lists
     - include: block-images
     - include: audios-and-videos
     - include: attribute-lists
@@ -61,10 +69,7 @@ contexts:
     - include: includes
     - include: conditionals
     - include: document-attribute-declarations
-    - include: breaks
     - include: section-titles
-    - include: lists
-    - include: description-lists
     - include: passthrough-blocks
     - include: verbatims-and-source-blocks
     - include: tables
@@ -74,6 +79,9 @@ contexts:
     - include: verses
     - include: blockquotes
     - include: open-blocks
+    - include: breaks
+    - include: lists
+    - include: description-lists
     - include: block-images
     - include: audios-and-videos
     - include: attribute-lists
@@ -92,8 +100,7 @@ contexts:
     - match: (?!^)(\+)\s*$
       captures:
         1: constant.character.break.asciidoc
-    - match: \\.
-      scope: constant.character.escape.asciidoc
+    - include: escape-characters
     - include: document-attributes
     - include: inline-images
     - include: bibliography-references
@@ -107,6 +114,11 @@ contexts:
     - include: button-menu-macro
     - include: substitutions
 
+  escape-characters:
+    # - match: \\[-`*_#+.!(){}\[\]\\>:=&]
+    - match: \\.
+      scope: constant.character.escape.asciidoc
+
 ###[ DOCUMENT ATTRIBUTES ]#####################################################
 
   document-attribute-declarations:
@@ -119,6 +131,7 @@ contexts:
 
   maybe-document-attribute-assignment:
     - meta_content_scope: string.unquoted.asciidoc
+    # TODO: This is supposed to eat the newline so we don't eol-pop, but it doesn't
     - match: \\\n?
       scope: punctuation.separator.continuation.line.asciidoc
     - include: eol-pop
@@ -346,11 +359,13 @@ contexts:
     - include: page-breaks
 
   thematic-breaks:
-    - match: ^(?:'''|\*\*\*|---|\* \* \*|- - -)$
+    - match: ^(?:'{3,}|\*{3,}|-{3,})$
+      scope: punctuation.section.block.thematic.asciidoc
+    - match: '^(?:\*(?: \*){2,}|-(?: -){2,})$'
       scope: punctuation.section.block.thematic.asciidoc
 
   page-breaks:
-    - match: ^<<<$
+    - match: ^<{3,}$
       scope: keyword.control.flow.break.asciidoc
 
 ###[ TEXT FORMATTING AND PUNCTUATION ]#########################################
