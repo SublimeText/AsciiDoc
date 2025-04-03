@@ -1,0 +1,34 @@
+name: Syntax Tests
+# https://github.com/sublimetext/syntax-test-action
+
+on:
+  push:
+    paths:
+      - '.github/workflows/*'
+      - '**.sublime-syntax'
+      - '**/syntax_test_*'
+      - '**.tmPreferences'
+  pull_request:
+    paths:
+      - '.github/workflows/*'
+      - '**.sublime-syntax'
+      - '**/syntax_test_*'
+      - '**.tmPreferences'
+
+jobs:
+  main:
+    name: Syntax Tests (${{ matrix.build }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    strategy:
+      # fail-fast: false
+      matrix:
+        include:
+          - build: 'latest'
+          - build: 'stable'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: SublimeText/syntax-test-action@v2
+        with:
+          build: ${{ matrix.build }}
+          package_name: 'AsciiDoc'
