@@ -299,3 +299,19 @@ Deprecated $$double-dollar$$ passthrough
 //         ^^^^^^^^^^^^^^^^^ markup.raw.inline.asciidoc
 //         ^^ keyword.control.passthrough.begin.asciidoc
 //                        ^^ keyword.control.passthrough.end.asciidoc
+
+foo &#00;
+//^^^^^^^ meta.paragraph.asciidoc
+//  ^^^^^ constant.character.entity.decimal.html
+//  ^^ punctuation.definition.entity.html
+//      ^ punctuation.terminator.entity.html
+foo &#x0000;
+//^^^^^^^^^^ meta.paragraph.asciidoc
+//  ^^^^^^^^ constant.character.entity.hexadecimal.html
+//  ^^^ punctuation.definition.entity.html
+//         ^ punctuation.terminator.entity.html
+foo &Abreve;
+//^^^^^^^^^^ meta.paragraph.asciidoc
+//  ^^^^^^^^ constant.character.entity.named.html
+//  ^ punctuation.definition.entity.html
+//         ^ punctuation.terminator.entity.html

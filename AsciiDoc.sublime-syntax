@@ -1124,9 +1124,26 @@ contexts:
 ###[ SUBSTITUTIONS ]###########################################################
 
   substitutions:
+    # HTML entities
+    - match: (&#[xX])[01]?\h{1,5}(;)
+      scope: constant.character.entity.hexadecimal.html
+      captures:
+        1: punctuation.definition.entity.html
+        2: punctuation.terminator.entity.html
+    - match: (&#)[0-9]{1,7}(;)
+      scope: constant.character.entity.decimal.html
+      captures:
+        1: punctuation.definition.entity.html
+        2: punctuation.terminator.entity.html
+    - match: (&)[a-zA-Z0-9]+(;)
+      scope: constant.character.entity.named.html
+      captures:
+        1: punctuation.definition.entity.html
+        2: punctuation.terminator.entity.html
+
+    # AsciiDoc conversions
     - match: \(C\)|\(R\)|\(TM\)|--(?!-)|\.\.\.(?!\.)|->|<-|=>|<=
       scope: constant.character.asciidoc
-    # TODO: Check HTML entities
 
 ###[ PASSTHROUGHS ]############################################################
 
