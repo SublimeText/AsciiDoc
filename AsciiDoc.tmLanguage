@@ -106,6 +106,14 @@
 		</dict>
 		<dict>
 			<key>begin</key>
+			<string>^([`]{3,})\s*$</string>
+			<key>end</key>
+			<string>^\1\s*$</string>
+			<key>name</key>
+			<string>markup.raw.block.asciidoc</string>
+		</dict>
+		<dict>
+			<key>begin</key>
 			<string>^[ ]{0,3}([*+-])(?=\s)</string>
 			<key>captures</key>
 			<dict>
