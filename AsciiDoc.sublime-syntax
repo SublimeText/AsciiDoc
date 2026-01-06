@@ -26,6 +26,10 @@ contexts:
 ###[ BLOCKS ]##################################################################
 
   blocks:
+    - include: blocks-without-setext
+    - include: setext-headings-or-paragraphs
+
+  blocks-without-setext:
     - include: comments
     - match: ^\+$
       scope: punctuation.separator.continuation.line.asciidoc
@@ -58,7 +62,6 @@ contexts:
 
     # Paragraphs at the end
     - include: literal-paragraphs
-    - include: setext-headings-or-paragraphs
 
   indented-blocks:
     - include: comments
@@ -990,7 +993,7 @@ contexts:
     - match: ^={4}$
       scope: punctuation.section.example.end.asciidoc
       pop: 1
-    - include: blocks
+    - include: blocks-without-setext
 
 ###[ BLOCKQUOTES ]#############################################################
 

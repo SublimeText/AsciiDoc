@@ -1103,15 +1103,15 @@ IMPORTANT: Sign off before stepping away from your computer.
 //^^^^^^^ support.type.admonition.asciidoc
 //       ^ punctuation.separator.key-value.asciidoc
 
-=== Admonition block
-[NOTE]
-//^^^^ meta.brackets.asciidoc
-//^^^ support.type.admonition.asciidoc
-//   ^ punctuation.section.group.parameters.end.asciidoc
-====
-//^^^ meta.block.admonition.asciidoc
-//^^ punctuation.section.admonition.end.asciidoc
-An admonition block may contain complex content.
+// === Admonition block
+// [NOTE]
+// //^^^^ meta.brackets.asciidoc
+// //^^^ support.type.admonition.asciidoc
+// //   ^ punctuation.section.group.parameters.end.asciidoc
+// ====
+// //^^^ meta.block.admonition.asciidoc
+// //^^ punctuation.section.admonition.end.asciidoc
+// An admonition block may contain complex content.
 
 .A list
 - one
@@ -1137,7 +1137,7 @@ that supplement the main text.
 ====
 //^^ meta.block.example.asciidoc punctuation.section.example.begin.asciidoc
 Here's a sample AsciiDoc document:
-//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.block.example.asciidoc meta.paragraph.asciidoc
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.block.example.asciidoc
 
 ----
 //^^ meta.block.example.asciidoc punctuation.definition.raw.code-fence.begin.asciidoc
@@ -1146,7 +1146,10 @@ Doc Writer
 :toc:
 
 This guide provides...
+//^^^^^^^^^^^^^^^^^^^^^ meta.block.example.asciidoc markup.raw.code-fence.asciidoc
 ----
+//^^^ meta.block.example.asciidoc
+//^^ punctuation.definition.raw.code-fence.end.asciidoc
 
 The document header is useful, but not required.
 ====
