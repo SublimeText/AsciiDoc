@@ -284,6 +284,15 @@ monospace `constrained` & ``un``constrained
 //                        ^^ punctuation.definition.raw.begin.asciidoc
 //                            ^^ punctuation.definition.raw.end.asciidoc
 
+monospace shortcut for `*` ``_`` single chars
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//                     ^^^ markup.raw.inline.asciidoc
+//                     ^ punctuation.definition.raw.begin.asciidoc
+//                       ^ punctuation.definition.raw.end.asciidoc
+//                         ^^^^^ markup.raw.inline.asciidoc
+//                         ^^ punctuation.definition.raw.begin.asciidoc
+//                            ^^ punctuation.definition.raw.end.asciidoc
+
 // TODO: Fix mono-bold
 monospace bold `*constrained*` & ``**un**``constrained
 

@@ -540,6 +540,11 @@ contexts:
     - include: inlines
 
   text-monospace:
+    - match: \B(`)[*_#~^](`)\B
+      scope: markup.raw.inline.asciidoc
+      captures:
+        1: punctuation.definition.raw.begin.asciidoc
+        2: punctuation.definition.raw.end.asciidoc
     - match: \B`(?=\S)
       scope: punctuation.definition.raw.begin.asciidoc
       captures:
@@ -630,6 +635,11 @@ contexts:
     - include: inlines
 
   text-monospace-unconstrained:
+    - match: (``)[*_#~^](``)
+      scope: markup.raw.inline.asciidoc
+      captures:
+        1: punctuation.definition.raw.begin.asciidoc
+        2: punctuation.definition.raw.end.asciidoc
     - match: '``'
       scope: punctuation.definition.raw.begin.asciidoc
       push: text-monospace-unconstrained-body
