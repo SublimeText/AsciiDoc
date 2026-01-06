@@ -1109,6 +1109,8 @@ IMPORTANT: Sign off before stepping away from your computer.
 //^^^ support.type.admonition.asciidoc
 //   ^ punctuation.section.group.parameters.end.asciidoc
 ====
+//^^^ meta.block.admonition.asciidoc
+//^^ punctuation.section.admonition.end.asciidoc
 An admonition block may contain complex content.
 
 .A list
