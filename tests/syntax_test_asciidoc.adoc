@@ -324,3 +324,17 @@ foo &Abreve;
 //  ^^^^^^^^ constant.character.entity.named.html
 //  ^ punctuation.definition.entity.html
 //         ^ punctuation.terminator.entity.html
+
+```java
+//^^^^^^ meta.code-fence.definition.begin.markdown-gfm
+//^ punctuation.definition.raw.code-fence.begin.markdown
+// ^^^^ constant.other.language-name.markdown
+//     ^ meta.fold.code-fence.begin.markdown
+class _MyClass
+{
+    void foo();
+};
+```
+//^^ meta.code-fence.definition.end.markdown-gfm
+//^ punctuation.definition.raw.code-fence.end.markdown
+// ^ meta.fold.code-fence.end.markdown

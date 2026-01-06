@@ -1020,6 +1020,7 @@ contexts:
   verbatims-and-source-blocks:
     - include: verbatims
     - include: literal-blocks
+    - include: Packages/Markdown/Markdown.sublime-syntax#fenced-code-blocks
 
   verbatims:
     - match: ^(-{4,})\s*$
