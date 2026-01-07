@@ -26,10 +26,14 @@ contexts:
 ###[ BLOCKS ]##################################################################
 
   blocks:
-    - include: blocks-without-setext
+    - include: blocks-common
     - include: setext-headings-or-paragraphs
 
   blocks-without-setext:
+    - include: blocks-common
+    - include: paragraphs
+
+  blocks-common:
     - include: comments
     - match: ^\+$
       scope: punctuation.separator.continuation.line.asciidoc

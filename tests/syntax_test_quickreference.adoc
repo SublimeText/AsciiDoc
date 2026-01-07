@@ -1137,7 +1137,7 @@ that supplement the main text.
 ====
 //^^ meta.block.example.asciidoc punctuation.section.example.begin.asciidoc
 Here's a sample AsciiDoc document:
-//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.block.example.asciidoc
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.block.example.asciidoc meta.paragraph.asciidoc
 
 ----
 //^^ meta.block.example.asciidoc punctuation.definition.raw.code-fence.begin.asciidoc
