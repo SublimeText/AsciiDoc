@@ -24,11 +24,17 @@ under the name link:https://packagecontrol.io/packages/AsciiDoc[AsciiDoc].
 To install the package manually, follow these steps:
 
 * Download the zip containing source files.
-* Extract the files to an [role="filename"]`AsciiDoc` folder (create this folder if not present already) under:
-** Windows: [role="filename"]`+%APPDATA%\Sublime Text\Packages+`
-** OS X: [role="filename"]`+~/Library/Application Support/Sublime Text/Packages+`
-** Linux: [role="filename"]`+~/.config/sublime-text/Packages+`
-** Portable Installation: [role="filename"]`Sublime Text/Data`
+* Open your Sublime Text [role="filename"]`Packages` folder:
+  Windows::
+  [role="filename"]`+%APPDATA%\Sublime Text\Packages+`
+  OS X::
+  [role="filename"]`+~/Library/Application Support/Sublime Text/Packages+`
+  Linux::
+  [role="filename"]`+~/.config/sublime-text/Packages+`
+  Portable Installation::
+  [role="filename"]`Sublime Text/Data`
+* Create or open an [role="filename"]`AsciiDoc` folder there.
+* Extract the files to it.
 * Close all instances of Sublime Text and relaunch the editor.
 
 If successful, you should see an *AsciiDoc* entry under *View > Syntax* and under *Tools > Snippets*.
@@ -40,7 +46,7 @@ If successful, you should see an *AsciiDoc* entry under *View > Syntax* and unde
 
 The Article snippet refers to certain variables that are styled after the TextMate standard for environment variables (as do other features of Sublime). These variables are configured via the Default.tmPreferences file.
 
-. Edit [role="filename"]`Default.tmPreferences`
+. Edit [role="filename"]`Default.tmPreferences`.
 . Replace "My Full Name", "My Email", and "My Company" with your actual name, email address, and company name.
 . Update the defintion of `TM_YEAR` (currently 2013) if necessary.
 . Test the Article snippet (create a new AsciiDoc file, type `ar` and hit Tab).
@@ -50,14 +56,14 @@ The Article snippet refers to certain variables that are styled after the TextMa
 
 Sublime has a build system for compiling source code like AsciiDoc source. A file called [role="filename"]`asciidoc.sublime-build` is provided here to allow you to take advantage of the build system, but it needs to be told where you have installed Python and AsciiDoc:
 
-. Edit [role="filename"]`asciidoc.sublime-build`
+. Edit [role="filename"]`asciidoc.sublime-build`.
 . Change the `working_dir` from `/path/to/asciidoc-8.6.8` to the actual location where you have AsciiDoc installed (e.g. [role="filename"]`+C:\prgs\asciidoc-8.6.8+`)
 . Change the first parameter of `cmd` from `/path/to/python` to the actual name and location of your Python engine (e.g. [role="filename"]`+C:\Python39\python.exe+`)
 . Note: See below about `Ctrl`-`B` no longer being the shortcut key for the build system.
 
 
 == Usage
-* Create a new file, save it as [role="filename"]`<filename>.asc`
+* Create a new file, and save it as [role="filename"]`<filename>.adoc`.
 * Start typing AsciiDoc!
 
 
@@ -98,14 +104,14 @@ automatically left out of the tag.
 === Keyboard Shortcuts
 Basic support for some handy shortcuts are now available:
 
-* *Bold* selection:
-  Select some text and then press `Ctrl`-`B`
-* _Italicize_ selection:
-  Select some text and then press `Ctrl`-`I`
-* Mark selection as Code literal:
-  Select some text and then press `Ctrl`-`K`, `Ctrl`-`K`
-* Mark selection as filename:
-  Select some text and then press `Ctrl`-`K`, `Ctrl`-`F`
+*Bold* selection::
+Select some text and then press `Ctrl`-`B`.
+_Italicize_ selection::
+Select some text and then press `Ctrl`-`I`.
+Mark selection as Code literal::
+Select some text and then press `Ctrl`-`K`, `Ctrl`-`K`.
+Mark selection as filename::
+Select some text and then press `Ctrl`-`K`, `Ctrl`-`F`.
 
 *Note*: `Ctrl`-`B` overrides
 the standard key binding of *Tools > Build System*.
