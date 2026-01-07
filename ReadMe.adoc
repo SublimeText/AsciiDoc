@@ -110,7 +110,7 @@ Basic support for some handy shortcuts are now available:
 *Note*: `Ctrl`-`B` overrides
 the standard key binding of *Tools > Build System*.
 If this bothers you, you can edit the `.sublime-keymap` files
-(based on your OS) under the `+Packages\AsciiDoc+` folder.
+under the `+Packages\AsciiDoc+` folder.
 
 Time permitting, I'll add more shortcuts but meanwhile if you come upon something useful, feel free to submit a patch!
 
