@@ -21,8 +21,10 @@
             s/^[#=]{3}/    /g;                     # indent atx heading 3
             s/^[#=]{2}/  /g;                       # indent atx heading 2
             s/^[#=]{1}//g;                         # indent atx heading 1
-            s/^(.+?)=+\s*\z/$1/g;               # indent SETEXT heading 1
-            s/^(.+?)-+\s*\z/  $1/g;             # indent SETEXT heading 2
+            s/^(.+?)=+\s*\z/$1/g;                 # indent SETEXT heading 1
+            s/^(.+?)-+\s*\z/  $1/g;               # indent SETEXT heading 2
+            s/^(.+?)~+\s*\z/    $1/g;             # indent SETEXT heading 3
+            s/^(.+?)\^+\s*\z/      $1/g;          # indent SETEXT heading 4
         ]]></string>
     </dict>
 </dict>
