@@ -19,11 +19,11 @@ contexts:
 
   # Stuff from old version, not implemented
   # TODO: Mark `<`s that will be converted to &lt; in HTML
-  # TODO: Using `\` is ONLY an escape if the next character would otherwise
-  #       be treated specially. See `C\+\+ foo C\+\+`.
 
   # Stuff from asciidoc.org, not implemented
   # TODO: Markdown-style blockquotes
+  # TODO: Using `\` is ONLY an escape if the next character would otherwise
+  #       be treated specially. See `C\+\+ foo C\+\+`.
 
 ###[ BLOCKS ]##################################################################
 
