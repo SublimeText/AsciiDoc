@@ -983,6 +983,7 @@ contexts:
     - match: ^={4}$
       scope: punctuation.section.block.end.asciidoc
       pop: 1
+    - include: pop-blank-line
     - include: blocks-without-setext
 
 ###[ SIDEBARS ]################################################################
