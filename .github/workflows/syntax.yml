@@ -21,15 +21,17 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     strategy:
-      # fail-fast: false
+      fail-fast: false
       matrix:
         include:
           - build: 'latest'
             packages: master
           - build: 'stable'
             packages: binary
+          - build: 4174  # LaTeX math-content context
+            packages: binary
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - uses: SublimeText/syntax-test-action@v2
         with:
           build: ${{ matrix.build }}
