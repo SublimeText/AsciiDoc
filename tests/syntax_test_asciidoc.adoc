@@ -338,3 +338,96 @@ class _MyClass
 //^^ meta.code-fence.definition.end.markdown-gfm
 //^ punctuation.definition.raw.code-fence.end.markdown
 // ^ meta.fold.code-fence.end.markdown
+
+== Plus-signs
+
+Monospace +text+ content.
+//^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//        ^^^^^^ markup.raw.inline.asciidoc
+//        ^ keyword.control.passthrough.begin.asciidoc
+//             ^ keyword.control.passthrough.end.asciidoc
+Monospace++in++aword.
+//^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//       ^^^^^^ markup.raw.inline.asciidoc
+//       ^^ keyword.control.passthrough.begin.asciidoc
+//           ^^ keyword.control.passthrough.end.asciidoc
+Some programming language is called C++.
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc - markup.raw
+How about C++? Is fine.
+//^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc - markup.raw
+As long as C++ does not occur twice in a line; C++.
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.raw.inline.asciidoc
+//          ^^ keyword.control.passthrough.begin.asciidoc
+//                                              ^^ keyword.control.passthrough.end.asciidoc
+C\{++} and C\{++}
+//^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//^ constant.character.escape.asciidoc
+// ^^^^^^^^^^^^^ markup.raw.inline.asciidoc
+// ^^ keyword.control.passthrough.begin.asciidoc
+//            ^^ keyword.control.passthrough.end.asciidoc
+C\++ and C++.
+//^^^^^^^^^^^^ meta.paragraph.asciidoc
+//^ constant.character.escape.asciidoc
+// TODO: second \+ should be literal, not escape
+C\++ and C\++.
+//^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//^ constant.character.escape.asciidoc
+// TODO: second \+ in each sequence should be literal, not escape
+C\+\+ and C\+\+.
+//^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//^ constant.character.escape.asciidoc
+//         ^^ constant.character.escape.asciidoc
+Notepadpass:[++] is *great*, I like Notepadpass:[++]
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//     ^^^^ keyword.control.passthrough.asciidoc
+//         ^ punctuation.separator.asciidoc
+//          ^^^^ markup.raw.inline.asciidoc
+//          ^ punctuation.definition.string.begin.asciidoc
+//             ^ punctuation.definition.string.end.asciidoc
+//                  ^^^^^^^ markup.bold.asciidoc
+//                  ^ punctuation.definition.bold.begin.asciidoc
+//                        ^ punctuation.definition.bold.end.asciidoc
+//                                         ^^^^ keyword.control.passthrough.asciidoc
+//                                             ^ punctuation.separator.asciidoc
+//                                              ^^^^ markup.raw.inline.asciidoc
+//                                              ^ punctuation.definition.string.begin.asciidoc
+//                                                 ^ punctuation.definition.string.end.asciidoc
+
+Notepad{blank}pass:[++] is *great*, I like Notepad{blank}pass:[++]
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//     ^^^^^^^ variable.other.readwrite.asciidoc
+//     ^ punctuation.definition.variable.begin.asciidoc
+//           ^ punctuation.definition.variable.end.asciidoc
+//            ^^^^ keyword.control.passthrough.asciidoc
+//                ^ punctuation.separator.asciidoc
+//                 ^^^^ markup.raw.inline.asciidoc
+//                 ^ punctuation.definition.string.begin.asciidoc
+//                    ^ punctuation.definition.string.end.asciidoc
+//                         ^^^^^^^ markup.bold.asciidoc
+//                         ^ punctuation.definition.bold.begin.asciidoc
+//                               ^ punctuation.definition.bold.end.asciidoc
+//                                                ^^^^^^^ variable.other.readwrite.asciidoc
+//                                                ^ punctuation.definition.variable.begin.asciidoc
+//                                                      ^ punctuation.definition.variable.end.asciidoc
+//                                                       ^^^^ keyword.control.passthrough.asciidoc
+//                                                           ^ punctuation.separator.asciidoc
+//                                                            ^^^^ markup.raw.inline.asciidoc
+//                                                            ^ punctuation.definition.string.begin.asciidoc
+//                                                               ^ punctuation.definition.string.end.asciidoc
+
+Notepad{plus}{plus} is *great*, I like Notepad{plus}{plus}
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//     ^^^^^^^^^^^^ variable.other.readwrite.asciidoc
+//     ^ punctuation.definition.variable.begin.asciidoc
+//          ^ punctuation.definition.variable.end.asciidoc
+//           ^ punctuation.definition.variable.begin.asciidoc
+//                ^ punctuation.definition.variable.end.asciidoc
+//                     ^^^^^^^ markup.bold.asciidoc
+//                     ^ punctuation.definition.bold.begin.asciidoc
+//                           ^ punctuation.definition.bold.end.asciidoc
+//                                            ^^^^^^^^^^^^ variable.other.readwrite.asciidoc
+//                                            ^ punctuation.definition.variable.begin.asciidoc
+//                                                 ^ punctuation.definition.variable.end.asciidoc
+//                                                  ^ punctuation.definition.variable.begin.asciidoc
+//                                                       ^ punctuation.definition.variable.end.asciidoc

@@ -1256,17 +1256,20 @@ contexts:
       pop: 1
 
   passthrough-inlines:
-    - match: (\+{2,3})(?=\S)
+    - match: (\+{3})(?=.*\+{3})
       scope: keyword.control.passthrough.begin.asciidoc
       push: passthrough-inline-body-unconstrained
-    - match: \B\+(?=\S.*\+)
+    - match: (\+{2})(?=.*\+{2})
+      scope: keyword.control.passthrough.begin.asciidoc
+      push: passthrough-inline-body-unconstrained
+    - match: \B\+(?=(?=\S)[^\n+]*[^\n+\\]\+\B)
       scope: keyword.control.passthrough.begin.asciidoc
       push: passthrough-inline-body
     # Double-dollar ($$) passthrough is deprecated
     - match: (\$\$)(?=\S)
       scope: keyword.control.passthrough.begin.asciidoc
       push: passthrough-inline-body-unconstrained
-    - match: \b(pass)(:)
+    - match: (pass)(:)
       captures:
         1: keyword.control.passthrough.asciidoc
         2: punctuation.separator.asciidoc
