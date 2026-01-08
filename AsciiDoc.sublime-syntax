@@ -1123,6 +1123,8 @@ contexts:
 
 ###[ EQUATIONS AND FORMULAE ]##################################################
 
+  # TODO: Add math/stem blocks
+
   equation-macros:
     - match: \b(latexmath)(:)(\[)
       captures:
@@ -1130,6 +1132,7 @@ contexts:
         2: punctuation.separator.asciidoc
         3: punctuation.definition.string.begin.asciidoc
       push: equation-macro-body-latex
+    # TODO: Add AsciiMath
 
   equation-macro-body-latex:
     - meta_content_scope: string.other.math.asciidoc text.tex.embedded.asciidoc
@@ -1137,6 +1140,7 @@ contexts:
     - match: \]
       scope: punctuation.definition.string.end.asciidoc
       pop: 1
+    # TODO: Extend LaTeX with \] as bracket replacement and embed this context
     - include: Packages/LaTeX/TeX.sublime-syntax#math-content
 
 ###[ OPEN BLOCKS ]#############################################################
