@@ -486,3 +486,11 @@ foo `_vimrc` bar
 //           ^^ punctuation.separator.key-value.asciidoc
 //             ^ meta.mapping.value.asciidoc
 image files
+
+latexmath:[C = \alpha + \beta Y^{\gamma} + \epsilon]
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//^^^^^^^ support.function.asciidoc
+//       ^ punctuation.separator.asciidoc
+//        ^ punctuation.definition.string.begin.asciidoc
+//         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ string.other.math.asciidoc text.tex.embedded.asciidoc
+//                                                 ^ punctuation.definition.string.end.asciidoc

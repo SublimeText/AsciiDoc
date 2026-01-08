@@ -118,8 +118,9 @@ contexts:
     - include: links
     - include: text-formatting
     - include: footnotes
-    - include: keyboard-macro
-    - include: button-menu-macro
+    - include: keyboard-macros
+    - include: button-menu-macros
+    - include: equation-macros
     - include: substitutions
 
   escape-characters:
@@ -921,7 +922,7 @@ contexts:
 
 ###[ KEYBOARD MACRO ]##########################################################
 
-  keyboard-macro:
+  keyboard-macros:
     - match: \b(kbd)(:)(\[)
       captures:
         1: support.function.asciidoc
@@ -940,7 +941,7 @@ contexts:
 
 ###[ BUTTON AND MENU UI MACROS ]###############################################
 
-  button-menu-macro:
+  button-menu-macros:
     - match: \b(btn|menu)(:)
       captures:
         1: keyword.control.import.asciidoc
@@ -1120,6 +1121,22 @@ contexts:
     - include: includes
 
 ###[ EQUATIONS AND FORMULAE ]##################################################
+
+  equation-macros:
+    - match: \b(latexmath)(:)(\[)
+      captures:
+        1: support.function.asciidoc
+        2: punctuation.separator.asciidoc
+        3: punctuation.definition.string.begin.asciidoc
+      push: equation-macro-body-latex
+
+  equation-macro-body-latex:
+    - meta_content_scope: string.other.math.asciidoc text.tex.embedded.asciidoc
+    - include: eol-pop
+    - match: \]
+      scope: punctuation.definition.string.end.asciidoc
+      pop: 1
+    - include: Packages/LaTeX/TeX.sublime-syntax#math-content
 
 ###[ OPEN BLOCKS ]#############################################################
 
