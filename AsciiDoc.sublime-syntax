@@ -556,16 +556,14 @@ contexts:
       scope: punctuation.definition.raw.begin.asciidoc
       captures:
         1: keyword.control.passthrough.asciidoc
-      push: text-monospace-body
+      embed: text-monospace-body
+      escape: (`\B)|^(\n)
+      escape_captures:
+        1: markup.raw.inline.asciidoc punctuation.definition.raw.end.asciidoc
+        2: invalid.illegal.new-block.asciidoc
 
   text-monospace-body:
     - meta_scope: markup.raw.inline.asciidoc
-    - match: '`\B'
-      scope: punctuation.definition.raw.end.asciidoc
-      captures:
-        1: keyword.control.passthrough.asciidoc
-      pop: 1
-    - include: pop-blank-line-illegal
     - include: inlines
 
   text-highlight:
@@ -649,14 +647,15 @@ contexts:
         2: punctuation.definition.raw.end.asciidoc
     - match: '``'
       scope: punctuation.definition.raw.begin.asciidoc
-      push: text-monospace-unconstrained-body
+      embed: text-monospace-unconstrained-body
+      escape: (``)|^(\n)
+      escape_captures:
+        1: markup.raw.inline.asciidoc punctuation.definition.raw.end.asciidoc
+        2: invalid.illegal.new-block.asciidoc
 
   text-monospace-unconstrained-body:
     - meta_scope: markup.raw.inline.asciidoc
-    - match: '``'
-      scope: punctuation.definition.raw.end.asciidoc
-      pop: 1
-    - include: pop-blank-line-illegal
+    - include: inlines
 
   text-highlight-unconstrained:
     - match: '##'
