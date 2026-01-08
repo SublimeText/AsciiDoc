@@ -368,7 +368,7 @@ foo &Abreve;
 //         ^ punctuation.terminator.entity.html
 
 ```java
-//^^^^^^ meta.code-fence.definition.begin.markdown-gfm
+//^^^^^^ meta.code-fence.definition.begin
 //^ punctuation.definition.raw.code-fence.begin.markdown
 // ^^^^ constant.other.language-name.markdown
 //     ^ meta.fold.code-fence.begin.markdown
@@ -377,7 +377,7 @@ class _MyClass
     void foo();
 };
 ```
-//^^ meta.code-fence.definition.end.markdown-gfm
+//^^ meta.code-fence.definition.end
 //^ punctuation.definition.raw.code-fence.end.markdown
 // ^ meta.fold.code-fence.end.markdown
 
