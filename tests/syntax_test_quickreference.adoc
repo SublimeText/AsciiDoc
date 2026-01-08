@@ -1491,14 +1491,15 @@ The asterisks around it are preserved.
 It's not converted into the section symbol (&sect;).
 
 \=> The backslash prevents the equals sign followed by a greater
-// <- meta.paragraph.asciidoc constant.character.escape.asciidoc
+// <- constant.character.escape.asciidoc
 than sign from combining to form a double arrow character (=>).
 
 \[[Word]] is not interpreted as an anchor.
-// <- meta.paragraph.asciidoc constant.character.escape.asciidoc
+// <- constant.character.escape.asciidoc
 The double brackets around it are preserved.
 
-[\[[Word]]] is not interpreted as a bibliography anchor.
+[\[[Word]]] is not interpreted as a bibliography anchor
+//^ constant.character.escape.asciidoc
 The triple brackets around it are preserved.
 
 \((DD AND CC) OR (DD AND EE)) is not interpreted as a flow index term.

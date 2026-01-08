@@ -107,7 +107,6 @@ contexts:
     - match: (?!^)(\+)\s*$
       captures:
         1: constant.character.break.asciidoc
-    - include: escape-characters
     - include: document-attributes
     - include: inline-images
     - include: bibliography-references
@@ -123,17 +122,11 @@ contexts:
     - include: button-menu-macros
     - include: equation-macros
 
-  escape-characters:
-    # - match: \\[-`*_#+.!(){}\[\]\\>:=&]
-    - match: '\[?(\\\[)\['
-      captures:
-        1: constant.character.escape.asciidoc
-    - match: \\.
-      scope: constant.character.escape.asciidoc
-
 ###[ DOCUMENT ATTRIBUTES ]#####################################################
 
   document-attribute-declarations:
+    - match: '\\:(?={{attribute_name}}:)'
+      scope: constant.character.escape.asciidoc
     - match: ((:){{attribute_name}}(:))[ ]*
       captures:
         1: variable.other.readwrite.asciidoc
@@ -148,6 +141,8 @@ contexts:
     - include: inlines
 
   document-attributes:
+    - match: '\\{(?=\S)'
+      scope: constant.character.escape.asciidoc
     - match: ({)empty(})
       scope: constant.language.null.asciidoc
       captures:
@@ -167,6 +162,9 @@ contexts:
 ###[ ELEMENT ATTRIBUTES ]######################################################
 
   attribute-lists:
+    - match: \[?(\\\[)\[(?=.*\])
+      captures:
+        1: constant.character.escape.asciidoc
     - match: \[(?!\\?\[)(?=.*\])
       scope: punctuation.section.group.parameters.begin.asciidoc
       push: attribute-list-body
@@ -242,6 +240,8 @@ contexts:
 
   # https://docs.asciidoctor.org/asciidoc/latest/sections/titles-and-levels/
   section-titles:
+    - match: '{{bol}}\\[=#]'
+      scope: constant.character.escape.asciidoc
     - match: '{{bol}}(=|#)[ ]'
       captures:
         1: punctuation.definition.heading.begin.asciidoc
@@ -304,6 +304,9 @@ contexts:
     - include: inlines
 
   bibliography-references:
+    - match: '\[?(\\\[)\['
+      captures:
+        1: constant.character.escape.asciidoc
     - match: \[{3}
       scope: punctuation.definition.reference.begin.asciidoc
       push: bibliography-reference-body
@@ -328,6 +331,8 @@ contexts:
     - include: flow-index-terms
 
   flow-index-terms:
+    - match: \\\((?=\()
+      scope: constant.character.escape.asciidoc
     - match: \({2}
       scope: punctuation.definition.reference.begin.asciidoc
       push: flow-index-term-body
@@ -354,6 +359,8 @@ contexts:
       scope: entity.name.reference.link.asciidoc
 
   concealed-index-terms:
+    - match: \\\((?=\(\()
+      scope: constant.character.escape.asciidoc
     - match: \({3}
       scope: punctuation.definition.reference.begin.asciidoc
       push: concealed-index-term-body
@@ -517,12 +524,18 @@ contexts:
     - include: page-breaks
 
   thematic-breaks:
+    - match: '{{bol}}(?:\\''(?=''{2,})|\\\*(?=\*{2,})|\\-(?=-{2,}))$'
+      scope: constant.character.escape.asciidoc
+    - match: '{{bol}}(?:\\\*(?=(?: \*){2,})|\\-(?=(?: -){2,}))$'
+      scope: constant.character.escape.asciidoc
     - match: '{{bol}}(?:''{3,}|\*{3,}|-{3,})$'
       scope: punctuation.section.block.thematic.asciidoc
     - match: '{{bol}}(?:\*(?: \*){2,}|-(?: -){2,})$'
       scope: punctuation.section.block.thematic.asciidoc
 
   page-breaks:
+    - match: '{{bol}}\\<(?=<{2,})$'
+      scope: constant.character.escape.asciidoc
     - match: '{{bol}}<{3,}$'
       scope: keyword.control.flow.break.asciidoc
 
@@ -553,13 +566,13 @@ contexts:
 
   text-formatting-constrained:
     # Eat opportunities for constrained formatting
-    - match: '[^*_`#~^\s(]\*(?![{`*])'
+    - match: '[^*_`#~^\s(\\]\*(?![{`*])'
       scope: meta.suppress.constrained.asciidoc
-    - match: '[^*_`#~^\s(]_(?![{`_])'
+    - match: '[^*_`#~^\s(\\]_(?![{`_])'
       scope: meta.suppress.constrained.asciidoc
-    - match: '[^*_`#~^\s(]`(?![{`''"])'
+    - match: '[^*_`#~^\s(\\]`(?![{`''"])'
       scope: meta.suppress.constrained.asciidoc
-    - match: '[^*_`#~^\s(]#(?![{`#])'
+    - match: '[^*_`#~^\s(\\]#(?![{`#])'
       scope: meta.suppress.constrained.asciidoc
 
     - include: text-bold
@@ -568,6 +581,8 @@ contexts:
     - include: text-highlight
 
   text-bold:
+    - match: \\\*(?=\S)
+      scope: constant.character.escape.asciidoc
     - match: \*(?=\S)
       scope: punctuation.definition.bold.begin.asciidoc
       push: text-bold-body
@@ -583,6 +598,8 @@ contexts:
     - include: inlines
 
   text-italic:
+    - match: \\_(?=\S)
+      scope: constant.character.escape.asciidoc
     - match: _(?=\S)
       scope: punctuation.definition.italic.begin.asciidoc
       push: text-italic-body
@@ -598,6 +615,8 @@ contexts:
     - include: inlines
 
   text-monospace:
+    - match: \\`{{constrained_break}}
+      scope: constant.character.escape.asciidoc
     - match: (`)[*_#~^](`){{constrained_break}}
       scope: markup.raw.inline.asciidoc
       captures:
@@ -616,6 +635,8 @@ contexts:
     - include: inlines
 
   text-highlight:
+    - match: \\#(?=\S.*#)
+      scope: constant.character.escape.asciidoc
     - match: '#(?=\S.*#)'
       scope: punctuation.definition.highlight.begin.asciidoc
       push: text-highlight-body
@@ -639,6 +660,8 @@ contexts:
     - include: text-superscript
 
   text-bold-unconstrained:
+    - match: \\\*(?=\*)
+      scope: constant.character.escape.asciidoc
     - match: \*\*
       scope: punctuation.definition.bold.begin.asciidoc
       push: text-bold-unconstrained-body
@@ -653,6 +676,8 @@ contexts:
     - include: inlines
 
   text-italic-unconstrained:
+    - match: \\_(?=_)
+      scope: constant.character.escape.asciidoc
     - match: __
       scope: punctuation.definition.italic.begin.asciidoc
       push: text-italic-unconstrained-body
@@ -667,6 +692,8 @@ contexts:
     - include: inlines
 
   text-monospace-unconstrained:
+    - match: \\`(?=`)
+      scope: constant.character.escape.asciidoc
     - match: (``)[*_#~^](``)
       scope: markup.raw.inline.asciidoc
       captures:
@@ -685,6 +712,8 @@ contexts:
     - include: inlines
 
   text-highlight-unconstrained:
+    - match: \\#(?=#)
+      scope: constant.character.escape.asciidoc
     - match: '##'
       scope: punctuation.definition.highlight.begin.asciidoc
       push: text-highlight-unconstrained-body
@@ -700,6 +729,8 @@ contexts:
 
   # Subscript is always unconstrained
   text-subscript:
+    - match: \\~(?=~)
+      scope: constant.character.escape.asciidoc
     - match: ~(?=\S)
       scope: punctuation.definition.subscript.begin.asciidoc
       push: text-subscript-body
@@ -716,6 +747,8 @@ contexts:
 
   # Superscript is always unconstrained
   text-superscript:
+    - match: \\\^(?=\^)
+      scope: constant.character.escape.asciidoc
     - match: \^(?=\S)
       scope: punctuation.definition.superscript.begin.asciidoc
       push: text-superscript-body
@@ -734,6 +767,9 @@ contexts:
 
   lists:
     # TODO: list titles
+    - match: '^\s*(\\[.*-])[.*-] +'
+      captures:
+        1: constant.character.escape.asciidoc
     - match: '^\s*([.*-]+) +'
       captures:
         1: punctuation.definition.list_item.asciidoc
@@ -754,6 +790,8 @@ contexts:
     - match: '{{bol}}$'
       set: maybe-indented-list-value
     - include: pop-block-anyway
+    - match: \G(\\\[)(?=[*xX ]\])
+      scope: constant.character.escape.asciidoc
     - match: \G(\[)([*xX ])(\])
       captures:
         1: markup.checkbox.begin.asciidoc punctuation.definition.checkbox.begin.asciidoc
@@ -799,6 +837,8 @@ contexts:
     - include: link-macros
 
   link-macros:
+    - match: \\l(?=ink:)
+      scope: constant.character.escape.asciidoc
     - match: \b(link)(:)
       captures:
         1: keyword.control.import.asciidoc
@@ -815,6 +855,11 @@ contexts:
     - include: document-attributes
 
   autolinks:
+    - match: (?=\\{{autolink_scheme}}:)
+      push:
+        - match: \\.
+          scope: constant.character.escape.asciidoc
+          pop: 1
     - match: '{{autolink_scheme}}(?=:)'
       push: link-body
 
@@ -832,18 +877,27 @@ contexts:
 
   cross-references:
     # Links
+    - match: \\<(?=<)
+      scope: constant.character.escape.asciidoc
     - match: <<(?=\w)
       scope: punctuation.definition.reference.begin.asciidoc
       push: cross-reference-natural-body
+    - match: \\x(?=ref:)
+      scope: constant.character.escape.asciidoc
     - match: \b(xref)(:)
       captures:
         1: keyword.control.import.asciidoc
         2: punctuation.separator.asciidoc
       push: link-macro-arguments
+
     # Anchors
+    - match: \\\[(?=\[.+\]\])
+      scope: constant.character.escape.asciidoc
     - match: \[\[(?=.+\]\])
       scope: punctuation.definition.reference.begin.asciidoc
       push: anchor-natural-body
+    - match: \\a(?=nchor:)
+      scope: constant.character.escape.asciidoc
     - match: \b(anchor)(:)
       captures:
         1: keyword.control.import.asciidoc
@@ -894,6 +948,8 @@ contexts:
 ###[ FOOTNOTES ]###############################################################
 
   footnotes:
+    - match: \\f(?=ootnote:)
+      scope: constant.character.escape.asciidoc
     - match: \b(footnote)(:)
       captures:
         1: keyword.control.flow.asciidoc
@@ -925,6 +981,8 @@ contexts:
 ###[ IMAGES ]##################################################################
 
   block-images:
+    - match: \\i(?=mage::)
+      scope: constant.character.escape.asciidoc
     - match: \b(image)(::)
       captures:
         1: keyword.control.import.asciidoc
@@ -932,6 +990,8 @@ contexts:
       push: include-arguments
 
   inline-images:
+    - match: \\i(?=mage:)
+      scope: constant.character.escape.asciidoc
     - match: \b(image)(:)
       captures:
         1: keyword.control.import.asciidoc
@@ -941,6 +1001,10 @@ contexts:
 ###[ AUDIO AND VIDEO ]#########################################################
 
   audios-and-videos:
+    - match: \\a(?=udio::)
+      scope: constant.character.escape.asciidoc
+    - match: \\v(?=ideo::)
+      scope: constant.character.escape.asciidoc
     - match: \b(audio|video)(::)
       captures:
         1: keyword.control.import.asciidoc
@@ -954,6 +1018,8 @@ contexts:
 ###[ KEYBOARD MACRO ]##########################################################
 
   keyboard-macros:
+    - match: \\k(?=bd:)
+      scope: constant.character.escape.asciidoc
     - match: \b(kbd)(:)(\[)
       captures:
         1: support.function.asciidoc
@@ -973,6 +1039,10 @@ contexts:
 ###[ BUTTON AND MENU UI MACROS ]###############################################
 
   button-menu-macros:
+    - match: \\b(?=tn:)
+      scope: constant.character.escape.asciidoc
+    - match: \\m(?=enu:)
+      scope: constant.character.escape.asciidoc
     - match: \b(btn|menu)(:)
       captures:
         1: keyword.control.import.asciidoc
@@ -1053,6 +1123,8 @@ contexts:
 ###[ VERSES ]##################################################################
 
   verses:
+    - match: '{{bol}}\\_(?=_{3}$)'
+      scope: constant.character.escape.asciidoc
     - match: '{{bol}}_{4}$'
       scope: punctuation.section.block.begin.asciidoc
       push: verse-body
@@ -1073,6 +1145,8 @@ contexts:
     - include: Packages/Markdown/Markdown.sublime-syntax#fenced-code-blocks
 
   verbatims:
+    - match: '{{bol}}\\-(?=-{3,}\s*$)'
+      scope: constant.character.escape.asciidoc
     - match: '{{bol}}(-{4,})\s*$'
       captures:
         1: punctuation.definition.raw.code-fence.begin.asciidoc
@@ -1097,6 +1171,8 @@ contexts:
     - include: delimited-literal-blocks
 
   delimited-literal-blocks:
+    - match: '{{bol}}\\\.(?=\.{3,}\s*$)'
+      scope: constant.character.escape.asciidoc
     - match: '{{bol}}(\.{4,})\s*$'
       captures:
         1: punctuation.definition.raw.literal.begin.asciidoc
@@ -1111,6 +1187,8 @@ contexts:
 ###[ TABLES ]##################################################################
 
   tables:
+    - match: '{{bol}}\\[|,:](?====$)'
+      scope: constant.character.escape.asciidoc
     - match: '{{bol}}\|===$'
       scope: punctuation.section.block.table.begin.asciidoc
       push: table-body
@@ -1177,6 +1255,8 @@ contexts:
 ###[ OPEN BLOCKS ]#############################################################
 
   open-blocks:
+    - match: '{{bol}}\-(?=-$)'
+      scope: constant.character.escape.asciidoc
     - match: '{{bol}}--$'
       scope: punctuation.section.block.begin.asciidoc
       push: open-block-body
@@ -1238,6 +1318,8 @@ contexts:
 ###[ INCLUDES ]################################################################
 
   includes:
+    - match: \\i(?=nclude::)
+      scope: constant.character.escape.asciidoc
     - match: \b(include)(::)
       captures:
         1: keyword.control.import.asciidoc
@@ -1256,6 +1338,8 @@ contexts:
 ###[ CONDITIONALS ]############################################################
 
   conditionals:
+    - match: \\i(?=f(?:n?def|eval)::)
+      scope: constant.character.escape.asciidoc
     - match: \b(if(?:n?def|eval))(::)
       captures:
         1: keyword.control.conditional.if.asciidoc
@@ -1287,16 +1371,22 @@ contexts:
 
   substitutions:
     # HTML entities
+    - match: \\&(?=#[xX][01]?\h{1,5};)
+      scope: constant.character.escape.asciidoc
     - match: (&#[xX])[01]?\h{1,5}(;)
       scope: constant.character.entity.hexadecimal.html
       captures:
         1: punctuation.definition.entity.html
         2: punctuation.terminator.entity.html
+    - match: \\&(?=#[0-9]{1,7};)
+      scope: constant.character.escape.asciidoc
     - match: (&#)[0-9]{1,7}(;)
       scope: constant.character.entity.decimal.html
       captures:
         1: punctuation.definition.entity.html
         2: punctuation.terminator.entity.html
+    - match: \\&(?=[a-zA-Z0-9]+;)
+      scope: constant.character.escape.asciidoc
     - match: (&)[a-zA-Z0-9]+(;)
       scope: constant.character.entity.named.html
       captures:
@@ -1310,6 +1400,8 @@ contexts:
 ###[ PASSTHROUGHS ]############################################################
 
   passthrough-blocks:
+    - match: '{{bol}}\\\+(?=\+{3}\s*$)'
+      scope: constant.character.escape.asciidoc
     - match: '{{bol}}(\+{4})\s*$'
       captures:
         1: keyword.control.passthrough.begin.asciidoc
@@ -1322,15 +1414,27 @@ contexts:
       pop: 1
 
   passthrough-inlines:
+    # +++
+    - match: \\\+(?=(?:\\?\+){2}.*(?:\\?\+){3})
+      scope: constant.character.escape.asciidoc
     - match: (\+{3})(?=.*\+{3})
       scope: keyword.control.passthrough.begin.asciidoc
       push: passthrough-inline-body-unconstrained
+
+    # ++
+    - match: \\\+(?=(?:\\?\+){1}.*(?:\\?\+){2})
+      scope: constant.character.escape.asciidoc
     - match: (\+{2})(?=.*\+{2})
       scope: keyword.control.passthrough.begin.asciidoc
       push: passthrough-inline-body-unconstrained
+
+    # +
+    - match: \\\+(?=(?=\S)[^\n+]*[^\n+\\]\+\B)
+      scope: constant.character.escape.asciidoc
     - match: \B\+(?=(?=\S)[^\n+]*[^\n+\\]\+\B)
       scope: keyword.control.passthrough.begin.asciidoc
       push: passthrough-inline-body
+
     # Double-dollar ($$) passthrough is deprecated
     - match: (\$\$)(?=\S)
       scope: keyword.control.passthrough.begin.asciidoc

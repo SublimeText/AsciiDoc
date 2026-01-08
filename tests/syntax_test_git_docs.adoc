@@ -29,14 +29,14 @@ core.worktree::
 
 credential.useHttpPath::
   When acquiring credentials, consider the "path" component of an http
-//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.block.open.asciidoc meta.mapping.value.asciidoc - markup.underline
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.mapping.value.asciidoc - markup.underline
 
 `merge.log`::
   In addition to branch names, populate the log message with at
   most the specified number of one-line descriptions from the
   actual commits that are being merged.  Defaults to false, and
   true is a synonym for 20.
-//^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.block.open.asciidoc meta.mapping.value.asciidoc - markup.list
+//^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.mapping.value.asciidoc - markup.list
 
 // You can grow a new branch from any commit. For example, switch to
 // "`HEAD~3`" and create branch "`fixup`":
@@ -48,12 +48,11 @@ credential.useHttpPath::
 // ------------
 
  - An asterisk "`*`" matches anything except a slash.
-//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.block.open.asciidoc meta.paragraph.list.asciidoc
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.list.asciidoc
 //             ^^ constant.character.escape.asciidoc
 //                ^^ constant.character.escape.asciidoc - markup.bold
 
 ++%C(++_<spec>_++)++:: color specification, as described under Values in the
-//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.block.open.asciidoc
 //^^^^^^^^^^^^^^^^^^ meta.mapping.key.asciidoc
 //^^^^^ markup.raw.inline.asciidoc
 //   ^^ keyword.control.passthrough.end.asciidoc
@@ -71,7 +70,7 @@ credential.useHttpPath::
   on the command line as _<commit>_. If _<pattern>_ is given, limit
   branches to ones matching given shell glob. If _<pattern>_ lacks '?',
   '{asterisk}', or '[', '/{asterisk}' at the end is implied.
-//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.block.open.asciidoc meta.mapping.value.asciidoc - punctuation.section
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.mapping.value.asciidoc - punctuation.section
 // ^^^^^^^^^^ variable.other.readwrite.asciidoc
 // ^ punctuation.definition.variable.begin.asciidoc
 //          ^ punctuation.definition.variable.end.asciidoc

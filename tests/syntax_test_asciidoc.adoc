@@ -467,15 +467,15 @@ C\{++} and C\{++}
 C\++ and C++.
 //^^^^^^^^^^^^ meta.paragraph.asciidoc
 //^ constant.character.escape.asciidoc
-// TODO: second \+ should be literal, not escape
 C\++ and C\++.
 //^^^^^^^^^^^^^ meta.paragraph.asciidoc
 //^ constant.character.escape.asciidoc
-// TODO: second \+ in each sequence should be literal, not escape
+// TODO: First \+ in each sequence should be escape. Second in each should not.
 C\+\+ and C\+\+.
 //^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+// ^^ - constant
 //^ constant.character.escape.asciidoc
-//         ^^ constant.character.escape.asciidoc
+//           ^^ - constant
 Notepadpass:[++] is *great*, I like Notepadpass:[++]
 //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
 //     ^^^^ keyword.control.passthrough.asciidoc
