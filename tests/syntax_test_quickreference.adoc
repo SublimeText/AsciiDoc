@@ -1126,15 +1126,17 @@ Another paragraph.
 === Sidebar block
 .Optional Title
 ****
-//^^ meta.block.sidebar.asciidoc punctuation.section.sidebar.begin.asciidoc
+//^^^ meta.block.sidebar.asciidoc
+//^^ punctuation.section.block.begin.asciidoc
 Sidebars are used to visually separate auxiliary bits of content
 that supplement the main text.
 ****
-//^^ meta.block.sidebar.asciidoc punctuation.section.sidebar.end.asciidoc
+//^^ meta.block.sidebar.asciidoc punctuation.section.block.end.asciidoc
 
 === Example block
 ====
-//^^ meta.block.example.asciidoc punctuation.section.example.begin.asciidoc
+//^^^ meta.block.example.asciidoc
+//^^ punctuation.section.block.begin.asciidoc
 Here's a sample AsciiDoc document:
 //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.block.example.asciidoc meta.paragraph.asciidoc
 
@@ -1152,16 +1154,17 @@ This guide provides...
 
 The document header is useful, but not required.
 ====
-//^^ meta.block.example.asciidoc punctuation.section.example.end.asciidoc
+//^^ meta.block.example.asciidoc punctuation.section.block.end.asciidoc
 
 === Blockquotes
 [quote,Abraham Lincoln,Address delivered at the dedication of the Cemetery at Gettysburg]
 ____
-//^^ meta.block.verse.asciidoc punctuation.section.verse.begin.asciidoc
+//^^^ meta.block.verse.asciidoc
+//^^ punctuation.section.block.begin.asciidoc
 Four score and seven years ago our fathers brought forth
 on this continent a new nation...
 ____
-//^^ meta.block.verse.asciidoc punctuation.section.verse.end.asciidoc
+//^^ meta.block.verse.asciidoc punctuation.section.block.end.asciidoc
 
 [quote,Albert Einstein]
 A person who never made a mistake never tried anything new.

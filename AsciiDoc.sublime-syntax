@@ -986,13 +986,13 @@ contexts:
 
   sidebars:
     - match: ^\*{4}$
-      scope: punctuation.section.sidebar.begin.asciidoc
+      scope: punctuation.section.block.begin.asciidoc
       push: sidebar-body
 
   sidebar-body:
     - meta_scope: meta.block.sidebar.asciidoc
     - match: ^\*{4}$
-      scope: punctuation.section.sidebar.end.asciidoc
+      scope: punctuation.section.block.end.asciidoc
       pop: 1
     - include: blocks
 
@@ -1000,13 +1000,13 @@ contexts:
 
   example-blocks:
     - match: ^={4}$
-      scope: punctuation.section.example.begin.asciidoc
+      scope: punctuation.section.block.begin.asciidoc
       push: example-block-body
 
   example-block-body:
     - meta_scope: meta.block.example.asciidoc
     - match: ^={4}$
-      scope: punctuation.section.example.end.asciidoc
+      scope: punctuation.section.block.end.asciidoc
       pop: 1
     - include: blocks-without-setext
 
@@ -1019,13 +1019,13 @@ contexts:
 
   verses:
     - match: ^_{4}$
-      scope: punctuation.section.verse.begin.asciidoc
+      scope: punctuation.section.block.begin.asciidoc
       push: verse-body
 
   verse-body:
     - meta_scope: meta.block.verse.asciidoc
     - match: ^_{4}$
-      scope: punctuation.section.verse.end.asciidoc
+      scope: punctuation.section.block.end.asciidoc
       pop: 1
 
 ###[ VERBATIM AND SOURCE BLOCKS ]##############################################
