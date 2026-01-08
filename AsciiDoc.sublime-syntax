@@ -142,9 +142,7 @@ contexts:
 
   maybe-document-attribute-assignment:
     - meta_content_scope: string.unquoted.asciidoc
-    # TODO: This is supposed to eat the newline so we don't eol-pop, but it doesn't
-    - match: \\\n?
-      scope: punctuation.separator.continuation.line.asciidoc
+    - include: line-continuations
     - include: eol-pop
     - include: inlines
 
@@ -1358,6 +1356,19 @@ contexts:
     - match: ^(?=.+{{description_list_marker}}\s|$)
       pop: 1
     - match: ^(?=:|[=|,]=|--|\*{4}|\+$|include|endif|if(?:n?def|eval))
+      pop: 1
+
+  line-continuations:
+    - match: (\\)\n
+      captures:
+        1: punctuation.separator.continuation.line.asciidoc
+      push: line-continuation-body
+    - match: '\\(\s+)\n'
+      captures:
+        1: invalid.illegal.unexpected-whitespace.asciidoc
+
+  line-continuation-body:
+    - match: ^(?!\s*//)
       pop: 1
 
   string-double:
