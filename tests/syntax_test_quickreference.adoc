@@ -1103,15 +1103,14 @@ IMPORTANT: Sign off before stepping away from your computer.
 //^^^^^^^ support.type.admonition.asciidoc
 //       ^ punctuation.separator.key-value.asciidoc
 
-// === Admonition block
-// [NOTE]
-// //^^^^ meta.brackets.asciidoc
-// //^^^ support.type.admonition.asciidoc
-// //   ^ punctuation.section.group.parameters.end.asciidoc
-// ====
-// //^^^ meta.block.admonition.asciidoc
-// //^^ punctuation.section.admonition.end.asciidoc
-// An admonition block may contain complex content.
+=== Admonition block
+[NOTE]
+//^^^^^ meta.block.admonition.asciidoc
+//^^^^ punctuation.section.block.begin.asciidoc
+//^^^ support.type.admonition.asciidoc
+====
+//^^ meta.block.admonition.asciidoc punctuation.section.block.end.asciidoc
+An admonition block may contain complex content.
 
 .A list
 - one

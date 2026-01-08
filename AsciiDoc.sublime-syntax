@@ -969,6 +969,18 @@ contexts:
         1: support.type.admonition.asciidoc
         2: punctuation.separator.key-value.asciidoc
       push: paragraph-body
+    - match: \[({{admonition}})\]
+      scope: punctuation.section.block.begin.asciidoc
+      captures:
+        1: support.type.admonition.asciidoc
+      push: admonition-block-body
+
+  admonition-block-body:
+    - meta_scope: meta.block.admonition.asciidoc
+    - match: ^={4}$
+      scope: punctuation.section.block.end.asciidoc
+      pop: 1
+    - include: blocks-without-setext
 
 ###[ SIDEBARS ]################################################################
 
