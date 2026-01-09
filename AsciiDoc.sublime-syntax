@@ -241,27 +241,27 @@ contexts:
 
   # https://docs.asciidoctor.org/asciidoc/latest/sections/titles-and-levels/
   section-titles:
-    - match: (=|#)[ ]
+    - match: '{{bol}}(=|#)[ ]'
       captures:
         1: punctuation.definition.heading.begin.asciidoc
       push: section-title-0-body
-    - match: (=={1}|##{1})[ ]
+    - match: '{{bol}}(=={1}|##{1})[ ]'
       captures:
         1: punctuation.definition.heading.begin.asciidoc
       push: section-title-1-body
-    - match: (=={2}|##{2})[ ]
+    - match: '{{bol}}(=={2}|##{2})[ ]'
       captures:
         1: punctuation.definition.heading.begin.asciidoc
       push: section-title-2-body
-    - match: (=={3}|##{3})[ ]
+    - match: '{{bol}}(=={3}|##{3})[ ]'
       captures:
         1: punctuation.definition.heading.begin.asciidoc
       push: section-title-3-body
-    - match: (=={4}|##{4})[ ]
+    - match: '{{bol}}(=={4}|##{4})[ ]'
       captures:
         1: punctuation.definition.heading.begin.asciidoc
       push: section-title-4-body
-    - match: (=={5}|##{5})[ ]
+    - match: '{{bol}}(=={5}|##{5})[ ]'
       captures:
         1: punctuation.definition.heading.begin.asciidoc
       push: section-title-5-body
@@ -453,7 +453,7 @@ contexts:
 ###[ PARAGRAPHS ]##############################################################
 
   paragraphs:
-    - match: ^(?=\S)
+    - match: '{{bol}}(?=\S)'
       push: paragraph-body
 
   paragraph-body:
@@ -493,13 +493,13 @@ contexts:
     - include: page-breaks
 
   thematic-breaks:
-    - match: ^(?:'{3,}|\*{3,}|-{3,})$
+    - match: '{{bol}}(?:''{3,}|\*{3,}|-{3,})$'
       scope: punctuation.section.block.thematic.asciidoc
-    - match: '^(?:\*(?: \*){2,}|-(?: -){2,})$'
+    - match: '{{bol}}(?:\*(?: \*){2,}|-(?: -){2,})$'
       scope: punctuation.section.block.thematic.asciidoc
 
   page-breaks:
-    - match: ^<{3,}$
+    - match: '{{bol}}<{3,}$'
       scope: keyword.control.flow.break.asciidoc
 
 ###[ TEXT FORMATTING AND PUNCTUATION ]#########################################
@@ -714,10 +714,10 @@ contexts:
 
   list-item:
     - meta_scope: meta.paragraph.list.asciidoc
-    - match: ^(?=\s*(?:[.*-]|\d+\.))
+    - match: '{{bol}}(?=\s*(?:[.*-]|\d+\.))'
       pop: 1
     # If there's a blank line, we might be in indented blocks
-    - match: ^$
+    - match: '{{bol}}$'
       set: maybe-indented-list-value
     - include: pop-block-anyway
     - match: \G(\[)([*xX ])(\])
@@ -731,7 +731,7 @@ contexts:
 ###[ DESCRIPTION LISTS ]#######################################################
 
   description-lists:
-    - match: ^(?=.+{{description_list_marker}}\s)
+    - match: '{{bol}}(?=.+{{description_list_marker}}\s)'
       push: description-list-term
 
   description-list-term:
@@ -753,7 +753,7 @@ contexts:
 
   maybe-indented-list-value:
     - meta_content_scope: meta.mapping.value.asciidoc
-    - match: ^(?=\S)
+    - match: '{{bol}}(?=\S)'
       pop: 1
     - include: indented-blocks
     - include: inlines
@@ -964,7 +964,7 @@ contexts:
 ###[ ADMONITIONS ]#############################################################
 
   admonitions:
-    - match: ^({{admonition}})(:)
+    - match: '{{bol}}({{admonition}})(:)'
       captures:
         1: support.type.admonition.asciidoc
         2: punctuation.separator.key-value.asciidoc
@@ -977,7 +977,7 @@ contexts:
 
   admonition-block-body:
     - meta_scope: meta.block.admonition.asciidoc
-    - match: ^={4}$
+    - match: '{{bol}}={4}$'
       scope: punctuation.section.block.end.asciidoc
       pop: 1
     - include: pop-blank-line
@@ -986,13 +986,13 @@ contexts:
 ###[ SIDEBARS ]################################################################
 
   sidebars:
-    - match: ^\*{4}$
+    - match: '{{bol}}\*{4}$'
       scope: punctuation.section.block.begin.asciidoc
       push: sidebar-body
 
   sidebar-body:
     - meta_scope: meta.block.sidebar.asciidoc
-    - match: ^\*{4}$
+    - match: '{{bol}}\*{4}$'
       scope: punctuation.section.block.end.asciidoc
       pop: 1
     - include: blocks
@@ -1000,13 +1000,13 @@ contexts:
 ###[ EXAMPLE BLOCKS ]##########################################################
 
   example-blocks:
-    - match: ^={4}$
+    - match: '{{bol}}={4}$'
       scope: punctuation.section.block.begin.asciidoc
       push: example-block-body
 
   example-block-body:
     - meta_scope: meta.block.example.asciidoc
-    - match: ^={4}$
+    - match: '{{bol}}={4}$'
       scope: punctuation.section.block.end.asciidoc
       pop: 1
     - include: blocks-without-setext
@@ -1019,13 +1019,13 @@ contexts:
 ###[ VERSES ]##################################################################
 
   verses:
-    - match: ^_{4}$
+    - match: '{{bol}}_{4}$'
       scope: punctuation.section.block.begin.asciidoc
       push: verse-body
 
   verse-body:
     - meta_scope: meta.block.verse.asciidoc
-    - match: ^_{4}$
+    - match: '{{bol}}_{4}$'
       scope: punctuation.section.block.end.asciidoc
       pop: 1
 
@@ -1039,14 +1039,14 @@ contexts:
     - include: Packages/Markdown/Markdown.sublime-syntax#fenced-code-blocks
 
   verbatims:
-    - match: ^(-{4,})\s*$
+    - match: '{{bol}}(-{4,})\s*$'
       captures:
         1: punctuation.definition.raw.code-fence.begin.asciidoc
       push: verbatim-body
 
   verbatim-body:
     - meta_content_scope: markup.raw.code-fence.asciidoc
-    - match: ^\1$
+    - match: '{{bol}}\1$'
       scope: punctuation.definition.raw.code-fence.end.asciidoc
       pop: 1
     - include: verbatim-line-annotations
@@ -1063,33 +1063,33 @@ contexts:
     - include: delimited-literal-blocks
 
   delimited-literal-blocks:
-    - match: ^(\.{4})\s*$
+    - match: '{{bol}}(\.{4})\s*$'
       captures:
         1: punctuation.definition.raw.literal.begin.asciidoc
       push: delimited-literal-blocks-body
 
   delimited-literal-blocks-body:
     - meta_content_scope: markup.raw.code-fence.asciidoc
-    - match: ^\.{4}$
+    - match: '{{bol}}\.{4}$'
       scope: punctuation.definition.raw.code-fence.end.asciidoc
       pop: 1
 
 ###[ TABLES ]##################################################################
 
   tables:
-    - match: ^\|===$
+    - match: '{{bol}}\|===$'
       scope: punctuation.section.block.table.begin.asciidoc
       push: table-body
-    - match: ^,===$
+    - match: '{{bol}}^,===$'
       scope: punctuation.section.block.table.begin.asciidoc
       push: table-body-csv
-    - match: ^:===$
+    - match: '{{bol}}^:===$'
       scope: punctuation.section.block.table.begin.asciidoc
       push: table-body-dsv
 
   table-body:
     - meta_scope: meta.table.asciidoc
-    - match: ^\|===$
+    - match: '{{bol}}\|===$'
       scope: punctuation.section.block.table.end.asciidoc
       pop: 1
     # TODO: Cell formatting
@@ -1100,7 +1100,7 @@ contexts:
 
   table-body-csv:
     - meta_scope: meta.table.asciidoc
-    - match: ^,===$
+    - match: '{{bol}},===$'
       scope: punctuation.section.block.table.end.asciidoc
       pop: 1
     - match: ','
@@ -1110,7 +1110,7 @@ contexts:
 
   table-body-dsv:
     - meta_scope: meta.table.asciidoc
-    - match: ^:===$
+    - match: '{{bol}}:===$'
       scope: punctuation.section.block.table.end.asciidoc
       pop: 1
     - match: ':'
@@ -1143,13 +1143,13 @@ contexts:
 ###[ OPEN BLOCKS ]#############################################################
 
   open-blocks:
-    - match: ^--$
+    - match: '{{bol}}--$'
       scope: punctuation.section.block.begin.asciidoc
       push: open-block-body
 
   open-block-body:
     - meta_scope: meta.block.open.asciidoc
-    - match: ^--$
+    - match: '{{bol}}--$'
       scope: punctuation.section.block.end.asciidoc
       pop: 1
     # Assume for now that it's still AsciiDoc
@@ -1167,7 +1167,7 @@ contexts:
     - include: comments-inline
 
   comments-inline:
-    - match: ^\s*(//)
+    - match: '{{bol}}\s*(//)'
       captures:
         1: punctuation.definition.comment.begin.asciidoc
       push: comment-inline-body
@@ -1181,14 +1181,14 @@ contexts:
     # TODO: [comment] block and paragraph
 
   comments-block-delimited:
-    - match: ^\s*(////)
+    - match: '{{bol}}\s*(////)'
       captures:
         1: punctuation.definition.comment.begin.asciidoc
       push: comment-block-delimited-body
 
   comment-block-delimited-body:
     - meta_scope: comment.block.quad-slash.asciidoc
-    - match: ^\s*(////)
+    - match: '{{bol}}\s*(////)'
       captures:
         1: punctuation.definition.comment.end.asciidoc
       pop: 1
@@ -1276,14 +1276,14 @@ contexts:
 ###[ PASSTHROUGHS ]############################################################
 
   passthrough-blocks:
-    - match: ^(\+{4})\s*$
+    - match: '{{bol}}(\+{4})\s*$'
       captures:
         1: keyword.control.passthrough.begin.asciidoc
       push: passthrough-block-body
 
   passthrough-block-body:
     - meta_content_scope: markup.raw.passthrough.asciidoc
-    - match: ^\+{4}$
+    - match: '{{bol}}\+{4}$'
       scope: keyword.control.passthrough.end.asciidoc
       pop: 1
 
@@ -1344,18 +1344,18 @@ contexts:
       pop: 1
 
   pop-blank-line:
-    - match: ^$\n?
+    - match: '{{bol}}$\n?'
       pop: 1
 
   pop-blank-line-illegal:
-    - match: ^$\n?
+    - match: '{{bol}}$\n?'
       scope: invalid.illegal.new-block.asciidoc
       pop: 1
 
   pop-block-anyway:
-    - match: ^(?=.+{{description_list_marker}}\s|$)
+    - match: '{{bol}}(?=.+{{description_list_marker}}\s|$)'
       pop: 1
-    - match: ^(?=:|[=|,]=|--|\*{4}|\+$|include|endif|if(?:n?def|eval))
+    - match: '{{bol}}(?=:|[=|,]=|--|\*{4}|\+$|include|endif|if(?:n?def|eval))'
       pop: 1
 
   line-continuations:
@@ -1389,6 +1389,7 @@ contexts:
 ###[ VARIABLES ]###############################################################
 
 variables:
+  bol: ^
   # https://docs.asciidoctor.org/asciidoc/latest/attributes/names-and-values/
   word_char: (?i:[a-z0-9_])
   attribute_name: (?:{{word_char}}(?:(?:{{word_char}}|-)*{{word_char}})?)
