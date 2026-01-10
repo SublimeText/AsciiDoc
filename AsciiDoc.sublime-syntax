@@ -398,6 +398,7 @@ contexts:
         1: punctuation.definition.heading.setext.asciidoc
         2: meta.whitespace.newline.asciidoc
       pop: 1
+    - include: inlines
 
   setext-heading2:
     # https://spec.commonmark.org/0.30/#setext-headings
@@ -410,6 +411,7 @@ contexts:
       pop: 1
     - match: '{{setext_heading1_escape}}'
       fail: setext-headings-or-paragraphs
+    - include: inlines
 
   setext-heading3:
     # https://spec.commonmark.org/0.30/#setext-headings
@@ -424,6 +426,7 @@ contexts:
       fail: setext-headings-or-paragraphs
     - match: '{{setext_heading1_escape}}'
       fail: setext-headings-or-paragraphs
+    - include: inlines
 
   setext-heading4:
     # https://spec.commonmark.org/0.30/#setext-headings
@@ -440,6 +443,7 @@ contexts:
       fail: setext-headings-or-paragraphs
     - match: '{{setext_heading1_escape}}'
       fail: setext-headings-or-paragraphs
+    - include: inlines
 
   setext-heading5:
     # https://spec.commonmark.org/0.30/#setext-headings
@@ -458,6 +462,7 @@ contexts:
       fail: setext-headings-or-paragraphs
     - match: '{{setext_heading1_escape}}'
       fail: setext-headings-or-paragraphs
+    - include: inlines
 
   setext-hard-line-breaks:
     # This context consumes what 'hard-line-breaks' does for normal
