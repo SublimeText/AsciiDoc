@@ -30,3 +30,10 @@ core.worktree::
 credential.useHttpPath::
   When acquiring credentials, consider the "path" component of an http
 //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.block.open.asciidoc meta.mapping.value.asciidoc - markup.underline
+
+`merge.log`::
+  In addition to branch names, populate the log message with at
+  most the specified number of one-line descriptions from the
+  actual commits that are being merged.  Defaults to false, and
+  true is a synonym for 20.
+//^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.block.open.asciidoc meta.mapping.value.asciidoc - markup.list
