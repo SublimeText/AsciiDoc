@@ -368,6 +368,39 @@ E=mc^2^,`" Lazarus replied.
 //    ^ punctuation.definition.superscript.end.asciidoc
 //      ^^ constant.character.escape.asciidoc
 
+"`Wait!`" Indigo plucked a small vial from her desk's top drawer
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//     ^^ constant.character.escape.asciidoc
+and held it toward us.
+The vial's label read: `E=mc^2^`; the `E` represents _energy_,
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//                     ^^^^^^^^^ markup.raw.inline.asciidoc
+//                     ^ punctuation.definition.raw.begin.asciidoc
+//                          ^^^ markup.italic.superscript.asciidoc
+//                          ^ punctuation.definition.superscript.begin.asciidoc
+//                            ^ punctuation.definition.superscript.end.asciidoc
+//                             ^ punctuation.definition.raw.end.asciidoc
+//                                    ^^^ markup.raw.inline.asciidoc
+//                                    ^ punctuation.definition.raw.begin.asciidoc
+//                                      ^ punctuation.definition.raw.end.asciidoc
+//                                                   ^^^^^^^^ markup.italic.asciidoc
+//                                                   ^ punctuation.definition.italic.begin.asciidoc
+//                                                          ^ punctuation.definition.italic.end.asciidoc
+but also pure _genius!_
+
+You can reference the value of a document attribute using
+the syntax `+{name}+`, where `name` is the attribute name.
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//         ^^^^^^^^^^ markup.raw.inline.asciidoc - variable
+//         ^ punctuation.definition.raw.begin.asciidoc
+//          ^^^^^^^^ markup.raw.inline.asciidoc
+//          ^ keyword.control.passthrough.begin.asciidoc
+//                 ^ keyword.control.passthrough.end.asciidoc
+//                  ^ punctuation.definition.raw.end.asciidoc
+//                           ^^^^^^ markup.raw.inline.asciidoc
+//                           ^ punctuation.definition.raw.begin.asciidoc
+//                                ^ punctuation.definition.raw.end.asciidoc
+
 Deprecated $$double-dollar$$ passthrough
 //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
 //         ^^^^^^^^^^^^^^^^^ markup.raw.inline.asciidoc
