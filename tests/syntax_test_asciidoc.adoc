@@ -90,16 +90,6 @@ Line with unconstrained ##highlight##
 //                      ^^^^^^^^^^^^^ markup.bold.highlight.asciidoc
 //                      ^^ punctuation.definition.highlight.begin.asciidoc
 //                                 ^^ punctuation.definition.highlight.end.asciidoc
-Line with unconstrained ~~subscript~~
-//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
-//                      ^^^^^^^^^^^^^ markup.italic.subscript.asciidoc
-//                      ^^ punctuation.definition.subscript.begin.asciidoc
-//                                 ^^ punctuation.definition.subscript.end.asciidoc
-Line with unconstrained ^^superscript^^
-//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
-//                      ^^^^^^^^^^^^^^^ markup.italic.superscript.asciidoc
-//                      ^^ punctuation.definition.superscript.begin.asciidoc
-//                                   ^^ punctuation.definition.superscript.end.asciidoc
 
 * circles
 //^^^^^^^ meta.paragraph.list.asciidoc
@@ -342,6 +332,27 @@ monospace bold italic `*_constrained_*` & ``**__un__**``constrained
 //                                            ^^ punctuation.definition.italic.begin.asciidoc
 //                                                ^^ punctuation.definition.italic.end.asciidoc
 //                                                  ^^ punctuation.definition.bold.end.asciidoc
+//                                                    ^^ punctuation.definition.raw.end.asciidoc
+
+monospace bold italic `_*constrained*_` & ``__**un**__``constrained
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//                    ^^^^^^^^^^^^^^^^^ markup.raw.inline.asciidoc
+//                    ^ punctuation.definition.raw.begin.asciidoc
+//                     ^^^^^^^^^^^^^^^ markup.italic.asciidoc
+//                     ^ punctuation.definition.italic.begin.asciidoc
+//                      ^^^^^^^^^^^^^ markup.bold.asciidoc
+//                      ^ punctuation.definition.bold.begin.asciidoc
+//                                  ^ punctuation.definition.bold.end.asciidoc
+//                                   ^ punctuation.definition.italic.end.asciidoc
+//                                    ^ punctuation.definition.raw.end.asciidoc
+//                                        ^^^^^^^^^^^^^^ markup.raw.inline.asciidoc
+//                                        ^^ punctuation.definition.raw.begin.asciidoc
+//                                          ^^^^^^^^^^ markup.italic.asciidoc
+//                                          ^^ punctuation.definition.italic.begin.asciidoc
+//                                            ^^^^^^ markup.bold.asciidoc
+//                                            ^^ punctuation.definition.bold.begin.asciidoc
+//                                                ^^ punctuation.definition.bold.end.asciidoc
+//                                                  ^^ punctuation.definition.italic.end.asciidoc
 //                                                    ^^ punctuation.definition.raw.end.asciidoc
 
 

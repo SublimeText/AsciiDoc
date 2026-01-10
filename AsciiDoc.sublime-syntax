@@ -115,12 +115,12 @@ contexts:
     - include: attribute-lists
     - include: passthrough-inlines
     - include: links
+    - include: substitutions
     - include: text-formatting
     - include: footnotes
     - include: keyboard-macros
     - include: button-menu-macros
     - include: equation-macros
-    - include: substitutions
 
   escape-characters:
     # - match: \\[-`*_#+.!(){}\[\]\\>:=&]
@@ -513,53 +513,61 @@ contexts:
     - include: text-formatting-constrained
 
   text-formatting-constrained:
+    # Eat opportunities for constrained formatting
+    - match: '[^*_`#~^\s]\*(?![{`*])'
+      scope: meta.suppress.constrained.asciidoc
+    - match: '[^*_`#~^\s]_(?![{`_])'
+      scope: meta.suppress.constrained.asciidoc
+    - match: '[^*_`#~^\s]`(?![{`''"])'
+      scope: meta.suppress.constrained.asciidoc
+    - match: '[^*_`#~^\s]#(?![{`#])'
+      scope: meta.suppress.constrained.asciidoc
+
     - include: text-bold
     - include: text-italic
     - include: text-monospace
     - include: text-highlight
-    - include: text-subscript
-    - include: text-superscript
 
   text-bold:
-    - match: \B\*(?=\S)
+    - match: \*(?=\S)
       scope: punctuation.definition.bold.begin.asciidoc
       push: text-bold-body
 
   text-bold-body:
     - meta_scope: markup.bold.asciidoc
-    - match: \*\B
-      scope: punctuation.definition.bold.end.asciidoc
+    - match: \S?(\*){{constrained_break}}
+      captures:
+        1: punctuation.definition.bold.end.asciidoc
       pop: 1
     - include: pop-blank-line-illegal
     - include: pop-end-of-definition
     - include: inlines
 
   text-italic:
-    - match: \b_(?=\S)
+    - match: _(?=\S)
       scope: punctuation.definition.italic.begin.asciidoc
       push: text-italic-body
 
   text-italic-body:
     - meta_scope: markup.italic.asciidoc
-    - match: _\b
-      scope: punctuation.definition.italic.end.asciidoc
+    - match: \S?(_){{constrained_break}}
+      captures:
+        1: punctuation.definition.italic.end.asciidoc
       pop: 1
     - include: pop-blank-line-illegal
     - include: pop-end-of-definition
     - include: inlines
 
   text-monospace:
-    - match: \B(`)[*_#~^](`)\B
+    - match: (`)[*_#~^](`){{constrained_break}}
       scope: markup.raw.inline.asciidoc
       captures:
         1: punctuation.definition.raw.begin.asciidoc
         2: punctuation.definition.raw.end.asciidoc
-    - match: \B`(?=\S)
+    - match: '`(?=\S)'
       scope: punctuation.definition.raw.begin.asciidoc
-      captures:
-        1: keyword.control.passthrough.asciidoc
       embed: text-monospace-body
-      escape: (`\B)|^(\n)
+      escape: (`){{constrained_break}}|^(\n)
       escape_captures:
         1: markup.raw.inline.asciidoc punctuation.definition.raw.end.asciidoc
         2: invalid.illegal.new-block.asciidoc
@@ -569,42 +577,15 @@ contexts:
     - include: inlines
 
   text-highlight:
-    - match: \B#(?=\S.*#)
+    - match: '#(?=\S.*#)'
       scope: punctuation.definition.highlight.begin.asciidoc
       push: text-highlight-body
 
   text-highlight-body:
     - meta_scope: markup.bold.highlight.asciidoc
-    - match: '#\B'
-      scope: punctuation.definition.highlight.end.asciidoc
-      pop: 1
-    - include: pop-blank-line-illegal
-    - include: pop-end-of-definition
-    - include: inlines
-
-  text-subscript:
-    - match: \B~(?=\S)
-      scope: punctuation.definition.subscript.begin.asciidoc
-      push: text-subscript-body
-
-  text-subscript-body:
-    - meta_scope: markup.italic.subscript.asciidoc
-    - match: '~'
-      scope: punctuation.definition.subscript.end.asciidoc
-      pop: 1
-    - include: pop-blank-line-illegal
-    - include: pop-end-of-definition
-    - include: inlines
-
-  text-superscript:
-    - match: \B\^(?=\S)
-      scope: punctuation.definition.superscript.begin.asciidoc
-      push: text-superscript-body
-
-  text-superscript-body:
-    - meta_scope: markup.italic.superscript.asciidoc
-    - match: \^
-      scope: punctuation.definition.superscript.end.asciidoc
+    - match: \S?(#){{constrained_break}}
+      captures:
+        1: punctuation.definition.highlight.end.asciidoc
       pop: 1
     - include: pop-blank-line-illegal
     - include: pop-end-of-definition
@@ -615,8 +596,8 @@ contexts:
     - include: text-italic-unconstrained
     - include: text-monospace-unconstrained
     - include: text-highlight-unconstrained
-    - include: text-subscript-unconstrained
-    - include: text-superscript-unconstrained
+    - include: text-subscript
+    - include: text-superscript
 
   text-bold-unconstrained:
     - match: \*\*
@@ -678,29 +659,33 @@ contexts:
     - include: pop-end-of-definition
     - include: inlines
 
-  text-subscript-unconstrained:
-    - match: ~~
+  # Subscript is always unconstrained
+  text-subscript:
+    - match: ~(?=\S)
       scope: punctuation.definition.subscript.begin.asciidoc
-      push: text-subscript-unconstrained-body
+      push: text-subscript-body
 
-  text-subscript-unconstrained-body:
+  text-subscript-body:
     - meta_scope: markup.italic.subscript.asciidoc
-    - match: ~~
-      scope: punctuation.definition.subscript.end.asciidoc
+    - match: \S?(~)
+      captures:
+        1: punctuation.definition.subscript.end.asciidoc
       pop: 1
     - include: pop-blank-line-illegal
     - include: pop-end-of-definition
     - include: inlines
 
-  text-superscript-unconstrained:
-    - match: \^\^
+  # Superscript is always unconstrained
+  text-superscript:
+    - match: \^(?=\S)
       scope: punctuation.definition.superscript.begin.asciidoc
-      push: text-superscript-unconstrained-body
+      push: text-superscript-body
 
-  text-superscript-unconstrained-body:
+  text-superscript-body:
     - meta_scope: markup.italic.superscript.asciidoc
-    - match: \^\^
-      scope: punctuation.definition.superscript.end.asciidoc
+    - match: \S?(\^)
+      captures:
+        1: punctuation.definition.superscript.end.asciidoc
       pop: 1
     - include: pop-blank-line-illegal
     - include: pop-end-of-definition
@@ -1443,6 +1428,7 @@ variables:
   autolink_scheme: \b(?:https?|ftp|irc|mailto)\b
   link_pop: (?:$|[\s\[\]()'"])
   doctype: (?:article|book|manpage|inline)
+  constrained_break: (?=[\s\p{P}`*]|$)
 
   setext_min: '{3,}'  # At least 3 of char
   setext_heading_or_paragraph: ^(?=\S)  # Any BOL non-whitespace

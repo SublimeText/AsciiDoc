@@ -1,8 +1,13 @@
 // SYNTAX TEST "Packages/AsciiDoc/AsciiDoc.sublime-syntax"
 
 advice.*::
-//^^^^^^ meta.mapping.key.asciidoc
+//^^^^^^ meta.mapping.key.asciidoc - markup.bold
+//    ^^ meta.suppress.constrained.asciidoc
 //      ^^ punctuation.separator.key-value.asciidoc
 //        ^ meta.mapping.value.asciidoc
   These variables control various optional help messages designed to
 
+core.worktree::
+  Set the path to the root of the working tree.
+  If `GIT_COMMON_DIR` environment variable is set, core.worktree
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.mapping.value.asciidoc - markup.italic
