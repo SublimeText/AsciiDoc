@@ -817,7 +817,7 @@ contexts:
 
   cross-references:
     # Links
-    - match: <<
+    - match: <<(?=\w)
       scope: punctuation.definition.reference.begin.asciidoc
       push: cross-reference-natural-body
     - match: \b(xref)(:)
