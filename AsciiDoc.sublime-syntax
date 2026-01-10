@@ -492,7 +492,6 @@ contexts:
     - meta_scope: meta.paragraph.asciidoc markup.raw.block.asciidoc
     - include: paragraph-body-pops
     - include: comments-inline
-    - include: inlines
 
   paragraph-body-pops:
     - match: ^$
@@ -1078,14 +1077,14 @@ contexts:
     - include: delimited-literal-blocks
 
   delimited-literal-blocks:
-    - match: '{{bol}}(\.{4})\s*$'
+    - match: '{{bol}}(\.{4,})\s*$'
       captures:
         1: punctuation.definition.raw.literal.begin.asciidoc
       push: delimited-literal-blocks-body
 
   delimited-literal-blocks-body:
     - meta_content_scope: markup.raw.code-fence.asciidoc
-    - match: '{{bol}}\.{4}$'
+    - match: '{{bol}}\1$'
       scope: punctuation.definition.raw.code-fence.end.asciidoc
       pop: 1
 

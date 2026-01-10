@@ -550,3 +550,19 @@ latexmath:[C = \alpha + \beta Y^{\gamma} + \epsilon]
 //        ^ punctuation.definition.string.begin.asciidoc
 //         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ string.other.math.asciidoc text.tex.embedded.asciidoc
 //                                                 ^ punctuation.definition.string.end.asciidoc
+
+    ~/secure/vault/defops
+//^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc markup.raw.block.asciidoc - markup.italic
+
+....
+Kismet: Where is the *defensive operations manual*?
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.raw.code-fence.asciidoc - markup.bold
+
+Computer: Calculating ...
+Can not locate object.
+You are not authorized to know it exists.
+
+Kismet: Did the werewolves tell you to say that?
+
+Computer: Calculating ...
+....
