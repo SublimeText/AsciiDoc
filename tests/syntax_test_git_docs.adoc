@@ -37,3 +37,12 @@ credential.useHttpPath::
   actual commits that are being merged.  Defaults to false, and
   true is a synonym for 20.
 //^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.block.open.asciidoc meta.mapping.value.asciidoc - markup.list
+
+// You can grow a new branch from any commit. For example, switch to
+// "`HEAD~3`" and create branch "`fixup`":
+
+// ------------
+// //^^^^^^^^^^ - markup.heading
+// $ git switch -c fixup HEAD~3
+// Switched to a new branch 'fixup'
+// ------------
