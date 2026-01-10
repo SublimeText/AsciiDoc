@@ -514,13 +514,13 @@ contexts:
 
   text-formatting-constrained:
     # Eat opportunities for constrained formatting
-    - match: '[^*_`#~^\s]\*(?![{`*])'
+    - match: '[^*_`#~^\s(]\*(?![{`*])'
       scope: meta.suppress.constrained.asciidoc
-    - match: '[^*_`#~^\s]_(?![{`_])'
+    - match: '[^*_`#~^\s(]_(?![{`_])'
       scope: meta.suppress.constrained.asciidoc
-    - match: '[^*_`#~^\s]`(?![{`''"])'
+    - match: '[^*_`#~^\s(]`(?![{`''"])'
       scope: meta.suppress.constrained.asciidoc
-    - match: '[^*_`#~^\s]#(?![{`#])'
+    - match: '[^*_`#~^\s(]#(?![{`#])'
       scope: meta.suppress.constrained.asciidoc
 
     - include: text-bold

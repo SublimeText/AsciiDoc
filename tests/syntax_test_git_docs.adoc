@@ -11,3 +11,18 @@ core.worktree::
   Set the path to the root of the working tree.
   If `GIT_COMMON_DIR` environment variable is set, core.worktree
 //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.mapping.value.asciidoc - markup.italic
+
+`separator`;;
+  separators between fields on a line (`:`, `-`, and `=`)
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.mapping.value.asciidoc
+//                                     ^^^ markup.raw.inline.asciidoc
+//                                     ^ punctuation.definition.raw.begin.asciidoc
+//                                       ^ punctuation.definition.raw.end.asciidoc
+//                                          ^^^ markup.raw.inline.asciidoc
+//                                          ^ punctuation.definition.raw.begin.asciidoc
+//                                            ^ punctuation.definition.raw.end.asciidoc
+//                                                   ^^^ markup.raw.inline.asciidoc
+//                                                   ^ punctuation.definition.raw.begin.asciidoc
+//                                                     ^ punctuation.definition.raw.end.asciidoc
+  and between hunks (`--`)
+--
