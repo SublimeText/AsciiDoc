@@ -8,6 +8,7 @@ version: 2
 
 file_extensions:
   - adoc
+  - adoco
   - asciidoc
   - asc
 
