@@ -822,7 +822,7 @@ contexts:
         2: punctuation.separator.asciidoc
       push: link-macro-arguments
     # Anchors
-    - match: \[\[
+    - match: \[\[(?=.+\]\])
       scope: punctuation.definition.reference.begin.asciidoc
       push: anchor-natural-body
     - match: \b(anchor)(:)
