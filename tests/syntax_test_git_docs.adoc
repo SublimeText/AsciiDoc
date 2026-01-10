@@ -1,0 +1,8 @@
+// SYNTAX TEST "Packages/AsciiDoc/AsciiDoc.sublime-syntax"
+
+advice.*::
+//^^^^^^ meta.mapping.key.asciidoc
+//      ^^ punctuation.separator.key-value.asciidoc
+//        ^ meta.mapping.value.asciidoc
+  These variables control various optional help messages designed to
+

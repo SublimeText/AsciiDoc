@@ -531,6 +531,7 @@ contexts:
       scope: punctuation.definition.bold.end.asciidoc
       pop: 1
     - include: pop-blank-line-illegal
+    - include: pop-end-of-definition
     - include: inlines
 
   text-italic:
@@ -544,6 +545,7 @@ contexts:
       scope: punctuation.definition.italic.end.asciidoc
       pop: 1
     - include: pop-blank-line-illegal
+    - include: pop-end-of-definition
     - include: inlines
 
   text-monospace:
@@ -577,6 +579,7 @@ contexts:
       scope: punctuation.definition.highlight.end.asciidoc
       pop: 1
     - include: pop-blank-line-illegal
+    - include: pop-end-of-definition
     - include: inlines
 
   text-subscript:
@@ -590,6 +593,7 @@ contexts:
       scope: punctuation.definition.subscript.end.asciidoc
       pop: 1
     - include: pop-blank-line-illegal
+    - include: pop-end-of-definition
     - include: inlines
 
   text-superscript:
@@ -603,6 +607,7 @@ contexts:
       scope: punctuation.definition.superscript.end.asciidoc
       pop: 1
     - include: pop-blank-line-illegal
+    - include: pop-end-of-definition
     - include: inlines
 
   text-formatting-unconstrained:
@@ -624,6 +629,7 @@ contexts:
       scope: punctuation.definition.bold.end.asciidoc
       pop: 1
     - include: pop-blank-line-illegal
+    - include: pop-end-of-definition
     - include: inlines
 
   text-italic-unconstrained:
@@ -637,6 +643,7 @@ contexts:
       scope: punctuation.definition.italic.end.asciidoc
       pop: 1
     - include: pop-blank-line-illegal
+    - include: pop-end-of-definition
     - include: inlines
 
   text-monospace-unconstrained:
@@ -668,6 +675,7 @@ contexts:
       scope: punctuation.definition.highlight.end.asciidoc
       pop: 1
     - include: pop-blank-line-illegal
+    - include: pop-end-of-definition
     - include: inlines
 
   text-subscript-unconstrained:
@@ -681,6 +689,7 @@ contexts:
       scope: punctuation.definition.subscript.end.asciidoc
       pop: 1
     - include: pop-blank-line-illegal
+    - include: pop-end-of-definition
     - include: inlines
 
   text-superscript-unconstrained:
@@ -694,6 +703,7 @@ contexts:
       scope: punctuation.definition.superscript.end.asciidoc
       pop: 1
     - include: pop-blank-line-illegal
+    - include: pop-end-of-definition
     - include: inlines
 
 ###[ LISTS ]###################################################################
@@ -1356,6 +1366,10 @@ contexts:
     - match: '{{bol}}(?=.+{{description_list_marker}}\s|$)'
       pop: 1
     - match: '{{bol}}(?=:|[=|,]=|--|\*{4}|\+$|include|endif|if(?:n?def|eval))'
+      pop: 1
+
+  pop-end-of-definition:
+    - match: (?=::$)
       pop: 1
 
   line-continuations:
