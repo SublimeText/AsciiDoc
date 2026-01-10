@@ -25,6 +25,7 @@
             s/^(.+?)-+\s*\z/  $1/g;               # indent SETEXT heading 2
             s/^(.+?)~+\s*\z/    $1/g;             # indent SETEXT heading 3
             s/^(.+?)\^+\s*\z/      $1/g;          # indent SETEXT heading 4
+            s/^(.+?)\++\s*\z/        $1/g;        # indent SETEXT heading 5
         ]]></string>
     </dict>
 </dict>

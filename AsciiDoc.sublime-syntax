@@ -382,6 +382,7 @@ contexts:
       branch_point: setext-headings-or-paragraphs
       branch:
         - paragraph-body
+        - setext-heading5
         - setext-heading4
         - setext-heading3
         - setext-heading2
@@ -432,6 +433,24 @@ contexts:
         1: punctuation.definition.heading.setext.asciidoc
         2: meta.whitespace.newline.asciidoc
       pop: 1
+    - match: '{{setext_heading3_escape}}'
+      fail: setext-headings-or-paragraphs
+    - match: '{{setext_heading2_escape}}'
+      fail: setext-headings-or-paragraphs
+    - match: '{{setext_heading1_escape}}'
+      fail: setext-headings-or-paragraphs
+
+  setext-heading5:
+    # https://spec.commonmark.org/0.30/#setext-headings
+    - meta_scope: markup.heading.5.asciidoc
+    - meta_content_scope: entity.name.section.asciidoc
+    - match: '{{setext_heading5_end}}'
+      captures:
+        1: punctuation.definition.heading.setext.asciidoc
+        2: meta.whitespace.newline.asciidoc
+      pop: 1
+    - match: '{{setext_heading4_escape}}'
+      fail: setext-headings-or-paragraphs
     - match: '{{setext_heading3_escape}}'
       fail: setext-headings-or-paragraphs
     - match: '{{setext_heading2_escape}}'
@@ -1438,12 +1457,15 @@ variables:
         ={{setext_min}}   # equal signs,
       | -{{setext_min}}   # hyphens,
       | ~{{setext_min}}   # tildes,
-      | \^{{setext_min}}  # or carets.
+      | \^{{setext_min}}  # carets,
+      | \+{{setext_min}}  # or plus signs.
     )[ \t]*$)             # Followed by only whitespace
   setext_heading1_escape: ^(?=={{setext_min}}[ \t]*$)   # at least N equal signs
   setext_heading2_escape: ^(?=-{{setext_min}}[ \t]*$)   # at least N hyphens
   setext_heading3_escape: ^(?=~{{setext_min}}[ \t]*$)   # at least N tildes
+  setext_heading4_escape: ^(?=\^{{setext_min}}[ \t]*$)  # at least N carets
   setext_heading1_end: ^(={{setext_min}})[ \t]*$(\n?)   # at least N equal signs
   setext_heading2_end: ^(-{{setext_min}})[ \t]*$(\n?)   # at least N hyphens
   setext_heading3_end: ^(~{{setext_min}})[ \t]*$(\n?)   # at least N tildes
   setext_heading4_end: ^(\^{{setext_min}})[ \t]*$(\n?)  # at least N carets
+  setext_heading5_end: ^(\+{{setext_min}})[ \t]*$(\n?)  # at least N plus signs

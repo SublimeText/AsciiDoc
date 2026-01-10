@@ -504,6 +504,12 @@ SETEXT Title 4
 //^^^^^^^^^^^^ punctuation.definition.heading.setext.asciidoc
 //            ^ meta.whitespace.newline.asciidoc
 
+SETEXT Title 5
+++++++++++++++
+//^^^^^^^^^^^^^ markup.heading.5.asciidoc
+//^^^^^^^^^^^^ punctuation.definition.heading.setext.asciidoc
+//            ^ meta.whitespace.newline.asciidoc
+
 === Discrete heading (not a section)
 [discrete]
 === I'm an independent heading!
