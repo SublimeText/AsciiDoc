@@ -46,3 +46,8 @@ credential.useHttpPath::
 // $ git switch -c fixup HEAD~3
 // Switched to a new branch 'fixup'
 // ------------
+
+ - An asterisk "`*`" matches anything except a slash.
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.block.open.asciidoc meta.paragraph.list.asciidoc
+//             ^^ constant.character.escape.asciidoc
+//                ^^ constant.character.escape.asciidoc - markup.bold

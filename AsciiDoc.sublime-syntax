@@ -529,12 +529,27 @@ contexts:
 ###[ TEXT FORMATTING AND PUNCTUATION ]#########################################
 
   text-formatting:
+    - match: '"`(?=.*`")'
+      scope: constant.character.escape.asciidoc
+      embed: curly-quote-singleline-content
+      escape: (`")
+      escape_captures:
+        1: constant.character.escape.asciidoc
+    - match: '`''(?=.*`'')'
+      scope: constant.character.escape.asciidoc
+      embed: curly-quote-singleline-content
+      escape: (`')
+      escape_captures:
+        1: constant.character.escape.asciidoc
     - match: '`"|"`'
       scope: constant.character.escape.asciidoc
     - match: "`'|'`"
       scope: constant.character.escape.asciidoc
     - include: text-formatting-unconstrained
     - include: text-formatting-constrained
+
+  curly-quote-singleline-content:
+    - include: inlines
 
   text-formatting-constrained:
     # Eat opportunities for constrained formatting
