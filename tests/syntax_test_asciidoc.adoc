@@ -355,6 +355,18 @@ monospace bold italic `_*constrained*_` & ``__**un**__``constrained
 //                                                  ^^ punctuation.definition.italic.end.asciidoc
 //                                                    ^^ punctuation.definition.raw.end.asciidoc
 
+"`Well the H~2~O formula written on their whiteboard could be part
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//          ^^^ markup.italic.subscript.asciidoc
+//          ^ punctuation.definition.subscript.begin.asciidoc
+//            ^ punctuation.definition.subscript.end.asciidoc
+of a shopping list, but I don't think the local bodega sells
+E=mc^2^,`" Lazarus replied.
+//^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//  ^^^ markup.italic.superscript.asciidoc
+//  ^ punctuation.definition.superscript.begin.asciidoc
+//    ^ punctuation.definition.superscript.end.asciidoc
+//      ^^ constant.character.escape.asciidoc
 
 Deprecated $$double-dollar$$ passthrough
 //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
