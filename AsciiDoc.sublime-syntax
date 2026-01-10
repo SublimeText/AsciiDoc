@@ -776,7 +776,7 @@ contexts:
     - include: document-attributes
 
   autolinks:
-    - match: '{{autolink_scheme}}'
+    - match: '{{autolink_scheme}}(?=:)'
       push: link-body
 
   link-body:

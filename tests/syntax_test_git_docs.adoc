@@ -26,3 +26,7 @@ core.worktree::
 //                                                     ^ punctuation.definition.raw.end.asciidoc
   and between hunks (`--`)
 --
+
+credential.useHttpPath::
+  When acquiring credentials, consider the "path" component of an http
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.block.open.asciidoc meta.mapping.value.asciidoc - markup.underline
