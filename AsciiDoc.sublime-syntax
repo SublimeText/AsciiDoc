@@ -167,7 +167,7 @@ contexts:
 ###[ ELEMENT ATTRIBUTES ]######################################################
 
   attribute-lists:
-    - match: \[(?!\\?\[)
+    - match: \[(?!\\?\[)(?=.*\])
       scope: punctuation.section.group.parameters.begin.asciidoc
       push: attribute-list-body
 

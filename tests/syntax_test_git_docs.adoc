@@ -65,3 +65,16 @@ credential.useHttpPath::
 //                ^^ keyword.control.passthrough.end.asciidoc
 //                  ^^ punctuation.separator.key-value.asciidoc
 //                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.mapping.value.asciidoc
+
+`--branches[=<pattern>]`::
+  Pretend as if all the refs in `refs/heads` are listed
+  on the command line as _<commit>_. If _<pattern>_ is given, limit
+  branches to ones matching given shell glob. If _<pattern>_ lacks '?',
+  '{asterisk}', or '[', '/{asterisk}' at the end is implied.
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.block.open.asciidoc meta.mapping.value.asciidoc - punctuation.section
+// ^^^^^^^^^^ variable.other.readwrite.asciidoc
+// ^ punctuation.definition.variable.begin.asciidoc
+//          ^ punctuation.definition.variable.end.asciidoc
+//                        ^^^^^^^^^^ variable.other.readwrite.asciidoc
+//                        ^ punctuation.definition.variable.begin.asciidoc
+//                                 ^ punctuation.definition.variable.end.asciidoc
