@@ -1393,7 +1393,7 @@ contexts:
       pop: 1
 
   pop-end-of-definition:
-    - match: (?=::$)
+    - match: (?=::\s)
       pop: 1
 
   line-continuations:
@@ -1467,7 +1467,7 @@ variables:
   autolink_scheme: \b(?:https?|ftp|irc|mailto)\b
   link_pop: (?:$|[\s\[\]()'"])
   doctype: (?:article|book|manpage|inline)
-  constrained_break: (?=[\s\p{P}`*]|$)
+  constrained_break: (?=[\s\p{P}`*+]|$)
 
   setext_min: '{3,}'  # At least 3 of char
   setext_heading_or_paragraph: ^(?=\S)  # Any BOL non-whitespace

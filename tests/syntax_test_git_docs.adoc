@@ -51,3 +51,17 @@ credential.useHttpPath::
 //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.block.open.asciidoc meta.paragraph.list.asciidoc
 //             ^^ constant.character.escape.asciidoc
 //                ^^ constant.character.escape.asciidoc - markup.bold
+
+++%C(++_<spec>_++)++:: color specification, as described under Values in the
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.block.open.asciidoc
+//^^^^^^^^^^^^^^^^^^ meta.mapping.key.asciidoc
+//^^^^^ markup.raw.inline.asciidoc
+//   ^^ keyword.control.passthrough.end.asciidoc
+//     ^^^^^^^^ markup.italic.asciidoc
+//     ^ punctuation.definition.italic.begin.asciidoc
+//            ^ punctuation.definition.italic.end.asciidoc
+//             ^^^^^ markup.raw.inline.asciidoc
+//             ^^ keyword.control.passthrough.begin.asciidoc
+//                ^^ keyword.control.passthrough.end.asciidoc
+//                  ^^ punctuation.separator.key-value.asciidoc
+//                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.mapping.value.asciidoc
