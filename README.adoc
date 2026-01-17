@@ -134,9 +134,8 @@ Your suggestions are welcome.
 
 
 == Author & Credits
-Created by Hrusikesh Panda. Copy left or right, as you wish.
-
-Credit goes to Christian Zuckschwerdt for his original work on
+* Created by Hrusikesh Panda.
+* Syntax rewrite by Michael Lyons.
+* Credit goes to Christian Zuckschwerdt for his original work on
 link:https://github.com/zuckschwerdt/asciidoc.tmbundle[AsciiDoc TextMate bundle].
-
-The Article, Definition, and Definition Link snippets were written by Craig Jones.
+* The Article, Definition, and Definition Link snippets were written by Craig Jones.
