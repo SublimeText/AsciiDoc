@@ -36,40 +36,14 @@ contexts:
     - include: paragraphs
 
   blocks-common:
-    - include: comments
-    - match: ^\+$
-      scope: punctuation.separator.continuation.line.asciidoc
-    - include: includes
-    - include: conditionals
-    - include: document-attribute-declarations
-    - include: section-titles
-    - include: passthrough-blocks
-    - include: verbatims-and-source-blocks
-    - include: tables
-    - include: admonitions
-    - include: sidebars
-    - include: example-blocks
-    - include: verses
-    - include: blockquotes
-    - include: open-blocks
-    - include: breaks
-    - include: lists
-    - include: description-lists
-    - include: block-images
-    - include: audios-and-videos
-    - include: attribute-lists
-
-    # TODO: Figure out where this belongs
-    - match: ^(\.)
-      scope: punctuation.section.block.asciidoc
-      push:
-        - meta_content_scope: markup.bold.asciidoc
-        - include: eol-pop
-
-    # Paragraphs at the end
+    - include: blocks-without-literal-paragraphs
     - include: literal-paragraphs
 
   indented-blocks:
+    - include: blocks-without-literal-paragraphs
+    - include: setext-headings-or-paragraphs
+
+  blocks-without-literal-paragraphs:
     - include: comments
     - match: ^\+$
       scope: punctuation.separator.continuation.line.asciidoc
@@ -99,9 +73,6 @@ contexts:
       push:
         - meta_content_scope: markup.bold.asciidoc
         - include: eol-pop
-
-    # Paragraphs at the end
-    - include: setext-headings-or-paragraphs
 
   inlines:
     - match: (?!^)(\+)\s*$
