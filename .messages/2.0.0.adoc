@@ -1,0 +1,24 @@
+AsciiDoc 2.0
+------------
+
+The syntax has been rewritten in Sublime Text's YAML format.
+
+* Removed sequences incompatible with ST's fast `sregex` engine.
+* Added regression tests from:
+** AsciiDoc documention
+** Git documentation
+** Bug reports
+** Stuff I encountered
+* Updated scopes to better match ST's markup conventions.
+** This helps color schemes support more languages without special rules.
+* Added SETEXT headings.
+* Added built-in macros.
+* Added bibliography and cross-references.
+* Added table format.
+* Added description lists.
+* Embedded LaTeX math some places.
+* Embedded Markdown code fences.
+* Probably more.
+
+Some things may still be broken.
+Please file issues, particularly for cascading errors.
