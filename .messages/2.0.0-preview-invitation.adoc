@@ -1,0 +1,18 @@
+AsciiDoc 2.0 preview
+--------------------
+
+There is a big uplift underway for this package's syntax definition.
+If you are interested in trying it out, open your Package Control
+Settings file, and add (or update) the `install_prereleases` key:
+
+----
+{
+    "install_prereleases": [
+        "AsciiDoc",
+    ],
+}
+----
+
+The new version is not complete, but it may already be more usable
+than the existing version.  If you find bugs, particularly catastrophic
+ones, feel free to file an issue.
