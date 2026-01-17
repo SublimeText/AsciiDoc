@@ -1,4 +1,5 @@
 = AsciiDoc Package for Sublime Text
+:experimental:
 
 This is an link:https://asciidoc.org[AsciiDoc] package
 for link:https://www.sublimetext.com[Sublime Text].
