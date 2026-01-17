@@ -143,7 +143,7 @@ contexts:
   document-attributes:
     - match: '\\{(?=\S)'
       scope: constant.character.escape.asciidoc
-    - match: ({)empty(})
+    - match: (\{)empty(\})
       scope: constant.language.null.asciidoc
       captures:
         1: punctuation.definition.variable.begin.asciidoc
@@ -177,9 +177,9 @@ contexts:
     - include: attribute-list-contents
 
   attribute-list-contents:
-    - match: \G{{admonition}}
+    - match: '{{admonition}}'
       scope: support.type.admonition.asciidoc
-    - match: \G{{block_type}}
+    - match: '{{block_type}}'
       scope: support.type.block.asciidoc
     - include: comma-separator
     - include: named-attributes
@@ -202,7 +202,7 @@ contexts:
     - match: (?=[,\]#.%])
       pop: 1
     - include: autolinks
-    - match: \G"
+    - match: '"'
       scope: punctuation.definition.string.begin.asciidoc
       push:
         - meta_scope: meta.string.asciidoc string.quoted.double.asciidoc
@@ -790,9 +790,9 @@ contexts:
     - match: '{{bol}}$'
       set: maybe-indented-list-value
     - include: pop-block-anyway
-    - match: \G(\\\[)(?=[*xX ]\])
+    - match: (\\\[)(?=[*xX ]\])
       scope: constant.character.escape.asciidoc
-    - match: \G(\[)([*xX ])(\])
+    - match: (\[)([*xX ])(\])
       captures:
         1: markup.checkbox.begin.asciidoc punctuation.definition.checkbox.begin.asciidoc
         2: markup.checkbox.mark.asciidoc
@@ -1573,23 +1573,22 @@ variables:
   doctype: (?:article|book|manpage|inline)
   constrained_break: (?=[\s\p{P}`*+]|$)
 
-  setext_min: '{3,}'  # At least 3 of char
   setext_heading_or_paragraph: ^(?=\S)  # Any BOL non-whitespace
   setext_heading_escape: |-
     ^(?x)(?=              # At least N...
       (?:
-        ={{setext_min}}   # equal signs,
-      | -{{setext_min}}   # hyphens,
-      | ~{{setext_min}}   # tildes,
-      | \^{{setext_min}}  # carets,
-      | \+{{setext_min}}  # or plus signs.
+        ={3,}   # equal signs,
+      | -{3,}   # hyphens,
+      | ~{3,}   # tildes,
+      | \^{3,}  # carets,
+      | \+{3,}  # or plus signs.
     )[ \t]*$)             # Followed by only whitespace
-  setext_heading1_escape: ^(?=={{setext_min}}[ \t]*$)   # at least N equal signs
-  setext_heading2_escape: ^(?=-{{setext_min}}[ \t]*$)   # at least N hyphens
-  setext_heading3_escape: ^(?=~{{setext_min}}[ \t]*$)   # at least N tildes
-  setext_heading4_escape: ^(?=\^{{setext_min}}[ \t]*$)  # at least N carets
-  setext_heading1_end: ^(={{setext_min}})[ \t]*$(\n?)   # at least N equal signs
-  setext_heading2_end: ^(-{{setext_min}})[ \t]*$(\n?)   # at least N hyphens
-  setext_heading3_end: ^(~{{setext_min}})[ \t]*$(\n?)   # at least N tildes
-  setext_heading4_end: ^(\^{{setext_min}})[ \t]*$(\n?)  # at least N carets
-  setext_heading5_end: ^(\+{{setext_min}})[ \t]*$(\n?)  # at least N plus signs
+  setext_heading1_escape: ^(?=={3,}[ \t]*$)   # at least N equal signs
+  setext_heading2_escape: ^(?=-{3,}[ \t]*$)   # at least N hyphens
+  setext_heading3_escape: ^(?=~{3,}[ \t]*$)   # at least N tildes
+  setext_heading4_escape: ^(?=\^{3,}[ \t]*$)  # at least N carets
+  setext_heading1_end: ^(={3,})[ \t]*$(\n?)   # at least N equal signs
+  setext_heading2_end: ^(-{3,})[ \t]*$(\n?)   # at least N hyphens
+  setext_heading3_end: ^(~{3,})[ \t]*$(\n?)   # at least N tildes
+  setext_heading4_end: ^(\^{3,})[ \t]*$(\n?)  # at least N carets
+  setext_heading5_end: ^(\+{3,})[ \t]*$(\n?)  # at least N plus signs
