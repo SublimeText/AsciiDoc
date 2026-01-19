@@ -1,0 +1,568 @@
+// SYNTAX TEST "Packages/AsciiDoc/AsciiDoc.sublime-syntax"
+
+  // A single-line comment
+//^^^^^^^^^^^^^^^^^^^^^^^^ comment.line.double-slash.asciidoc
+//^^ punctuation.definition.comment.begin.asciidoc
+
+  ////
+//^^^^ comment.block.quad-slash.asciidoc
+//^^^^ punctuation.definition.comment.begin.asciidoc
+  A comment block.
+
+  Notice it's a delimited block.
+  ////
+//^^^^ comment.block.quad-slash.asciidoc
+//^^^^ punctuation.definition.comment.end.asciidoc
+
+= Document Title
+//^^^^^^^^^^^^^^ markup.heading.0.asciidoc
+//^^^^^^^^^^^^^^ entity.name.section.asciidoc
+
+Paragraphs don't require special markup in AsciiDoc.
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+A paragraph is defined by one or more consecutive lines of text.
+Line breaks within a paragraph are not displayed.
+
+Leave at least one empty line to begin a new paragraph.
+
+Line with `'curvy`' `"quotes`"
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//        ^^ constant.character.escape.asciidoc
+//               ^^ constant.character.escape.asciidoc
+//                  ^^ constant.character.escape.asciidoc
+//                          ^^ constant.character.escape.asciidoc
+Line with *bold*
+//^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//        ^^^^^^ markup.bold.asciidoc
+//        ^ punctuation.definition.bold.begin.asciidoc
+//             ^ punctuation.definition.bold.end.asciidoc
+Line with _italics_
+//^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//        ^^^^^^^^^ markup.italic.asciidoc
+//        ^ punctuation.definition.italic.begin.asciidoc
+//                ^ punctuation.definition.italic.end.asciidoc
+Line with `raw code`
+//^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//        ^^^^^^^^^^ markup.raw.inline.asciidoc
+//        ^ punctuation.definition.raw.begin.asciidoc
+//                 ^ punctuation.definition.raw.end.asciidoc
+Line with `+raw code+`
+//^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//        ^^^^^^^^^^^^ markup.raw.inline.asciidoc
+//        ^ punctuation.definition.raw.begin.asciidoc
+//         ^^^^^^^^^^ markup.raw.inline.asciidoc
+//         ^ keyword.control.passthrough.begin.asciidoc
+//                  ^ keyword.control.passthrough.end.asciidoc
+//                   ^ punctuation.definition.raw.end.asciidoc
+Line with #highlight#
+//^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//        ^^^^^^^^^^^ markup.bold.highlight.asciidoc
+//        ^ punctuation.definition.highlight.begin.asciidoc
+//                  ^ punctuation.definition.highlight.end.asciidoc
+Line with ~subscript~
+//^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//        ^^^^^^^^^^^ markup.italic.subscript.asciidoc
+//        ^ punctuation.definition.subscript.begin.asciidoc
+//                  ^ punctuation.definition.subscript.end.asciidoc
+Line with ^superscript^
+//^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//        ^^^^^^^^^^^^^ markup.italic.superscript.asciidoc
+//        ^ punctuation.definition.superscript.begin.asciidoc
+//                    ^ punctuation.definition.superscript.end.asciidoc
+
+Line with unconstrained **bold**
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//                      ^^^^^^^^ markup.bold.asciidoc
+//                      ^^ punctuation.definition.bold.begin.asciidoc
+//                            ^^ punctuation.definition.bold.end.asciidoc
+Line with unconstrained __italics__
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//                      ^^^^^^^^^^^ markup.italic.asciidoc
+//                      ^^ punctuation.definition.italic.begin.asciidoc
+//                               ^^ punctuation.definition.italic.end.asciidoc
+Line with unconstrained ``raw code``
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//                      ^^^^^^^^^^^^ markup.raw.inline.asciidoc
+//                      ^^ punctuation.definition.raw.begin.asciidoc
+//                                ^^ punctuation.definition.raw.end.asciidoc
+Line with unconstrained ##highlight##
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//                      ^^^^^^^^^^^^^ markup.bold.highlight.asciidoc
+//                      ^^ punctuation.definition.highlight.begin.asciidoc
+//                                 ^^ punctuation.definition.highlight.end.asciidoc
+
+* circles
+//^^^^^^^ meta.paragraph.list.asciidoc
+** all
+*** the
+**** way
+//^^^^^^ meta.paragraph.list.asciidoc
+//^^ punctuation.definition.list_item.asciidoc
+***** down
+
+. Protons
+. Electrons
+//^^^^^^^^^ meta.paragraph.list.asciidoc
+. Neutrons
+
+1. Protons
+2. Electrons
+3. Neutrons
+
+. Step 1
+. Step 2
+.. Step 2a
+//^^^^^^^^ meta.paragraph.list.asciidoc
+.. Step 2b
+. Step 3
+
+include::partial.adoc[]
+//^^^^^ keyword.control.import.asciidoc
+//     ^^ punctuation.separator.asciidoc
+//       ^^^^^^^^^^^^ string.unquoted.asciidoc
+//                   ^ punctuation.section.group.parameters.begin.asciidoc
+//                    ^ punctuation.section.group.parameters.end.asciidoc
+
+ifdef::env-github[]
+//^^^^^^^^^^^^^^^^^ meta.block.conditional.asciidoc
+//^^^ keyword.control.conditional.if.asciidoc
+//   ^^ punctuation.separator.asciidoc
+//     ^^^^^^^^^^ variable.other.readwrite.asciidoc
+//               ^^ punctuation.section.group.asciidoc
+This content is for GitHub only.
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.block.conditional.asciidoc meta.paragraph.asciidoc
+endif::[]
+//^^^^^^^ meta.block.conditional.asciidoc
+//^^^ keyword.control.conditional.end.asciidoc
+//   ^^ punctuation.separator.asciidoc
+//     ^^ punctuation.section.group.asciidoc
+
+// ^ - meta.block.conditional
+
+ifdef::revnumber[]
+This document has a version number of {revnumber}.
+endif::[]
+
+`git diff [<options>] [--] [<path>...]`::
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.mapping.key.asciidoc markup.raw.inline.asciidoc
+//        ^^^^^^^^^^^ meta.brackets.asciidoc
+//        ^ punctuation.section.group.parameters.begin.asciidoc
+//                  ^ punctuation.section.group.parameters.end.asciidoc
+//                    ^^^^ meta.brackets.asciidoc
+//                    ^ punctuation.section.group.parameters.begin.asciidoc
+//                       ^ punctuation.section.group.parameters.end.asciidoc
+//                         ^^^^^^^^^^^ meta.brackets.asciidoc
+//                         ^ punctuation.section.group.parameters.begin.asciidoc
+//                                   ^ punctuation.section.group.parameters.end.asciidoc
+//                                    ^ punctuation.definition.raw.end.asciidoc
+//                                     ^^ punctuation.separator.key-value.asciidoc
+
+  This form is to view the changes you made relative to
+  the index (staging area for the next commit).  In other
+  words, the differences are what you _could_ tell Git to
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.mapping.value.asciidoc
+//                                    ^^^^^^^ markup.italic.asciidoc
+//                                    ^ punctuation.definition.italic.begin.asciidoc
+//                                          ^ punctuation.definition.italic.end.asciidoc
+
+pass:a,q[{attribute-with-formatted-text}]
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//^^ keyword.control.passthrough.asciidoc
+//  ^ punctuation.separator.asciidoc
+//      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.brackets.asciidoc
+//      ^ punctuation.section.group.parameters.begin.asciidoc
+//       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ variable.other.readwrite.asciidoc
+//       ^ punctuation.definition.variable.begin.asciidoc
+//                                     ^ punctuation.definition.variable.end.asciidoc
+//                                      ^ punctuation.section.group.parameters.end.asciidoc
+
+The Lady of the Lake, her arm clad in the purest shimmering samite,
+held aloft Excalibur from the bosom of the water,
+signifying by divine providence that I, ((Arthur)),
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//                                      ^^ punctuation.definition.reference.begin.asciidoc
+//                                        ^^^^^^ meta.link.reference.metadata.asciidoc entity.name.reference.link.asciidoc
+//                                              ^^ punctuation.definition.reference.end.asciidoc
+was to carry Excalibur(((Sword, Broadsword, Excalibur))).
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//                    ^^^ punctuation.definition.reference.begin.asciidoc
+//                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.link.reference.metadata.asciidoc
+//                       ^^^^^ entity.name.reference.link.asciidoc
+//                            ^ punctuation.separator.sequence.asciidoc
+//                              ^^^^^^^^^^ entity.name.reference.link.asciidoc
+//                                        ^ punctuation.separator.sequence.asciidoc
+//                                          ^^^^^^^^^ entity.name.reference.link.asciidoc
+//                                                   ^^^ punctuation.definition.reference.end.asciidoc
+That is why I am your king. Shut up! Will you shut up?!
+Burn her anyway! I'm not a witch.
+Look, my liege! We found them.
+
+indexterm2:[Lancelot] was one of the Knights of the Round Table.
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//^^^^^^^^ keyword.control.asciidoc
+//        ^ punctuation.separator.asciidoc
+//         ^ punctuation.section.group.parameters.begin.asciidoc
+//          ^^^^^^^^ entity.name.reference.link.asciidoc
+//                  ^ punctuation.section.group.parameters.end.asciidoc
+indexterm:[knight, Knight of the Round Table, Lancelot]
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//^^^^^^^ keyword.control.asciidoc
+//       ^ punctuation.separator.asciidoc
+//        ^ punctuation.section.group.parameters.begin.asciidoc
+//         ^^^^^^ entity.name.reference.link.asciidoc
+//               ^ punctuation.separator.sequence.asciidoc
+//                 ^^^^^^ entity.name.reference.link.asciidoc
+//                        ^^ entity.name.reference.link.asciidoc
+//                           ^^^ entity.name.reference.link.asciidoc
+//                               ^^^^^ entity.name.reference.link.asciidoc
+//                                     ^^^^^ entity.name.reference.link.asciidoc
+//                                          ^ punctuation.separator.sequence.asciidoc
+//                                            ^^^^^^^^ entity.name.reference.link.asciidoc
+//                                                    ^ punctuation.section.group.parameters.end.asciidoc
+
+I, King Arthur.
+(((knight, "Arthur, King")))
+//^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//^ punctuation.definition.reference.begin.asciidoc
+// ^^^^^^^^^^^^^^^^^^^^^^ meta.link.reference.metadata.asciidoc
+// ^^^^^^ entity.name.reference.link.asciidoc
+//       ^ punctuation.separator.sequence.asciidoc
+//         ^^^^^^^^^^^^^^ meta.string.asciidoc string.quoted.double.asciidoc
+//         ^ punctuation.definition.string.begin.asciidoc
+//                      ^ punctuation.definition.string.end.asciidoc
+//                       ^^^ punctuation.definition.reference.end.asciidoc
+
+bold *constrained* & **un**constrained
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//   ^^^^^^^^^^^^^ markup.bold.asciidoc
+//   ^ punctuation.definition.bold.begin.asciidoc
+//               ^ punctuation.definition.bold.end.asciidoc
+//                   ^^^^^^ markup.bold.asciidoc
+//                   ^^ punctuation.definition.bold.begin.asciidoc
+//                       ^^ punctuation.definition.bold.end.asciidoc
+
+italic _constrained_ & __un__constrained
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//     ^^^^^^^^^^^^^ markup.italic.asciidoc
+//     ^ punctuation.definition.italic.begin.asciidoc
+//                 ^ punctuation.definition.italic.end.asciidoc
+//                     ^^^^^^ markup.italic.asciidoc
+//                     ^^ punctuation.definition.italic.begin.asciidoc
+//                         ^^ punctuation.definition.italic.end.asciidoc
+
+bold italic *_constrained_* & **__un__**constrained
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//          ^^^^^^^^^^^^^^^ markup.bold.asciidoc
+//          ^ punctuation.definition.bold.begin.asciidoc
+//           ^^^^^^^^^^^^^ markup.italic.asciidoc
+//           ^ punctuation.definition.italic.begin.asciidoc
+//                       ^ punctuation.definition.italic.end.asciidoc
+//                        ^ punctuation.definition.bold.end.asciidoc
+//                            ^^^^^^^^^^ markup.bold.asciidoc
+//                            ^^ punctuation.definition.bold.begin.asciidoc
+//                              ^^^^^^ markup.italic.asciidoc
+//                              ^^ punctuation.definition.italic.begin.asciidoc
+//                                  ^^ punctuation.definition.italic.end.asciidoc
+//                                    ^^ punctuation.definition.bold.end.asciidoc
+
+monospace `constrained` & ``un``constrained
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//        ^^^^^^^^^^^^^ markup.raw.inline.asciidoc
+//        ^ punctuation.definition.raw.begin.asciidoc
+//                    ^ punctuation.definition.raw.end.asciidoc
+//                        ^^^^^^ markup.raw.inline.asciidoc
+//                        ^^ punctuation.definition.raw.begin.asciidoc
+//                            ^^ punctuation.definition.raw.end.asciidoc
+
+monospace shortcut for `*` ``_`` single chars
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//                     ^^^ markup.raw.inline.asciidoc
+//                     ^ punctuation.definition.raw.begin.asciidoc
+//                       ^ punctuation.definition.raw.end.asciidoc
+//                         ^^^^^ markup.raw.inline.asciidoc
+//                         ^^ punctuation.definition.raw.begin.asciidoc
+//                            ^^ punctuation.definition.raw.end.asciidoc
+
+monospace bold `*constrained*` & ``**un**``constrained
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//             ^^^^^^^^^^^^^^^ markup.raw.inline.asciidoc
+//             ^ punctuation.definition.raw.begin.asciidoc
+//              ^^^^^^^^^^^^^ markup.bold.asciidoc
+//              ^ punctuation.definition.bold.begin.asciidoc
+//                          ^ punctuation.definition.bold.end.asciidoc
+//                           ^ punctuation.definition.raw.end.asciidoc
+//                               ^^^^^^^^^^ markup.raw.inline.asciidoc
+//                               ^^ punctuation.definition.raw.begin.asciidoc
+//                                 ^^^^^^ markup.bold.asciidoc
+//                                 ^^ punctuation.definition.bold.begin.asciidoc
+//                                     ^^ punctuation.definition.bold.end.asciidoc
+//                                       ^^ punctuation.definition.raw.end.asciidoc
+
+monospace italic `_constrained_` & ``__un__``constrained
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//               ^^^^^^^^^^^^^^^ markup.raw.inline.asciidoc
+//               ^ punctuation.definition.raw.begin.asciidoc
+//                ^^^^^^^^^^^^^ markup.italic.asciidoc
+//                ^ punctuation.definition.italic.begin.asciidoc
+//                            ^ punctuation.definition.italic.end.asciidoc
+//                             ^ punctuation.definition.raw.end.asciidoc
+//                                 ^^^^^^^^^^ markup.raw.inline.asciidoc
+//                                 ^^ punctuation.definition.raw.begin.asciidoc
+//                                   ^^^^^^ markup.italic.asciidoc
+//                                   ^^ punctuation.definition.italic.begin.asciidoc
+//                                       ^^ punctuation.definition.italic.end.asciidoc
+//                                         ^^ punctuation.definition.raw.end.asciidoc
+
+monospace bold italic `*_constrained_*` & ``**__un__**``constrained
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//                    ^^^^^^^^^^^^^^^^^ markup.raw.inline.asciidoc
+//                    ^ punctuation.definition.raw.begin.asciidoc
+//                     ^^^^^^^^^^^^^^^ markup.bold.asciidoc
+//                     ^ punctuation.definition.bold.begin.asciidoc
+//                      ^^^^^^^^^^^^^ markup.italic.asciidoc
+//                      ^ punctuation.definition.italic.begin.asciidoc
+//                                  ^ punctuation.definition.italic.end.asciidoc
+//                                   ^ punctuation.definition.bold.end.asciidoc
+//                                    ^ punctuation.definition.raw.end.asciidoc
+//                                        ^^^^^^^^^^^^^^ markup.raw.inline.asciidoc
+//                                        ^^ punctuation.definition.raw.begin.asciidoc
+//                                          ^^^^^^^^^^ markup.bold.asciidoc
+//                                          ^^ punctuation.definition.bold.begin.asciidoc
+//                                            ^^^^^^ markup.italic.asciidoc
+//                                            ^^ punctuation.definition.italic.begin.asciidoc
+//                                                ^^ punctuation.definition.italic.end.asciidoc
+//                                                  ^^ punctuation.definition.bold.end.asciidoc
+//                                                    ^^ punctuation.definition.raw.end.asciidoc
+
+monospace bold italic `_*constrained*_` & ``__**un**__``constrained
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//                    ^^^^^^^^^^^^^^^^^ markup.raw.inline.asciidoc
+//                    ^ punctuation.definition.raw.begin.asciidoc
+//                     ^^^^^^^^^^^^^^^ markup.italic.asciidoc
+//                     ^ punctuation.definition.italic.begin.asciidoc
+//                      ^^^^^^^^^^^^^ markup.bold.asciidoc
+//                      ^ punctuation.definition.bold.begin.asciidoc
+//                                  ^ punctuation.definition.bold.end.asciidoc
+//                                   ^ punctuation.definition.italic.end.asciidoc
+//                                    ^ punctuation.definition.raw.end.asciidoc
+//                                        ^^^^^^^^^^^^^^ markup.raw.inline.asciidoc
+//                                        ^^ punctuation.definition.raw.begin.asciidoc
+//                                          ^^^^^^^^^^ markup.italic.asciidoc
+//                                          ^^ punctuation.definition.italic.begin.asciidoc
+//                                            ^^^^^^ markup.bold.asciidoc
+//                                            ^^ punctuation.definition.bold.begin.asciidoc
+//                                                ^^ punctuation.definition.bold.end.asciidoc
+//                                                  ^^ punctuation.definition.italic.end.asciidoc
+//                                                    ^^ punctuation.definition.raw.end.asciidoc
+
+"`Well the H~2~O formula written on their whiteboard could be part
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//          ^^^ markup.italic.subscript.asciidoc
+//          ^ punctuation.definition.subscript.begin.asciidoc
+//            ^ punctuation.definition.subscript.end.asciidoc
+of a shopping list, but I don't think the local bodega sells
+E=mc^2^,`" Lazarus replied.
+//^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//  ^^^ markup.italic.superscript.asciidoc
+//  ^ punctuation.definition.superscript.begin.asciidoc
+//    ^ punctuation.definition.superscript.end.asciidoc
+//      ^^ constant.character.escape.asciidoc
+
+"`Wait!`" Indigo plucked a small vial from her desk's top drawer
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//     ^^ constant.character.escape.asciidoc
+and held it toward us.
+The vial's label read: `E=mc^2^`; the `E` represents _energy_,
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//                     ^^^^^^^^^ markup.raw.inline.asciidoc
+//                     ^ punctuation.definition.raw.begin.asciidoc
+//                          ^^^ markup.italic.superscript.asciidoc
+//                          ^ punctuation.definition.superscript.begin.asciidoc
+//                            ^ punctuation.definition.superscript.end.asciidoc
+//                             ^ punctuation.definition.raw.end.asciidoc
+//                                    ^^^ markup.raw.inline.asciidoc
+//                                    ^ punctuation.definition.raw.begin.asciidoc
+//                                      ^ punctuation.definition.raw.end.asciidoc
+//                                                   ^^^^^^^^ markup.italic.asciidoc
+//                                                   ^ punctuation.definition.italic.begin.asciidoc
+//                                                          ^ punctuation.definition.italic.end.asciidoc
+but also pure _genius!_
+
+You can reference the value of a document attribute using
+the syntax `+{name}+`, where `name` is the attribute name.
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//         ^^^^^^^^^^ markup.raw.inline.asciidoc - variable
+//         ^ punctuation.definition.raw.begin.asciidoc
+//          ^^^^^^^^ markup.raw.inline.asciidoc
+//          ^ keyword.control.passthrough.begin.asciidoc
+//                 ^ keyword.control.passthrough.end.asciidoc
+//                  ^ punctuation.definition.raw.end.asciidoc
+//                           ^^^^^^ markup.raw.inline.asciidoc
+//                           ^ punctuation.definition.raw.begin.asciidoc
+//                                ^ punctuation.definition.raw.end.asciidoc
+
+Deprecated $$double-dollar$$ passthrough
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//         ^^^^^^^^^^^^^^^^^ markup.raw.inline.asciidoc
+//         ^^ keyword.control.passthrough.begin.asciidoc
+//                        ^^ keyword.control.passthrough.end.asciidoc
+
+foo &#00;
+//^^^^^^^ meta.paragraph.asciidoc
+//  ^^^^^ constant.character.entity.decimal.html
+//  ^^ punctuation.definition.entity.html
+//      ^ punctuation.terminator.entity.html
+foo &#x0000;
+//^^^^^^^^^^ meta.paragraph.asciidoc
+//  ^^^^^^^^ constant.character.entity.hexadecimal.html
+//  ^^^ punctuation.definition.entity.html
+//         ^ punctuation.terminator.entity.html
+foo &Abreve;
+//^^^^^^^^^^ meta.paragraph.asciidoc
+//  ^^^^^^^^ constant.character.entity.named.html
+//  ^ punctuation.definition.entity.html
+//         ^ punctuation.terminator.entity.html
+
+```java
+//^^^^^^ meta.code-fence.definition.begin
+//^ punctuation.definition.raw.code-fence.begin.markdown
+// ^^^^ constant.other.language-name.markdown
+//     ^ meta.fold.code-fence.begin.markdown
+class _MyClass
+{
+    void foo();
+};
+```
+//^^ meta.code-fence.definition.end
+//^ punctuation.definition.raw.code-fence.end.markdown
+// ^ meta.fold.code-fence.end.markdown
+
+== Plus-signs
+
+Monospace +text+ content.
+//^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//        ^^^^^^ markup.raw.inline.asciidoc
+//        ^ keyword.control.passthrough.begin.asciidoc
+//             ^ keyword.control.passthrough.end.asciidoc
+Monospace++in++aword.
+//^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//       ^^^^^^ markup.raw.inline.asciidoc
+//       ^^ keyword.control.passthrough.begin.asciidoc
+//           ^^ keyword.control.passthrough.end.asciidoc
+Some programming language is called C++.
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc - markup.raw
+How about C++? Is fine.
+//^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc - markup.raw
+As long as C++ does not occur twice in a line; C++.
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.raw.inline.asciidoc
+//          ^^ keyword.control.passthrough.begin.asciidoc
+//                                              ^^ keyword.control.passthrough.end.asciidoc
+C\{++} and C\{++}
+//^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//^ constant.character.escape.asciidoc
+// ^^^^^^^^^^^^^ markup.raw.inline.asciidoc
+// ^^ keyword.control.passthrough.begin.asciidoc
+//            ^^ keyword.control.passthrough.end.asciidoc
+C\++ and C++.
+//^^^^^^^^^^^^ meta.paragraph.asciidoc
+//^ constant.character.escape.asciidoc
+C\++ and C\++.
+//^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//^ constant.character.escape.asciidoc
+// TODO: First \+ in each sequence should be escape. Second in each should not.
+C\+\+ and C\+\+.
+//^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+// ^^ - constant
+//^ constant.character.escape.asciidoc
+//           ^^ - constant
+Notepadpass:[++] is *great*, I like Notepadpass:[++]
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//     ^^^^ keyword.control.passthrough.asciidoc
+//         ^ punctuation.separator.asciidoc
+//          ^^^^ markup.raw.inline.asciidoc
+//          ^ punctuation.definition.string.begin.asciidoc
+//             ^ punctuation.definition.string.end.asciidoc
+//                  ^^^^^^^ markup.bold.asciidoc
+//                  ^ punctuation.definition.bold.begin.asciidoc
+//                        ^ punctuation.definition.bold.end.asciidoc
+//                                         ^^^^ keyword.control.passthrough.asciidoc
+//                                             ^ punctuation.separator.asciidoc
+//                                              ^^^^ markup.raw.inline.asciidoc
+//                                              ^ punctuation.definition.string.begin.asciidoc
+//                                                 ^ punctuation.definition.string.end.asciidoc
+
+Notepad{blank}pass:[++] is *great*, I like Notepad{blank}pass:[++]
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//     ^^^^^^^ variable.other.readwrite.asciidoc
+//     ^ punctuation.definition.variable.begin.asciidoc
+//           ^ punctuation.definition.variable.end.asciidoc
+//            ^^^^ keyword.control.passthrough.asciidoc
+//                ^ punctuation.separator.asciidoc
+//                 ^^^^ markup.raw.inline.asciidoc
+//                 ^ punctuation.definition.string.begin.asciidoc
+//                    ^ punctuation.definition.string.end.asciidoc
+//                         ^^^^^^^ markup.bold.asciidoc
+//                         ^ punctuation.definition.bold.begin.asciidoc
+//                               ^ punctuation.definition.bold.end.asciidoc
+//                                                ^^^^^^^ variable.other.readwrite.asciidoc
+//                                                ^ punctuation.definition.variable.begin.asciidoc
+//                                                      ^ punctuation.definition.variable.end.asciidoc
+//                                                       ^^^^ keyword.control.passthrough.asciidoc
+//                                                           ^ punctuation.separator.asciidoc
+//                                                            ^^^^ markup.raw.inline.asciidoc
+//                                                            ^ punctuation.definition.string.begin.asciidoc
+//                                                               ^ punctuation.definition.string.end.asciidoc
+
+Notepad{plus}{plus} is *great*, I like Notepad{plus}{plus}
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//     ^^^^^^^^^^^^ variable.other.readwrite.asciidoc
+//     ^ punctuation.definition.variable.begin.asciidoc
+//          ^ punctuation.definition.variable.end.asciidoc
+//           ^ punctuation.definition.variable.begin.asciidoc
+//                ^ punctuation.definition.variable.end.asciidoc
+//                     ^^^^^^^ markup.bold.asciidoc
+//                     ^ punctuation.definition.bold.begin.asciidoc
+//                           ^ punctuation.definition.bold.end.asciidoc
+//                                            ^^^^^^^^^^^^ variable.other.readwrite.asciidoc
+//                                            ^ punctuation.definition.variable.begin.asciidoc
+//                                                 ^ punctuation.definition.variable.end.asciidoc
+//                                                  ^ punctuation.definition.variable.begin.asciidoc
+//                                                       ^ punctuation.definition.variable.end.asciidoc
+
+foo `_vimrc` bar
+//^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//  ^^^^^^^^ markup.raw.inline.asciidoc
+//  ^ punctuation.definition.raw.begin.asciidoc
+//         ^ punctuation.definition.raw.end.asciidoc
+
+`*.jpg *.png`::
+//^^^^^^^^^^^ meta.mapping.key.asciidoc markup.raw.inline.asciidoc
+//          ^ punctuation.definition.raw.end.asciidoc
+//           ^^ punctuation.separator.key-value.asciidoc
+//             ^ meta.mapping.value.asciidoc
+image files
+
+latexmath:[C = \alpha + \beta Y^{\gamma} + \epsilon]
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//^^^^^^^ support.function.asciidoc
+//       ^ punctuation.separator.asciidoc
+//        ^ punctuation.definition.string.begin.asciidoc
+//         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ string.other.math.asciidoc text.tex.embedded.asciidoc
+//                                                 ^ punctuation.definition.string.end.asciidoc
+
+    ~/secure/vault/defops
+//^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc markup.raw.block.asciidoc - markup.italic
+
+....
+Kismet: Where is the *defensive operations manual*?
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.raw.code-fence.asciidoc - markup.bold
+
+Computer: Calculating ...
+Can not locate object.
+You are not authorized to know it exists.
+
+Kismet: Did the werewolves tell you to say that?
+
+Computer: Calculating ...
+....

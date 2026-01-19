@@ -1,0 +1,79 @@
+// SYNTAX TEST "Packages/AsciiDoc/AsciiDoc.sublime-syntax"
+
+advice.*::
+//^^^^^^ meta.mapping.key.asciidoc - markup.bold
+//    ^^ meta.suppress.constrained.asciidoc
+//      ^^ punctuation.separator.key-value.asciidoc
+//        ^ meta.mapping.value.asciidoc
+  These variables control various optional help messages designed to
+
+core.worktree::
+  Set the path to the root of the working tree.
+  If `GIT_COMMON_DIR` environment variable is set, core.worktree
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.mapping.value.asciidoc - markup.italic
+
+`separator`;;
+  separators between fields on a line (`:`, `-`, and `=`)
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.mapping.value.asciidoc
+//                                     ^^^ markup.raw.inline.asciidoc
+//                                     ^ punctuation.definition.raw.begin.asciidoc
+//                                       ^ punctuation.definition.raw.end.asciidoc
+//                                          ^^^ markup.raw.inline.asciidoc
+//                                          ^ punctuation.definition.raw.begin.asciidoc
+//                                            ^ punctuation.definition.raw.end.asciidoc
+//                                                   ^^^ markup.raw.inline.asciidoc
+//                                                   ^ punctuation.definition.raw.begin.asciidoc
+//                                                     ^ punctuation.definition.raw.end.asciidoc
+  and between hunks (`--`)
+--
+
+credential.useHttpPath::
+  When acquiring credentials, consider the "path" component of an http
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.mapping.value.asciidoc - markup.underline
+
+`merge.log`::
+  In addition to branch names, populate the log message with at
+  most the specified number of one-line descriptions from the
+  actual commits that are being merged.  Defaults to false, and
+  true is a synonym for 20.
+//^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.mapping.value.asciidoc - markup.list
+
+// You can grow a new branch from any commit. For example, switch to
+// "`HEAD~3`" and create branch "`fixup`":
+
+// ------------
+// //^^^^^^^^^^ - markup.heading
+// $ git switch -c fixup HEAD~3
+// Switched to a new branch 'fixup'
+// ------------
+
+ - An asterisk "`*`" matches anything except a slash.
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.list.asciidoc
+//             ^^ constant.character.escape.asciidoc
+//                ^^ constant.character.escape.asciidoc - markup.bold
+
+++%C(++_<spec>_++)++:: color specification, as described under Values in the
+//^^^^^^^^^^^^^^^^^^ meta.mapping.key.asciidoc
+//^^^^^ markup.raw.inline.asciidoc
+//   ^^ keyword.control.passthrough.end.asciidoc
+//     ^^^^^^^^ markup.italic.asciidoc
+//     ^ punctuation.definition.italic.begin.asciidoc
+//            ^ punctuation.definition.italic.end.asciidoc
+//             ^^^^^ markup.raw.inline.asciidoc
+//             ^^ keyword.control.passthrough.begin.asciidoc
+//                ^^ keyword.control.passthrough.end.asciidoc
+//                  ^^ punctuation.separator.key-value.asciidoc
+//                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.mapping.value.asciidoc
+
+`--branches[=<pattern>]`::
+  Pretend as if all the refs in `refs/heads` are listed
+  on the command line as _<commit>_. If _<pattern>_ is given, limit
+  branches to ones matching given shell glob. If _<pattern>_ lacks '?',
+  '{asterisk}', or '[', '/{asterisk}' at the end is implied.
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.mapping.value.asciidoc - punctuation.section
+// ^^^^^^^^^^ variable.other.readwrite.asciidoc
+// ^ punctuation.definition.variable.begin.asciidoc
+//          ^ punctuation.definition.variable.end.asciidoc
+//                        ^^^^^^^^^^ variable.other.readwrite.asciidoc
+//                        ^ punctuation.definition.variable.begin.asciidoc
+//                                 ^ punctuation.definition.variable.end.asciidoc

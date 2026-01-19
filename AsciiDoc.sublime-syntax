@@ -1,0 +1,1565 @@
+%YAML 1.2
+---
+# https://www.sublimetext.com/docs/syntax.html
+# https://asciidoc.org
+name: AsciiDoc
+scope: text.html.asciidoc
+version: 2
+
+file_extensions:
+  - adoc
+  - adoco
+  - asciidoc
+  - asc
+
+contexts:
+
+  main:
+    - include: blocks
+
+  # Stuff from old version, not implemented
+  # TODO: Mark `<`s that will be converted to &lt; in HTML
+
+  # Stuff from asciidoc.org, not implemented
+  # TODO: Markdown-style blockquotes
+  # TODO: Using `\` is ONLY an escape if the next character would otherwise
+  #       be treated specially. See `C\+\+ foo C\+\+`.
+
+###[ BLOCKS ]##################################################################
+
+  blocks:
+    - include: blocks-common
+    - include: setext-headings-or-paragraphs
+
+  blocks-without-setext:
+    - include: blocks-common
+    - include: paragraphs
+
+  blocks-common:
+    - include: blocks-without-literal-paragraphs
+    - include: literal-paragraphs
+
+  indented-blocks:
+    - include: blocks-without-literal-paragraphs
+    - include: setext-headings-or-paragraphs
+
+  blocks-without-literal-paragraphs:
+    - include: comments
+    - match: ^\+$
+      scope: punctuation.separator.continuation.line.asciidoc
+    - include: includes
+    - include: conditionals
+    - include: document-attribute-declarations
+    - include: section-titles
+    - include: passthrough-blocks
+    - include: verbatims-and-source-blocks
+    - include: tables
+    - include: admonitions
+    - include: sidebars
+    - include: example-blocks
+    - include: verses
+    - include: blockquotes
+    - include: open-blocks
+    - include: breaks
+    - include: lists
+    - include: description-lists
+    - include: block-images
+    - include: audios-and-videos
+    - include: attribute-lists
+
+    # TODO: Figure out where this belongs
+    - match: ^(\.)
+      scope: punctuation.section.block.asciidoc
+      push:
+        - meta_content_scope: markup.bold.asciidoc
+        - include: eol-pop
+
+  inlines:
+    - match: (?!^)(\+)\s*$
+      captures:
+        1: constant.character.break.asciidoc
+    - include: document-attributes
+    - include: inline-images
+    - include: bibliography-references
+    - include: cross-references
+    - include: index-terms
+    - include: attribute-lists
+    - include: passthrough-inlines
+    - include: links
+    - include: substitutions
+    - include: text-formatting
+    - include: footnotes
+    - include: keyboard-macros
+    - include: button-menu-macros
+    - include: equation-macros
+
+###[ DOCUMENT ATTRIBUTES ]#####################################################
+
+  document-attribute-declarations:
+    - match: '\\:(?={{attribute_name}}:)'
+      scope: constant.character.escape.asciidoc
+    - match: ((:){{attribute_name}}(:))[ ]*
+      captures:
+        1: variable.other.readwrite.asciidoc
+        2: punctuation.definition.variable.begin.asciidoc
+        3: punctuation.definition.variable.end.asciidoc
+      push: maybe-document-attribute-assignment
+
+  maybe-document-attribute-assignment:
+    - meta_content_scope: string.unquoted.asciidoc
+    - include: line-continuations
+    - include: eol-pop
+    - include: inlines
+
+  document-attributes:
+    - match: '\\{(?=\S)'
+      scope: constant.character.escape.asciidoc
+    - match: (\{)empty(\})
+      scope: constant.language.null.asciidoc
+      captures:
+        1: punctuation.definition.variable.begin.asciidoc
+        2: punctuation.definition.variable.end.asciidoc
+    - match: ({){{attribute_builtin}}(})
+      scope: support.variable.asciidoc
+      captures:
+        1: punctuation.definition.variable.begin.asciidoc
+        2: punctuation.definition.variable.end.asciidoc
+    - match: ({){{attribute_name}}(})
+      scope: variable.other.readwrite.asciidoc
+      captures:
+        1: punctuation.definition.variable.begin.asciidoc
+        2: punctuation.definition.variable.end.asciidoc
+
+###[ ELEMENT ATTRIBUTES ]######################################################
+
+  attribute-lists:
+    - match: \[?(\\\[)\[(?=.*\])
+      captures:
+        1: constant.character.escape.asciidoc
+    - match: \[(?!\\?\[)(?=.*\])
+      scope: punctuation.section.group.parameters.begin.asciidoc
+      push: attribute-list-body
+
+  attribute-list-body:
+    - meta_scope: meta.brackets.asciidoc
+    - match: \]
+      scope: punctuation.section.group.parameters.end.asciidoc
+      pop: 1
+    - include: attribute-list-contents
+
+  attribute-list-contents:
+    - match: '{{admonition}}'
+      scope: support.type.admonition.asciidoc
+    - match: '{{block_type}}'
+      scope: support.type.block.asciidoc
+    - include: comma-separator
+    - include: named-attributes
+    - include: attribute-anchors
+    - include: attribute-roles
+    - include: attribute-options
+    - include: document-attributes
+    - include: autolinks
+
+  named-attributes:
+    - match: \b([\w-]+)(=)
+      captures:
+        1: meta.mapping.key.asciidoc entity.other.attribute-name.asciidoc
+        2: punctuation.separator.key-value.asciidoc
+      push: named-attribute-value
+
+  named-attribute-value:
+    - meta_scope: meta.attribute-with-value.asciidoc
+    - meta_content_scope: meta.mapping.value.asciidoc
+    - match: (?=[,\]#.%])
+      pop: 1
+    - include: autolinks
+    - match: '"'
+      scope: punctuation.definition.string.begin.asciidoc
+      push:
+        - meta_scope: meta.string.asciidoc string.quoted.double.asciidoc
+        - match: '"'
+          scope: punctuation.definition.string.end.asciidoc
+          pop: 1
+
+  attribute-anchors:
+    - match: (#){{attribute_name}}
+      scope: entity.name.reference.link.asciidoc
+      captures:
+        1: punctuation.definition.asciidoc
+
+  attribute-roles:
+    - match: (\.){{attribute_name}}
+      scope: storage.modifier.role.asciidoc
+      captures:
+        1: punctuation.definition.asciidoc
+
+  attribute-options:
+    - match: (%){{attribute_name}}
+      scope: keyword.other.option.asciidoc
+      captures:
+        1: punctuation.definition.keyword.asciidoc
+
+###[ DOCUMENT HEADER ]#########################################################
+
+  # TODO: Add an author block after the document header?
+
+###[ DOCUMENT TYPE ]###########################################################
+
+  # Nothing to do here
+
+###[ SECTIONS ]################################################################
+
+  # https://docs.asciidoctor.org/asciidoc/latest/sections/titles-and-levels/
+  section-titles:
+    - match: '{{bol}}\\[=#]'
+      scope: constant.character.escape.asciidoc
+    - match: '{{bol}}(=|#)[ ]'
+      captures:
+        1: punctuation.definition.heading.begin.asciidoc
+      push: section-title-0-body
+    - match: '{{bol}}(=={1}|##{1})[ ]'
+      captures:
+        1: punctuation.definition.heading.begin.asciidoc
+      push: section-title-1-body
+    - match: '{{bol}}(=={2}|##{2})[ ]'
+      captures:
+        1: punctuation.definition.heading.begin.asciidoc
+      push: section-title-2-body
+    - match: '{{bol}}(=={3}|##{3})[ ]'
+      captures:
+        1: punctuation.definition.heading.begin.asciidoc
+      push: section-title-3-body
+    - match: '{{bol}}(=={4}|##{4})[ ]'
+      captures:
+        1: punctuation.definition.heading.begin.asciidoc
+      push: section-title-4-body
+    - match: '{{bol}}(=={5}|##{5})[ ]'
+      captures:
+        1: punctuation.definition.heading.begin.asciidoc
+      push: section-title-5-body
+
+  section-title-0-body:
+    - meta_scope: markup.heading.0.asciidoc
+    - meta_content_scope: entity.name.section.asciidoc
+    - include: eol-pop
+    - include: inlines
+
+  section-title-1-body:
+    - meta_scope: markup.heading.1.asciidoc
+    - meta_content_scope: entity.name.section.asciidoc
+    - include: eol-pop
+    - include: inlines
+
+  section-title-2-body:
+    - meta_scope: markup.heading.2.asciidoc
+    - meta_content_scope: entity.name.section.asciidoc
+    - include: eol-pop
+    - include: inlines
+
+  section-title-3-body:
+    - meta_scope: markup.heading.3.asciidoc
+    - meta_content_scope: entity.name.section.asciidoc
+    - include: eol-pop
+    - include: inlines
+
+  section-title-4-body:
+    - meta_scope: markup.heading.4.asciidoc
+    - meta_content_scope: entity.name.section.asciidoc
+    - include: eol-pop
+    - include: inlines
+
+  section-title-5-body:
+    - meta_scope: markup.heading.5.asciidoc
+    - meta_content_scope: entity.name.section.asciidoc
+    - include: eol-pop
+    - include: inlines
+
+  bibliography-references:
+    - match: '\[?(\\\[)\['
+      captures:
+        1: constant.character.escape.asciidoc
+    - match: \[{3}
+      scope: punctuation.definition.reference.begin.asciidoc
+      push: bibliography-reference-body
+
+  bibliography-reference-body:
+    - meta_content_scope: meta.link.reference.metadata.asciidoc entity.name.reference.link.asciidoc
+    - match: \]{3}
+      scope: punctuation.definition.reference.end.asciidoc
+      pop: 1
+    - include: comma-separator
+      set: bibliography-reference-attributes
+
+  bibliography-reference-attributes:
+    - meta_content_scope: meta.link.reference.metadata.asciidoc
+    - match: \]{3}
+      scope: punctuation.definition.reference.end.asciidoc
+      pop: 1
+    - include: attribute-list-contents
+
+  index-terms:
+    - include: concealed-index-terms
+    - include: flow-index-terms
+
+  flow-index-terms:
+    - match: \\\((?=\()
+      scope: constant.character.escape.asciidoc
+    - match: \({2}
+      scope: punctuation.definition.reference.begin.asciidoc
+      push: flow-index-term-body
+    - match: \b(indexterm2)(:)(\[)
+      captures:
+        1: keyword.control.asciidoc
+        2: punctuation.separator.asciidoc
+        3: punctuation.section.group.parameters.begin.asciidoc
+      push: index-term-macro-arguments
+
+  flow-index-term-body:
+    - meta_content_scope: meta.link.reference.metadata.asciidoc entity.name.reference.link.asciidoc
+    - match: \){2}
+      scope: punctuation.definition.reference.end.asciidoc
+      pop: 1
+
+  index-term-macro-arguments:
+    - match: \]
+      scope: punctuation.section.group.parameters.end.asciidoc
+      pop: 1
+    - include: comma-separator
+    - include: string-double-body
+    - match: '[^\s\],]+'
+      scope: entity.name.reference.link.asciidoc
+
+  concealed-index-terms:
+    - match: \\\((?=\(\()
+      scope: constant.character.escape.asciidoc
+    - match: \({3}
+      scope: punctuation.definition.reference.begin.asciidoc
+      push: concealed-index-term-body
+    - match: \b(indexterm)(:)(\[)
+      captures:
+        1: keyword.control.asciidoc
+        2: punctuation.separator.asciidoc
+        3: punctuation.section.group.parameters.begin.asciidoc
+      push: index-term-macro-arguments
+
+  concealed-index-term-body:
+    - meta_content_scope: meta.link.reference.metadata.asciidoc
+    - match: \){3}
+      scope: punctuation.definition.reference.end.asciidoc
+      pop: 1
+    - include: comma-separator
+    - include: string-double
+    - match: '[^\s),]+'
+      scope: entity.name.reference.link.asciidoc
+
+  setext-headings-or-paragraphs:
+    # A paragraph may start with a line of equal signs which must not be matched
+    # as heading underline. This is achieved by consuming them here, which also
+    # applies `meta.paragraph` scope as expected.
+    # A line of dashes is already matched as thematic break and thus ignored.
+    - match: '{{setext_heading_or_paragraph}}'
+      branch_point: setext-headings-or-paragraphs
+      branch:
+        - paragraph-body
+        - setext-heading5
+        - setext-heading4
+        - setext-heading3
+        - setext-heading2
+        - setext-heading1
+
+  setext-heading1:
+    # https://spec.commonmark.org/0.30/#setext-headings
+    - meta_scope: markup.heading.1.asciidoc
+    - meta_content_scope: entity.name.section.asciidoc
+    - match: '{{setext_heading1_end}}'
+      captures:
+        1: punctuation.definition.heading.setext.asciidoc
+        2: meta.whitespace.newline.asciidoc
+      pop: 1
+    - include: inlines
+
+  setext-heading2:
+    # https://spec.commonmark.org/0.30/#setext-headings
+    - meta_scope: markup.heading.2.asciidoc
+    - meta_content_scope: entity.name.section.asciidoc
+    - match: '{{setext_heading2_end}}'
+      captures:
+        1: punctuation.definition.heading.setext.asciidoc
+        2: meta.whitespace.newline.asciidoc
+      pop: 1
+    - match: '{{setext_heading1_escape}}'
+      fail: setext-headings-or-paragraphs
+    - include: inlines
+
+  setext-heading3:
+    # https://spec.commonmark.org/0.30/#setext-headings
+    - meta_scope: markup.heading.3.asciidoc
+    - meta_content_scope: entity.name.section.asciidoc
+    - match: '{{setext_heading3_end}}'
+      captures:
+        1: punctuation.definition.heading.setext.asciidoc
+        2: meta.whitespace.newline.asciidoc
+      pop: 1
+    - match: '{{setext_heading2_escape}}'
+      fail: setext-headings-or-paragraphs
+    - match: '{{setext_heading1_escape}}'
+      fail: setext-headings-or-paragraphs
+    - include: inlines
+
+  setext-heading4:
+    # https://spec.commonmark.org/0.30/#setext-headings
+    - meta_scope: markup.heading.4.asciidoc
+    - meta_content_scope: entity.name.section.asciidoc
+    - match: '{{setext_heading4_end}}'
+      captures:
+        1: punctuation.definition.heading.setext.asciidoc
+        2: meta.whitespace.newline.asciidoc
+      pop: 1
+    - match: '{{setext_heading3_escape}}'
+      fail: setext-headings-or-paragraphs
+    - match: '{{setext_heading2_escape}}'
+      fail: setext-headings-or-paragraphs
+    - match: '{{setext_heading1_escape}}'
+      fail: setext-headings-or-paragraphs
+    - include: inlines
+
+  setext-heading5:
+    # https://spec.commonmark.org/0.30/#setext-headings
+    - meta_scope: markup.heading.5.asciidoc
+    - meta_content_scope: entity.name.section.asciidoc
+    - match: '{{setext_heading5_end}}'
+      captures:
+        1: punctuation.definition.heading.setext.asciidoc
+        2: meta.whitespace.newline.asciidoc
+      pop: 1
+    - match: '{{setext_heading4_escape}}'
+      fail: setext-headings-or-paragraphs
+    - match: '{{setext_heading3_escape}}'
+      fail: setext-headings-or-paragraphs
+    - match: '{{setext_heading2_escape}}'
+      fail: setext-headings-or-paragraphs
+    - match: '{{setext_heading1_escape}}'
+      fail: setext-headings-or-paragraphs
+    - include: inlines
+
+  setext-hard-line-breaks:
+    # This context consumes what 'hard-line-breaks' does for normal
+    # paragraphs to avoid deadlock of ST's syntax engine.
+    #
+    # as workaround for
+    #    https://github.com/sublimehq/sublime_text/issues/5415
+    # causing
+    #    https://github.com/sublimehq/Packages/issues/3494
+    - match: '[ ]{2,}$'
+    - match: '\\\n'
+
+###[ PARAGRAPHS ]##############################################################
+
+  paragraphs:
+    - match: '{{bol}}(?=\S)'
+      push: paragraph-body
+
+  paragraph-body:
+    - meta_scope: meta.paragraph.asciidoc
+    - match: '{{setext_heading_escape}}'
+      fail: setext-headings-or-paragraphs
+    - include: paragraph-body-pops
+    - include: comments-inline
+    - include: inlines
+
+  literal-paragraphs:
+    - match: ^\s+(?=\S)
+      push: literal-paragraph-body
+
+  literal-paragraph-body:
+    - meta_scope: meta.paragraph.asciidoc markup.raw.block.asciidoc
+    - include: paragraph-body-pops
+    - include: comments-inline
+
+  paragraph-body-pops:
+    - match: ^$
+      pop: 1
+    - include: pop-block-anyway
+    - match: ^(?=.+{{description_list_marker}}\s|$)
+      pop: 1
+
+###[ DISCRETE HEADINGS ]#######################################################
+
+  # Nothing to do here
+
+###[ BREAKS ]##################################################################
+
+  # https://docs.asciidoctor.org/asciidoc/latest/blocks/breaks/
+  breaks:
+    - include: thematic-breaks
+    - include: page-breaks
+
+  thematic-breaks:
+    - match: '{{bol}}(?:\\''(?=''{2,})|\\\*(?=\*{2,})|\\-(?=-{2,}))$'
+      scope: constant.character.escape.asciidoc
+    - match: '{{bol}}(?:\\\*(?=(?: \*){2,})|\\-(?=(?: -){2,}))$'
+      scope: constant.character.escape.asciidoc
+    - match: '{{bol}}(?:''{3,}|\*{3,}|-{3,})$'
+      scope: punctuation.section.block.thematic.asciidoc
+    - match: '{{bol}}(?:\*(?: \*){2,}|-(?: -){2,})$'
+      scope: punctuation.section.block.thematic.asciidoc
+
+  page-breaks:
+    - match: '{{bol}}\\<(?=<{2,})$'
+      scope: constant.character.escape.asciidoc
+    - match: '{{bol}}<{3,}$'
+      scope: keyword.control.flow.break.asciidoc
+
+###[ TEXT FORMATTING AND PUNCTUATION ]#########################################
+
+  text-formatting:
+    - match: '"`(?=.*`")'
+      scope: constant.character.escape.asciidoc
+      embed: curly-quote-singleline-content
+      escape: (`")
+      escape_captures:
+        1: constant.character.escape.asciidoc
+    - match: '`''(?=.*`'')'
+      scope: constant.character.escape.asciidoc
+      embed: curly-quote-singleline-content
+      escape: (`')
+      escape_captures:
+        1: constant.character.escape.asciidoc
+    - match: '`"|"`'
+      scope: constant.character.escape.asciidoc
+    - match: "`'|'`"
+      scope: constant.character.escape.asciidoc
+    - include: text-formatting-unconstrained
+    - include: text-formatting-constrained
+
+  curly-quote-singleline-content:
+    - include: inlines
+
+  text-formatting-constrained:
+    # Eat opportunities for constrained formatting
+    - match: '[^*_`#~^\s(\\]\*(?![{`*])'
+      scope: meta.suppress.constrained.asciidoc
+    - match: '[^*_`#~^\s(\\]_(?![{`_])'
+      scope: meta.suppress.constrained.asciidoc
+    - match: '[^*_`#~^\s(\\]`(?![{`''"])'
+      scope: meta.suppress.constrained.asciidoc
+    - match: '[^*_`#~^\s(\\]#(?![{`#])'
+      scope: meta.suppress.constrained.asciidoc
+
+    - include: text-bold
+    - include: text-italic
+    - include: text-monospace
+    - include: text-highlight
+
+  text-bold:
+    - match: \\\*(?=\S)
+      scope: constant.character.escape.asciidoc
+    - match: \*(?=\S)
+      scope: punctuation.definition.bold.begin.asciidoc
+      push: text-bold-body
+
+  text-bold-body:
+    - meta_scope: markup.bold.asciidoc
+    - match: \S?(\*){{constrained_break}}
+      captures:
+        1: punctuation.definition.bold.end.asciidoc
+      pop: 1
+    - include: pop-blank-line-illegal
+    - include: pop-end-of-definition
+    - include: inlines
+
+  text-italic:
+    - match: \\_(?=\S)
+      scope: constant.character.escape.asciidoc
+    - match: _(?=\S)
+      scope: punctuation.definition.italic.begin.asciidoc
+      push: text-italic-body
+
+  text-italic-body:
+    - meta_scope: markup.italic.asciidoc
+    - match: \S?(_){{constrained_break}}
+      captures:
+        1: punctuation.definition.italic.end.asciidoc
+      pop: 1
+    - include: pop-blank-line-illegal
+    - include: pop-end-of-definition
+    - include: inlines
+
+  text-monospace:
+    - match: \\`{{constrained_break}}
+      scope: constant.character.escape.asciidoc
+    - match: (`)[*_#~^](`){{constrained_break}}
+      scope: markup.raw.inline.asciidoc
+      captures:
+        1: punctuation.definition.raw.begin.asciidoc
+        2: punctuation.definition.raw.end.asciidoc
+    - match: '`(?=\S)'
+      scope: punctuation.definition.raw.begin.asciidoc
+      embed: text-monospace-body
+      escape: (`){{constrained_break}}|^(\n)
+      escape_captures:
+        1: markup.raw.inline.asciidoc punctuation.definition.raw.end.asciidoc
+        2: invalid.illegal.new-block.asciidoc
+
+  text-monospace-body:
+    - meta_scope: markup.raw.inline.asciidoc
+    - include: inlines
+
+  text-highlight:
+    - match: \\#(?=\S.*#)
+      scope: constant.character.escape.asciidoc
+    - match: '#(?=\S.*#)'
+      scope: punctuation.definition.highlight.begin.asciidoc
+      push: text-highlight-body
+
+  text-highlight-body:
+    - meta_scope: markup.bold.highlight.asciidoc
+    - match: \S?(#){{constrained_break}}
+      captures:
+        1: punctuation.definition.highlight.end.asciidoc
+      pop: 1
+    - include: pop-blank-line-illegal
+    - include: pop-end-of-definition
+    - include: inlines
+
+  text-formatting-unconstrained:
+    - include: text-bold-unconstrained
+    - include: text-italic-unconstrained
+    - include: text-monospace-unconstrained
+    - include: text-highlight-unconstrained
+    - include: text-subscript
+    - include: text-superscript
+
+  text-bold-unconstrained:
+    - match: \\\*(?=\*)
+      scope: constant.character.escape.asciidoc
+    - match: \*\*
+      scope: punctuation.definition.bold.begin.asciidoc
+      push: text-bold-unconstrained-body
+
+  text-bold-unconstrained-body:
+    - meta_scope: markup.bold.asciidoc
+    - match: \*\*
+      scope: punctuation.definition.bold.end.asciidoc
+      pop: 1
+    - include: pop-blank-line-illegal
+    - include: pop-end-of-definition
+    - include: inlines
+
+  text-italic-unconstrained:
+    - match: \\_(?=_)
+      scope: constant.character.escape.asciidoc
+    - match: __
+      scope: punctuation.definition.italic.begin.asciidoc
+      push: text-italic-unconstrained-body
+
+  text-italic-unconstrained-body:
+    - meta_scope: markup.italic.asciidoc
+    - match: __
+      scope: punctuation.definition.italic.end.asciidoc
+      pop: 1
+    - include: pop-blank-line-illegal
+    - include: pop-end-of-definition
+    - include: inlines
+
+  text-monospace-unconstrained:
+    - match: \\`(?=`)
+      scope: constant.character.escape.asciidoc
+    - match: (``)[*_#~^](``)
+      scope: markup.raw.inline.asciidoc
+      captures:
+        1: punctuation.definition.raw.begin.asciidoc
+        2: punctuation.definition.raw.end.asciidoc
+    - match: '``'
+      scope: punctuation.definition.raw.begin.asciidoc
+      embed: text-monospace-unconstrained-body
+      escape: (``)|^(\n)
+      escape_captures:
+        1: markup.raw.inline.asciidoc punctuation.definition.raw.end.asciidoc
+        2: invalid.illegal.new-block.asciidoc
+
+  text-monospace-unconstrained-body:
+    - meta_scope: markup.raw.inline.asciidoc
+    - include: inlines
+
+  text-highlight-unconstrained:
+    - match: \\#(?=#)
+      scope: constant.character.escape.asciidoc
+    - match: '##'
+      scope: punctuation.definition.highlight.begin.asciidoc
+      push: text-highlight-unconstrained-body
+
+  text-highlight-unconstrained-body:
+    - meta_scope: markup.bold.highlight.asciidoc
+    - match: '##'
+      scope: punctuation.definition.highlight.end.asciidoc
+      pop: 1
+    - include: pop-blank-line-illegal
+    - include: pop-end-of-definition
+    - include: inlines
+
+  # Subscript is always unconstrained
+  text-subscript:
+    - match: \\~(?=~)
+      scope: constant.character.escape.asciidoc
+    - match: ~(?=\S)
+      scope: punctuation.definition.subscript.begin.asciidoc
+      push: text-subscript-body
+
+  text-subscript-body:
+    - meta_scope: markup.italic.subscript.asciidoc
+    - match: \S?(~)
+      captures:
+        1: punctuation.definition.subscript.end.asciidoc
+      pop: 1
+    - include: pop-blank-line-illegal
+    - include: pop-end-of-definition
+    - include: inlines
+
+  # Superscript is always unconstrained
+  text-superscript:
+    - match: \\\^(?=\^)
+      scope: constant.character.escape.asciidoc
+    - match: \^(?=\S)
+      scope: punctuation.definition.superscript.begin.asciidoc
+      push: text-superscript-body
+
+  text-superscript-body:
+    - meta_scope: markup.italic.superscript.asciidoc
+    - match: \S?(\^)
+      captures:
+        1: punctuation.definition.superscript.end.asciidoc
+      pop: 1
+    - include: pop-blank-line-illegal
+    - include: pop-end-of-definition
+    - include: inlines
+
+###[ LISTS ]###################################################################
+
+  lists:
+    # TODO: list titles
+    - match: '^\s*(\\[.*-])[.*-] +'
+      captures:
+        1: constant.character.escape.asciidoc
+    - match: '^\s*([.*-]+) +'
+      captures:
+        1: punctuation.definition.list_item.asciidoc
+      push: list-item
+    - match: '{{bol}}([ \t]*)(\d{1,9}(\.))(\s)'
+      captures:
+        1: markup.list.numbered.markdown
+        2: markup.list.numbered.bullet.markdown
+        3: punctuation.definition.list_item.markdown
+        4: markup.list.numbered.markdown
+      push: list-item
+
+  list-item:
+    - meta_scope: meta.paragraph.list.asciidoc
+    - match: '{{bol}}(?=\s*(?:[.*-]|\d+\.))'
+      pop: 1
+    # If there's a blank line, we might be in indented blocks
+    - match: '{{bol}}$'
+      set: maybe-indented-list-value
+    - include: pop-block-anyway
+    - match: (\\\[)(?=[*xX ]\])
+      scope: constant.character.escape.asciidoc
+    - match: (\[)([*xX ])(\])
+      captures:
+        1: markup.checkbox.begin.asciidoc punctuation.definition.checkbox.begin.asciidoc
+        2: markup.checkbox.mark.asciidoc
+        3: markup.checkbox.end.asciidoc punctuation.definition.checkbox.end.asciidoc
+    - include: comments-inline
+    - include: inlines
+
+###[ DESCRIPTION LISTS ]#######################################################
+
+  description-lists:
+    - match: '{{bol}}(?=.+{{description_list_marker}}\s)'
+      push: description-list-term
+
+  description-list-term:
+    - meta_content_scope: meta.mapping.key.asciidoc
+    - match: '{{description_list_marker}}(?=\s|$)'
+      scope: punctuation.separator.key-value.asciidoc
+      set: description-list-value
+    - include: inlines
+
+  description-list-value:
+    - meta_content_scope: meta.mapping.value.asciidoc
+    # If there's a blank line, we might be in indented blocks
+    - match: ^$
+      set: maybe-indented-list-value
+    - include: pop-block-anyway
+    - include: comments-inline
+    - include: inlines
+    - include: lists
+
+  maybe-indented-list-value:
+    - meta_content_scope: meta.mapping.value.asciidoc
+    - match: '{{bol}}(?=\S)'
+      pop: 1
+    - include: indented-blocks
+    - include: inlines
+
+###[ LINKS ]###################################################################
+
+  links:
+    - include: autolinks
+    - include: link-macros
+
+  link-macros:
+    - match: \\l(?=ink:)
+      scope: constant.character.escape.asciidoc
+    - match: \b(link)(:)
+      captures:
+        1: keyword.control.import.asciidoc
+        2: punctuation.separator.asciidoc
+      push: link-macro-arguments
+
+  link-macro-arguments:
+    - meta_content_scope: markup.underline.link.asciidoc
+    - match: \[
+      scope: punctuation.section.group.parameters.begin.asciidoc
+      set: attribute-list-body
+    - include: passthrough-inlines
+    - include: link-special-characters
+    - include: document-attributes
+
+  autolinks:
+    - match: (?=\\{{autolink_scheme}}:)
+      push:
+        - match: \\.
+          scope: constant.character.escape.asciidoc
+          pop: 1
+    - match: '{{autolink_scheme}}(?=:)'
+      push: link-body
+
+  link-body:
+    - meta_scope: markup.underline.link.asciidoc
+    - match: (?=\.?{{link_pop}})
+      pop: 1
+    - include: link-special-characters
+
+  link-special-characters:
+    - match: '[:?#@]'
+      scope: punctuation.separator.sequence.asciidoc
+
+###[ CROSS-REFERENCES ]########################################################
+
+  cross-references:
+    # Links
+    - match: \\<(?=<)
+      scope: constant.character.escape.asciidoc
+    - match: <<(?=\w)
+      scope: punctuation.definition.reference.begin.asciidoc
+      push: cross-reference-natural-body
+    - match: \\x(?=ref:)
+      scope: constant.character.escape.asciidoc
+    - match: \b(xref)(:)
+      captures:
+        1: keyword.control.import.asciidoc
+        2: punctuation.separator.asciidoc
+      push: link-macro-arguments
+
+    # Anchors
+    - match: \\\[(?=\[.+\]\])
+      scope: constant.character.escape.asciidoc
+    - match: \[\[(?=.+\]\])
+      scope: punctuation.definition.reference.begin.asciidoc
+      push: anchor-natural-body
+    - match: \\a(?=nchor:)
+      scope: constant.character.escape.asciidoc
+    - match: \b(anchor)(:)
+      captures:
+        1: keyword.control.import.asciidoc
+        2: punctuation.separator.asciidoc
+      push: anchor-macro-arguments
+
+  cross-reference-natural-body:
+    - meta_content_scope: meta.link.reference.metadata.asciidoc markup.underline.link.asciidoc
+    - match: '>>'
+      scope: punctuation.definition.reference.end.asciidoc
+      pop: 1
+    - match: ','
+      scope: punctuation.separator.sequence.asciidoc
+      set: cross-reference-natural-attributes
+
+  cross-reference-natural-attributes:
+    - meta_content_scope: meta.link.reference.metadata.asciidoc
+    - match: '>>'
+      scope: punctuation.definition.reference.end.asciidoc
+      pop: 1
+    - include: attribute-list-contents
+
+  anchor-natural-body:
+    - meta_content_scope: entity.name.reference.link.asciidoc
+    - match: ']]'
+      scope: punctuation.definition.reference.end.asciidoc
+      pop: 1
+    - match: ','
+      scope: punctuation.separator.sequence.asciidoc
+      set: anchor-natural-attributes
+
+  anchor-natural-attributes:
+    - meta_content_scope: meta.link.reference.metadata.asciidoc
+    - match: ']]'
+      scope: punctuation.definition.reference.end.asciidoc
+      pop: 1
+    - include: attribute-list-contents
+
+  anchor-macro-arguments:
+    - meta_content_scope: entity.name.reference.link.asciidoc
+    - match: \[
+      scope: punctuation.section.group.parameters.begin.asciidoc
+      set: attribute-list-body
+    - include: passthrough-inlines
+    - include: link-special-characters
+    - include: document-attributes
+
+###[ FOOTNOTES ]###############################################################
+
+  footnotes:
+    - match: \\f(?=ootnote:)
+      scope: constant.character.escape.asciidoc
+    - match: \b(footnote)(:)
+      captures:
+        1: keyword.control.flow.asciidoc
+        2: punctuation.separator.asciidoc
+      push:
+        - footnote-content
+        - footnote-type
+
+  footnote-type:
+    - meta_content_scope: storage.modifier.asciidoc
+    - match: (?=\[)
+      pop: 1
+    - match: (?=\s)
+      pop: 1
+
+  footnote-content:
+    - match: \[
+      scope: punctuation.definition.string.begin.asciidoc
+      push: footnote-content-body
+    - include: else-pop
+
+  footnote-content-body:
+    - meta_scope: string.unquoted.asciidoc
+    - match: \]
+      scope: punctuation.definition.string.end.asciidoc
+      pop: 1
+    - include: inlines
+
+###[ IMAGES ]##################################################################
+
+  block-images:
+    - match: \\i(?=mage::)
+      scope: constant.character.escape.asciidoc
+    - match: \b(image)(::)
+      captures:
+        1: keyword.control.import.asciidoc
+        2: punctuation.separator.asciidoc
+      push: include-arguments
+
+  inline-images:
+    - match: \\i(?=mage:)
+      scope: constant.character.escape.asciidoc
+    - match: \b(image)(:)
+      captures:
+        1: keyword.control.import.asciidoc
+        2: punctuation.separator.asciidoc
+      push: include-arguments
+
+###[ AUDIO AND VIDEO ]#########################################################
+
+  audios-and-videos:
+    - match: \\a(?=udio::)
+      scope: constant.character.escape.asciidoc
+    - match: \\v(?=ideo::)
+      scope: constant.character.escape.asciidoc
+    - match: \b(audio|video)(::)
+      captures:
+        1: keyword.control.import.asciidoc
+        2: punctuation.separator.asciidoc
+      push: include-arguments
+
+###[ ICONS ]###################################################################
+
+  # Nothing to do here
+
+###[ KEYBOARD MACRO ]##########################################################
+
+  keyboard-macros:
+    - match: \\k(?=bd:)
+      scope: constant.character.escape.asciidoc
+    - match: \b(kbd)(:)(\[)
+      captures:
+        1: support.function.asciidoc
+        2: punctuation.separator.asciidoc
+        3: punctuation.definition.string.begin.asciidoc
+      push: keyboard-macro-body
+
+  keyboard-macro-body:
+    - meta_content_scope: string.unquoted.asciidoc
+    - include: eol-pop
+    - match: \+
+      scope: punctuation.separator.sequence.asciidoc
+    - match: \]
+      scope: punctuation.definition.string.end.asciidoc
+      pop: 1
+
+###[ BUTTON AND MENU UI MACROS ]###############################################
+
+  button-menu-macros:
+    - match: \\b(?=tn:)
+      scope: constant.character.escape.asciidoc
+    - match: \\m(?=enu:)
+      scope: constant.character.escape.asciidoc
+    - match: \b(btn|menu)(:)
+      captures:
+        1: keyword.control.import.asciidoc
+        2: punctuation.separator.asciidoc
+      push: button-menu-arguments
+
+  button-menu-arguments:
+    - meta_content_scope: entity.name.class.asciidoc
+    - match: \[
+      scope: punctuation.definition.string.begin.asciidoc
+      set: button-menu-body
+    - include: eol-pop
+
+  button-menu-body:
+    - match: \]
+      scope: punctuation.definition.string.end.asciidoc
+      pop: 1
+    - match: '>'
+      scope: punctuation.separator.sequence.asciidoc
+    - match: '[^\]>]'
+      scope: entity.name.class.asciidoc
+
+###[ ADMONITIONS ]#############################################################
+
+  admonitions:
+    - match: '{{bol}}({{admonition}})(:)'
+      captures:
+        1: support.type.admonition.asciidoc
+        2: punctuation.separator.key-value.asciidoc
+      push: paragraph-body
+    - match: \[({{admonition}})\]
+      scope: punctuation.section.block.begin.asciidoc
+      captures:
+        1: support.type.admonition.asciidoc
+      push: admonition-block-body
+
+  admonition-block-body:
+    - meta_scope: meta.block.admonition.asciidoc
+    - match: '{{bol}}={4}$'
+      scope: punctuation.section.block.end.asciidoc
+      pop: 1
+    - include: pop-blank-line
+    - include: blocks-without-setext
+
+###[ SIDEBARS ]################################################################
+
+  sidebars:
+    - match: '{{bol}}\*{4}$'
+      scope: punctuation.section.block.begin.asciidoc
+      push: sidebar-body
+
+  sidebar-body:
+    - meta_scope: meta.block.sidebar.asciidoc
+    - match: '{{bol}}\*{4}$'
+      scope: punctuation.section.block.end.asciidoc
+      pop: 1
+    - include: blocks
+
+###[ EXAMPLE BLOCKS ]##########################################################
+
+  example-blocks:
+    - match: '{{bol}}={4}$'
+      scope: punctuation.section.block.begin.asciidoc
+      push: example-block-body
+
+  example-block-body:
+    - meta_scope: meta.block.example.asciidoc
+    - match: '{{bol}}={4}$'
+      scope: punctuation.section.block.end.asciidoc
+      pop: 1
+    - include: blocks-without-setext
+
+###[ BLOCKQUOTES ]#############################################################
+
+  # Blockquotes are the same as Verses
+  blockquotes: []
+
+###[ VERSES ]##################################################################
+
+  verses:
+    - match: '{{bol}}\\_(?=_{3}$)'
+      scope: constant.character.escape.asciidoc
+    - match: '{{bol}}_{4}$'
+      scope: punctuation.section.block.begin.asciidoc
+      push: verse-body
+
+  verse-body:
+    - meta_scope: meta.block.verse.asciidoc
+    - match: '{{bol}}_{4}$'
+      scope: punctuation.section.block.end.asciidoc
+      pop: 1
+
+###[ VERBATIM AND SOURCE BLOCKS ]##############################################
+
+  # TODO: Maybe detect and inject language syntax?
+
+  verbatims-and-source-blocks:
+    - include: verbatims
+    - include: literal-blocks
+    - include: Packages/Markdown/Markdown.sublime-syntax#fenced-code-blocks
+
+  verbatims:
+    - match: '{{bol}}\\-(?=-{3,}\s*$)'
+      scope: constant.character.escape.asciidoc
+    - match: '{{bol}}(-{4,})\s*$'
+      captures:
+        1: punctuation.definition.raw.code-fence.begin.asciidoc
+      push: verbatim-body
+
+  verbatim-body:
+    - meta_content_scope: markup.raw.code-fence.asciidoc
+    - match: '{{bol}}\1$'
+      scope: punctuation.definition.raw.code-fence.end.asciidoc
+      pop: 1
+    - include: verbatim-line-annotations
+    - include: includes
+
+  verbatim-line-annotations:
+    - match: (<(?:!--)?)\d+((?:--)?>)
+      scope: comment.block.asciidoc
+      captures:
+        1: punctuation.definition.comment.begin.asciidoc
+        2: punctuation.definition.comment.end.asciidoc
+
+  literal-blocks:
+    - include: delimited-literal-blocks
+
+  delimited-literal-blocks:
+    - match: '{{bol}}\\\.(?=\.{3,}\s*$)'
+      scope: constant.character.escape.asciidoc
+    - match: '{{bol}}(\.{4,})\s*$'
+      captures:
+        1: punctuation.definition.raw.literal.begin.asciidoc
+      push: delimited-literal-blocks-body
+
+  delimited-literal-blocks-body:
+    - meta_content_scope: markup.raw.code-fence.asciidoc
+    - match: '{{bol}}\1$'
+      scope: punctuation.definition.raw.code-fence.end.asciidoc
+      pop: 1
+
+###[ TABLES ]##################################################################
+
+  tables:
+    - match: '{{bol}}\\[|,:](?====$)'
+      scope: constant.character.escape.asciidoc
+    - match: '{{bol}}\|===$'
+      scope: punctuation.section.block.table.begin.asciidoc
+      push: table-body
+    - match: '{{bol}}^,===$'
+      scope: punctuation.section.block.table.begin.asciidoc
+      push: table-body-csv
+    - match: '{{bol}}^:===$'
+      scope: punctuation.section.block.table.begin.asciidoc
+      push: table-body-dsv
+
+  table-body:
+    - meta_scope: meta.table.asciidoc
+    - match: '{{bol}}\|===$'
+      scope: punctuation.section.block.table.end.asciidoc
+      pop: 1
+    # TODO: Cell formatting
+    - match: \|
+      scope: punctuation.separator.table-cell.asciidoc
+    - include: blocks
+    - include: inlines
+
+  table-body-csv:
+    - meta_scope: meta.table.asciidoc
+    - match: '{{bol}},===$'
+      scope: punctuation.section.block.table.end.asciidoc
+      pop: 1
+    - match: ','
+      scope: punctuation.separator.table-cell.asciidoc
+    - include: comments-inline
+    - include: includes
+
+  table-body-dsv:
+    - meta_scope: meta.table.asciidoc
+    - match: '{{bol}}:===$'
+      scope: punctuation.section.block.table.end.asciidoc
+      pop: 1
+    - match: ':'
+      scope: punctuation.separator.table-cell.asciidoc
+    - include: comments-inline
+    - include: includes
+
+###[ EQUATIONS AND FORMULAE ]##################################################
+
+  # TODO: Add math/stem blocks
+
+  equation-macros:
+    - match: \b(latexmath)(:)(\[)
+      captures:
+        1: support.function.asciidoc
+        2: punctuation.separator.asciidoc
+        3: punctuation.definition.string.begin.asciidoc
+      push: equation-macro-body-latex
+    # TODO: Add AsciiMath
+
+  equation-macro-body-latex:
+    - meta_content_scope: string.other.math.asciidoc text.tex.embedded.asciidoc
+    - include: eol-pop
+    - match: \]
+      scope: punctuation.definition.string.end.asciidoc
+      pop: 1
+    # TODO: Extend LaTeX with \] as bracket replacement and embed this context
+    - include: Packages/LaTeX/TeX.sublime-syntax#math-content
+
+###[ OPEN BLOCKS ]#############################################################
+
+  open-blocks:
+    - match: '{{bol}}\-(?=-$)'
+      scope: constant.character.escape.asciidoc
+    - match: '{{bol}}--$'
+      scope: punctuation.section.block.begin.asciidoc
+      push: open-block-body
+
+  open-block-body:
+    - meta_scope: meta.block.open.asciidoc
+    - match: '{{bol}}--$'
+      scope: punctuation.section.block.end.asciidoc
+      pop: 1
+    # Assume for now that it's still AsciiDoc
+    - include: indented-blocks
+
+###[ COLLAPSIBLE BLOCKS ]######################################################
+
+  # Collapsible blocks use the same format as example blocks
+
+###[ COMMENTS ]################################################################
+
+  # https://docs.asciidoctor.org/asciidoc/latest/comments/
+  comments:
+    - include: comments-block
+    - include: comments-inline
+
+  comments-inline:
+    - match: '{{bol}}\s*(//)'
+      captures:
+        1: punctuation.definition.comment.begin.asciidoc
+      push: comment-inline-body
+
+  comment-inline-body:
+    - meta_scope: comment.line.double-slash.asciidoc
+    - include: eol-pop
+
+  comments-block:
+    - include: comments-block-delimited
+    # TODO: [comment] block and paragraph
+
+  comments-block-delimited:
+    - match: '{{bol}}\s*(////)'
+      captures:
+        1: punctuation.definition.comment.begin.asciidoc
+      push: comment-block-delimited-body
+
+  comment-block-delimited-body:
+    - meta_scope: comment.block.quad-slash.asciidoc
+    - match: '{{bol}}\s*(////)'
+      captures:
+        1: punctuation.definition.comment.end.asciidoc
+      pop: 1
+
+###[ AUTOMATIC TABLE OF CONTENTS ]#############################################
+
+  # Nothing to do here.
+
+###[ DOCINFO FILES ]###########################################################
+
+  # Nothing to do here.
+
+###[ INCLUDES ]################################################################
+
+  includes:
+    - match: \\i(?=nclude::)
+      scope: constant.character.escape.asciidoc
+    - match: \b(include)(::)
+      captures:
+        1: keyword.control.import.asciidoc
+        2: punctuation.separator.asciidoc
+      push: include-arguments
+
+  include-arguments:
+    - meta_content_scope: string.unquoted.asciidoc
+    - match: \[
+      scope: punctuation.section.group.parameters.begin.asciidoc
+      set: attribute-list-body
+    - match: /
+      scope: punctuation.separator.sequence.asciidoc
+    - include: document-attributes
+
+###[ CONDITIONALS ]############################################################
+
+  conditionals:
+    - match: \\i(?=f(?:n?def|eval)::)
+      scope: constant.character.escape.asciidoc
+    - match: \b(if(?:n?def|eval))(::)
+      captures:
+        1: keyword.control.conditional.if.asciidoc
+        2: punctuation.separator.asciidoc
+      push:
+        - if-block
+        - if-arguments
+
+  if-arguments:
+    - meta_content_scope: variable.other.readwrite.asciidoc
+    - match: \[\]
+      scope: punctuation.section.group.asciidoc
+      pop: 1
+    # TODO: Support the one-line version
+    - include: eol-pop
+
+  if-block:
+    - meta_scope: meta.block.conditional.asciidoc
+    - match: \b(endif)(?:(::)(\S*)(\[\]))?
+      captures:
+        1: keyword.control.conditional.end.asciidoc
+        2: punctuation.separator.asciidoc
+        3: variable.other.readwrite.asciidoc
+        4: punctuation.section.group.asciidoc
+      pop: 1
+    - include: blocks
+
+###[ SUBSTITUTIONS ]###########################################################
+
+  substitutions:
+    # HTML entities
+    - match: \\&(?=#[xX][01]?\h{1,5};)
+      scope: constant.character.escape.asciidoc
+    - match: (&#[xX])[01]?\h{1,5}(;)
+      scope: constant.character.entity.hexadecimal.html
+      captures:
+        1: punctuation.definition.entity.html
+        2: punctuation.terminator.entity.html
+    - match: \\&(?=#[0-9]{1,7};)
+      scope: constant.character.escape.asciidoc
+    - match: (&#)[0-9]{1,7}(;)
+      scope: constant.character.entity.decimal.html
+      captures:
+        1: punctuation.definition.entity.html
+        2: punctuation.terminator.entity.html
+    - match: \\&(?=[a-zA-Z0-9]+;)
+      scope: constant.character.escape.asciidoc
+    - match: (&)[a-zA-Z0-9]+(;)
+      scope: constant.character.entity.named.html
+      captures:
+        1: punctuation.definition.entity.html
+        2: punctuation.terminator.entity.html
+
+    # AsciiDoc conversions
+    - match: \(C\)|\(R\)|\(TM\)|--(?!-)|\.\.\.(?!\.)|->|<-|=>|<=
+      scope: constant.character.asciidoc
+
+###[ PASSTHROUGHS ]############################################################
+
+  passthrough-blocks:
+    - match: '{{bol}}\\\+(?=\+{3}\s*$)'
+      scope: constant.character.escape.asciidoc
+    - match: '{{bol}}(\+{4})\s*$'
+      captures:
+        1: keyword.control.passthrough.begin.asciidoc
+      push: passthrough-block-body
+
+  passthrough-block-body:
+    - meta_content_scope: markup.raw.passthrough.asciidoc
+    - match: '{{bol}}\+{4}$'
+      scope: keyword.control.passthrough.end.asciidoc
+      pop: 1
+
+  passthrough-inlines:
+    # +++
+    - match: \\\+(?=(?:\\?\+){2}.*(?:\\?\+){3})
+      scope: constant.character.escape.asciidoc
+    - match: (\+{3})(?=.*\+{3})
+      scope: keyword.control.passthrough.begin.asciidoc
+      push: passthrough-inline-body-unconstrained
+
+    # ++
+    - match: \\\+(?=(?:\\?\+){1}.*(?:\\?\+){2})
+      scope: constant.character.escape.asciidoc
+    - match: (\+{2})(?=.*\+{2})
+      scope: keyword.control.passthrough.begin.asciidoc
+      push: passthrough-inline-body-unconstrained
+
+    # +
+    - match: \\\+(?=(?=\S)[^\n+]*[^\n+\\]\+\B)
+      scope: constant.character.escape.asciidoc
+    - match: \B\+(?=(?=\S)[^\n+]*[^\n+\\]\+\B)
+      scope: keyword.control.passthrough.begin.asciidoc
+      push: passthrough-inline-body
+
+    # Double-dollar ($$) passthrough is deprecated
+    - match: (\$\$)(?=\S)
+      scope: keyword.control.passthrough.begin.asciidoc
+      push: passthrough-inline-body-unconstrained
+    - match: (pass)(:)
+      captures:
+        1: keyword.control.passthrough.asciidoc
+        2: punctuation.separator.asciidoc
+      push: pass-inline-content
+
+  passthrough-inline-body:
+    - meta_scope: markup.raw.inline.asciidoc
+    - match: \+\B
+      scope: keyword.control.passthrough.end.asciidoc
+      pop: 1
+    - include: pop-blank-line-illegal
+
+  passthrough-inline-body-unconstrained:
+    - meta_scope: markup.raw.inline.asciidoc
+    - match: \1
+      scope: keyword.control.passthrough.end.asciidoc
+      pop: 1
+    - include: pop-blank-line-illegal
+
+  pass-inline-content:
+    - match: \[
+      scope: punctuation.definition.string.begin.asciidoc
+      push: pass-inline-content-body
+    - include: else-pop
+
+  pass-inline-content-body:
+    - meta_scope: markup.raw.inline.asciidoc
+    - match: \]
+      scope: punctuation.definition.string.end.asciidoc
+      pop: 1
+
+###[ PROTOTYPE ]###############################################################
+
+  eol-pop:
+    - match: $\n?
+      pop: 1
+
+  else-pop:
+    - match: (?=\S)
+      pop: 1
+
+  pop-blank-line:
+    - match: '{{bol}}$\n?'
+      pop: 1
+
+  pop-blank-line-illegal:
+    - match: '{{bol}}$\n?'
+      scope: invalid.illegal.new-block.asciidoc
+      pop: 1
+
+  pop-block-anyway:
+    - match: '{{bol}}(?=.+{{description_list_marker}}\s|$)'
+      pop: 1
+    - match: '{{bol}}(?=:|[=|,]=|--|\*{4}|\+$|include|endif|if(?:n?def|eval))'
+      pop: 1
+
+  pop-end-of-definition:
+    - match: (?=::\s)
+      pop: 1
+
+  line-continuations:
+    - match: (\\)\n
+      captures:
+        1: punctuation.separator.continuation.line.asciidoc
+      push: line-continuation-body
+    - match: '\\(\s+)\n'
+      captures:
+        1: invalid.illegal.unexpected-whitespace.asciidoc
+
+  line-continuation-body:
+    - match: ^(?!\s*//)
+      pop: 1
+
+  string-double:
+    - match: '"'
+      scope: punctuation.definition.string.begin.asciidoc
+      push: string-double-body
+
+  string-double-body:
+    - meta_scope: meta.string.asciidoc string.quoted.double.asciidoc
+    - match: '"'
+      scope: punctuation.definition.string.end.asciidoc
+      pop: 1
+
+  comma-separator:
+    - match: ','
+      scope: punctuation.separator.sequence.asciidoc
+
+###[ VARIABLES ]###############################################################
+
+variables:
+  bol: ^
+  # https://docs.asciidoctor.org/asciidoc/latest/attributes/names-and-values/
+  word_char: (?i:[a-z0-9_])
+  attribute_name: (?:{{word_char}}(?:(?:{{word_char}}|-)*{{word_char}})?)
+  output_type: |-
+    \b(?xi:
+      docbook-article | xhtml11-article | html4-article | docbook-book
+    | xhtml11-book | html4-book | docbook-manpage | xhtml11-manpage
+    | html4-manpage
+    )\b
+  attribute_builtin: |-
+    \b(?xi:
+      {{output_type}}
+    | amp | asciidoc-dir | asciidoc-file | asciidoc-version | author
+    | authored | authorinitials
+    | backend-docbook | backend-xhtml11 | backend-html4 | backend
+    | backslash | basebackend | brvbar
+    | date | docdate | doctime | docname | docfile | docdir | doctitle
+    | doctype-article | doctype-book | doctype-manpage | doctype
+    | email | empty | encoding
+    | filetype | firstname
+    | gt
+    | id | indir | infile
+    | lastname | level | listindex | localdate | localtime | lt
+    | manname | manpurpose | mantitle | manvolnum | middlename
+    | nbsp
+    | outdir | outfile
+    | reftext | revision
+    | sectnum | showcomments
+    | title | two_colons | two_semicolons
+    | user-dir
+    | verbose
+    )\b
+
+  admonition: \b(?:NOTE|IMPORTANT|TIP|CAUTION|WARNING)\b
+  block_type: \b(?:source|quote|discrete|qanda)\b
+  description_list_marker: (?:;;|:{2,4})
+  autolink_scheme: \b(?:https?|ftp|irc|mailto)\b
+  link_pop: (?:$|[\s\[\]()'"])
+  doctype: (?:article|book|manpage|inline)
+  constrained_break: (?=[\s\p{P}`*+]|$)
+
+  setext_heading_or_paragraph: ^(?=\S)  # Any BOL non-whitespace
+  setext_heading_escape: |-
+    ^(?x)(?=              # At least N...
+      (?:
+        ={3,}   # equal signs,
+      | -{3,}   # hyphens,
+      | ~{3,}   # tildes,
+      | \^{3,}  # carets,
+      | \+{3,}  # or plus signs.
+    )[ \t]*$)             # Followed by only whitespace
+  setext_heading1_escape: ^(?=={3,}[ \t]*$)   # at least N equal signs
+  setext_heading2_escape: ^(?=-{3,}[ \t]*$)   # at least N hyphens
+  setext_heading3_escape: ^(?=~{3,}[ \t]*$)   # at least N tildes
+  setext_heading4_escape: ^(?=\^{3,}[ \t]*$)  # at least N carets
+  setext_heading1_end: ^(={3,})[ \t]*$(\n?)   # at least N equal signs
+  setext_heading2_end: ^(-{3,})[ \t]*$(\n?)   # at least N hyphens
+  setext_heading3_end: ^(~{3,})[ \t]*$(\n?)   # at least N tildes
+  setext_heading4_end: ^(\^{3,})[ \t]*$(\n?)  # at least N carets
+  setext_heading5_end: ^(\+{3,})[ \t]*$(\n?)  # at least N plus signs
