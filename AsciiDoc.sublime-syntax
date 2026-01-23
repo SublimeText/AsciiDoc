@@ -70,6 +70,7 @@ contexts:
         - include: eol-pop
 
   inlines:
+    - include: comments-inline
     - match: (?!{{bol}})(\+)\s*$
       captures:
         1: constant.character.break.asciidoc

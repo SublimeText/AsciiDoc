@@ -77,3 +77,113 @@ credential.useHttpPath::
 //                        ^^^^^^^^^^ variable.other.readwrite.asciidoc
 //                        ^ punctuation.definition.variable.begin.asciidoc
 //                                 ^ punctuation.definition.variable.end.asciidoc
+
+bitmapPseudoMerge.<name>.decay::
+  Determines the rate at which consecutive pseudo-merge bitmap
+  groups decrease in size. Must be non-negative. This parameter
+  can be thought of as `k` in the function `f(n) = C * n^-k`,
+  where `f(n)` is the size of the `n`th group.
+
+`branch.<name>.remote`::
+  When on branch _<name>_, it tells `git fetch` and `git push`
+  which remote to fetch from or push to.  The remote to push to
+  may be overridden with `remote.pushDefault` (for all branches).
+  The remote to push to, for the current branch, may be further
+  overridden by `branch.<name>.pushRemote`.  If no remote is
+  configured, or if you are not on any branch and there is more than
+  one remote defined in the repository, it defaults to `origin` for
+  fetching and `remote.pushDefault` for pushing.
+  Additionally, `.` (a period) is the current local repository
+  (a dot-repository), see `branch.<name>.merge`'s final note below.
+
+core.commentChar::
+core.commentString::
+  Commands such as `commit` and `tag` that let you edit
+  messages consider a line that begins with this character
+  commented, and removes them after the editor returns
+  (default '#').
++
+The value of this setting is interpolated, i.e. `~/<path>` expands to a
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//                                              ^^^^^^^^^^ markup.raw.inline.asciidoc
+//                                              ^ punctuation.definition.raw.begin.asciidoc
+//                                                       ^ punctuation.definition.raw.end.asciidoc
+path relative to the home directory and `%(prefix)/<path>` expands to a
+path relative to Git's (runtime) prefix.
+
+status.submoduleSummary::
+  Defaults to false.
+  If this is set to a non-zero number or true (identical to -1 or an
+  unlimited number), the submodule summary will be enabled and a
+  summary of commits for modified submodules will be shown (see
+  --summary-limit option of linkgit:git-submodule[1]). Please note
+  that the summary output command will be suppressed for all
+  submodules when `diff.ignoreSubmodules` is set to 'all' or only
+  for those submodules where `submodule.<name>.ignore=all`. The only
+  exception to that rule is that status and commit will show staged
+  submodule changes. To
+  also view the summary for ignored submodules you can either use
+  the --ignore-submodules=dirty command-line option or the 'git
+  submodule summary' command, which shows a similar output but does
+  not honor these settings.
+
+--ignore-rev <rev>::
+  Ignore changes made by the revision when assigning blame, as if the
+  change never happened.  Lines that were changed or added by an ignored
+  commit will be blamed on the previous commit that changed that line or
+  nearby lines.  This option may be specified multiple times to ignore
+  more than one revision.  If the `blame.markIgnoredLines` config option
+  is set, then lines that were changed by an ignored commit and attributed to
+  another commit will be marked with a `?` in the blame output.  If the
+  `blame.markUnblamableLines` config option is set, then those lines touched
+  by an ignored commit that we could not attribute to another revision are
+  marked with a '*'. In the porcelain modes, we print 'ignored' and
+//                  ^^^^^^^^^^^^^^^^^^^^^^^ meta.mapping.value.asciidoc - markup.italic
+  'unblamable' on a newline respectively.
+
+pathname::
+  A variable that takes a pathname value can be given a
+  string that begins with "`~/`" or "`~user/`", and the usual
+  tilde expansion happens to such a string: `~/`
+  is expanded to the value of `$HOME`, and `~user/` to the
+  specified user's home directory.
+
+`-i`::
+`--interactive`::
+  Add modified contents in the working tree interactively to
+  the index. Optional path arguments may be supplied to limit
+  operation to a subset of the working tree. See ``Interactive
+  mode'' for details.
+
+
+
+`-u <upstream>`::
+`--set-upstream-to=<upstream>`::
+  Set up _<branch-name>_'s tracking information so _<upstream>_ is
+  considered _<branch-name>_'s upstream branch. If no _<branch-name>_
+  is specified, then it defaults to the current branch.
+
+a
+
+b
+
+c
+
+
+DESCRIPTION
+-----------
+
+For each pathname given via the command-line or from a file via
+`--stdin`, check whether the file is excluded by .gitignore (or other
+input files to the exclude mechanism) and output the path if it is
+excluded.
+
+By default, tracked files are not shown at all since they are not
+subject to exclude rules; but see `--no-index'.
+
+OPTIONS
+-------
+-q::
+--quiet::
+  Don't output anything, just set exit status.  This is only
+  valid with a single pathname.
