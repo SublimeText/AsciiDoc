@@ -532,13 +532,13 @@ contexts:
 
   text-formatting-constrained:
     # Eat opportunities for constrained formatting
-    - match: '[^*_`#~^\s(\\]\*(?![{`*])'
+    - match: '{{constraining_char}}\*(?![{`*])'
       scope: meta.suppress.constrained.asciidoc
-    - match: '[^*_`#~^\s(\\]_(?![{`_])'
+    - match: '{{constraining_char}}_(?![{`_])'
       scope: meta.suppress.constrained.asciidoc
-    - match: '[^*_`#~^\s(\\]`(?![{`''"])'
+    - match: '{{constraining_char}}`(?![{`''"])'
       scope: meta.suppress.constrained.asciidoc
-    - match: '[^*_`#~^\s(\\]#(?![{`#])'
+    - match: '{{constraining_char}}#(?![{`#])'
       scope: meta.suppress.constrained.asciidoc
 
     - include: text-bold
@@ -1539,6 +1539,7 @@ variables:
   autolink_scheme: \b(?:https?|ftp|irc|mailto)\b
   link_pop: (?:$|[\s\[\]()'"])
   doctype: (?:article|book|manpage|inline)
+  constraining_char: '[^*_`#~^\s(\\]'
   constrained_break: (?=[\s\p{P}`*+]|$)
 
   setext_heading_or_paragraph: ^(?=\S)  # Any BOL non-whitespace
