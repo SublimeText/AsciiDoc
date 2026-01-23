@@ -152,7 +152,11 @@ pathname::
   Add modified contents in the working tree interactively to
   the index. Optional path arguments may be supplied to limit
   operation to a subset of the working tree. See ``Interactive
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.mapping.value.asciidoc
+//                                               ^^ constant.character.asciidoc
   mode'' for details.
+//^^^^^^^^^^^^^^^^^^^^ meta.mapping.value.asciidoc
+//    ^^ constant.character.asciidoc
 
 
 

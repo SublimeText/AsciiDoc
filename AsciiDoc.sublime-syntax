@@ -643,7 +643,7 @@ contexts:
   text-formatting-unconstrained:
     - include: text-bold-unconstrained
     - include: text-italic-unconstrained
-    - include: text-monospace-unconstrained
+    - include: text-monospace-unconstrained-or-double-curly-quote
     - include: text-highlight-unconstrained
     - include: text-subscript
     - include: text-superscript
@@ -680,7 +680,7 @@ contexts:
     - include: pop-end-of-definition
     - include: inlines
 
-  text-monospace-unconstrained:
+  text-monospace-unconstrained-or-double-curly-quote:
     - match: \\`(?=`)
       scope: constant.character.escape.asciidoc
     - match: (``)[*_#~^](``)
@@ -688,6 +688,13 @@ contexts:
       captures:
         1: punctuation.definition.raw.begin.asciidoc
         2: punctuation.definition.raw.end.asciidoc
+    - match: (?=``\S)
+      branch_point: monospace-or-double-curly
+      branch:
+        - latex-double-curly-quote
+        - text-monospace-unconstrained
+
+  text-monospace-unconstrained:
     - match: '``'
       scope: punctuation.definition.raw.begin.asciidoc
       embed: text-monospace-unconstrained-body
@@ -695,9 +702,24 @@ contexts:
       escape_captures:
         1: markup.raw.inline.asciidoc punctuation.definition.raw.end.asciidoc
         2: invalid.illegal.new-block.asciidoc
+    - include: else-pop
 
   text-monospace-unconstrained-body:
     - meta_scope: markup.raw.inline.asciidoc
+    - include: inlines
+
+  latex-double-curly-quote:
+    - match: '``(?=\S)'
+      scope: constant.character.asciidoc
+      push: latex-double-curly-quote-body
+    - include: else-pop
+
+  latex-double-curly-quote-body:
+    - match: \'\'{{constrained_break}}
+      scope: constant.character.asciidoc
+      pop: 1
+    - match: \S?[`*_#~^]{{constrained_break}}
+      fail: monospace-or-double-curly
     - include: inlines
 
   text-highlight-unconstrained:
