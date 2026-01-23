@@ -17,9 +17,6 @@ contexts:
   main:
     - include: blocks
 
-  # Stuff from old version, not implemented
-  # TODO: Mark `<`s that will be converted to &lt; in HTML
-
   # Stuff from asciidoc.org, not implemented
   # TODO: Markdown-style blockquotes
 
@@ -1364,6 +1361,8 @@ contexts:
 
     # AsciiDoc conversions
     - match: \(C\)|\(R\)|\(TM\)|--(?!-)|\.\.\.(?!\.)|->|<-|=>|<=
+      scope: constant.character.asciidoc
+    - match: <(?=\s)
       scope: constant.character.asciidoc
 
 ###[ PASSTHROUGHS ]############################################################

@@ -1473,6 +1473,10 @@ Be sure to read the {link-docs} too!
 //                        ^^ constant.character.asciidoc
 //                           ^^ constant.character.asciidoc
 
+HTML replacement < chars
+//^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//               ^ constant.character.asciidoc
+
 
 == Escaping substitutions
 
