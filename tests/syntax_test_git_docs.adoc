@@ -1,9 +1,8 @@
 // SYNTAX TEST "Packages/AsciiDoc/AsciiDoc.sublime-syntax"
 
 advice.*::
-//^^^^^^ meta.mapping.key.asciidoc - markup.bold
-//    ^^ meta.suppress.constrained.asciidoc
-//      ^^ punctuation.separator.key-value.asciidoc
+//^^^^^^ meta.mapping.key.asciidoc
+//      ^^ punctuation.separator.key-value.asciidoc - markup.bold
 //        ^ meta.mapping.value.asciidoc
   These variables control various optional help messages designed to
 
@@ -180,6 +179,9 @@ excluded.
 
 By default, tracked files are not shown at all since they are not
 subject to exclude rules; but see `--no-index'.
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//                                ^^^ constant.character.asciidoc
+//                                           ^ constant.character.asciidoc
 
 OPTIONS
 -------

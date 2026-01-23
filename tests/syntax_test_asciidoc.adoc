@@ -41,6 +41,10 @@ Line with _italics_
 //        ^^^^^^^^^ markup.italic.asciidoc
 //        ^ punctuation.definition.italic.begin.asciidoc
 //                ^ punctuation.definition.italic.end.asciidoc
+Line with `A curly-quote' in it
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//        ^ constant.character.asciidoc
+//                      ^ constant.character.asciidoc
 Line with `raw code`
 //^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
 //        ^^^^^^^^^^ markup.raw.inline.asciidoc
