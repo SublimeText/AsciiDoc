@@ -22,8 +22,6 @@ contexts:
 
   # Stuff from asciidoc.org, not implemented
   # TODO: Markdown-style blockquotes
-  # TODO: Using `\` is ONLY an escape if the next character would otherwise
-  #       be treated specially. See `C\+\+ foo C\+\+`.
 
 ###[ BLOCKS ]##################################################################
 
