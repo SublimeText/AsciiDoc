@@ -570,3 +570,12 @@ Kismet: Did the werewolves tell you to say that?
 
 Computer: Calculating ...
 ....
+
+* Open your Sublime Text [role="filename"]`Packages` folder:
+  Windows::
+    [role="filename"]`+%AppData%\Sublime Text\Packages+`
+  OS X::
+//^^^^ meta.mapping.key.asciidoc
+//    ^^ punctuation.separator.key-value.asciidoc
+//      ^ meta.mapping.value.asciidoc
+    [role="filename"]`+~/Library/Application Support/Sublime Text/Packages+`
