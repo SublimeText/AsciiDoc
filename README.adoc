@@ -1,17 +1,10 @@
 = AsciiDoc Package for Sublime Text
 :experimental:
 
-This is an link:https://asciidoc.org[AsciiDoc] package
-for link:https://www.sublimetext.com[Sublime Text].
+This is a link:https://www.sublimetext.com[Sublime Text] package
+for link:https://asciidoc.org[AsciiDoc].
 It adds syntax highlighting and snippets
 for the AsciiDoc language to Sublime Text.
-
-Sublime Text is compatible with the TextMate editor
-for OS X snippets, preferences, and language files.
-However, even though Sublime can recognize the TextMate snippets,
-some features such as tab completion and shortcut commands
-do not work out of the box.
-This package overcomes these limitations.
 
 
 == Installation
@@ -27,13 +20,13 @@ To install the package manually, follow these steps:
 * Download the zip containing source files.
 * Open your Sublime Text [role="filename"]`Packages` folder:
   Windows::
-  [role="filename"]`+%APPDATA%\Sublime Text\Packages+`
+    [role="filename"]`+%AppData%\Sublime Text\Packages+`
   OS X::
-  [role="filename"]`+~/Library/Application Support/Sublime Text/Packages+`
+    [role="filename"]`+~/Library/Application Support/Sublime Text/Packages+`
   Linux::
-  [role="filename"]`+~/.config/sublime-text/Packages+`
+    [role="filename"]`+~/.config/sublime-text/Packages+`
   Portable Installation::
-  [role="filename"]`Sublime Text/Data`
+    [role="filename"]`Sublime Text/Data`
 * Create or open an [role="filename"]`AsciiDoc` folder there.
 * Extract the files to it.
 * Close all instances of Sublime Text and relaunch the editor.
@@ -45,26 +38,40 @@ NOTE: Snippets may take few seconds to load under Windows.
 
 == Configure Variables: `TM_FULLNAME`, `TM_EMAIL`, etc.
 
-The Article snippet refers to certain variables that are styled after the TextMate standard for environment variables (as do other features of Sublime). These variables are configured via the Default.tmPreferences file.
+The Article snippet loads certain values
+from the TextMate standard for environment variables,
+like many other features of Sublime.
+These are configured
+in the [role="filename"]`Default.tmPreferences` file.
 
 . Edit [role="filename"]`Default.tmPreferences`.
-. Replace "My Full Name", "My Email", and "My Company" with your actual name, email address, and company name.
-. Update the defintion of `TM_YEAR` (currently 2013) if necessary.
+. Replace "My Full Name", "My Email", and "My Company"
+  with your actual name, email address, and company name.
+. Update the definition of `TM_YEAR`.
 . Test the Article snippet.
   (Create a new AsciiDoc file, type `ar` and hit kbd:[Tab].)
 
 
 == Configure the AsciiDoc Build System
 
-Sublime has a build system for compiling source code like AsciiDoc source. A file called [role="filename"]`asciidoc.sublime-build` is provided here to allow you to take advantage of the build system, but it needs to be told where you have installed Python and AsciiDoc:
+Sublime has a build system for compiling source code like AsciiDoc source.
+A file called [role="filename"]`asciidoc.sublime-build` is provided here
+to allow you to take advantage of the build system,
+but it needs to be told where you have installed Python and AsciiDoc:
 
 . Edit [role="filename"]`asciidoc.sublime-build`.
-. Change the `working_dir` from `/path/to/asciidoc-8.6.8` to the actual location where you have AsciiDoc installed (e.g. [role="filename"]`+C:\prgs\asciidoc-8.6.8+`)
-. Change the first parameter of `cmd` from `/path/to/python` to the actual name and location of your Python engine (e.g. [role="filename"]`+C:\Python39\python.exe+`)
-. Note: See below about kbd:[Ctrl+B] no longer being the shortcut key for the build system.
+. Change the `working_dir` from `/path/to/asciidoc-8.6.8`
+  to the actual location where you have AsciiDoc installed
+  (e.g. [role="filename"]`+C:\prgs\asciidoc-8.6.8+`)
+. Change the first parameter of `cmd`
+  from `/path/to/python` to the actual name and location of your Python engine
+  (e.g. [role="filename"]`+C:\Python39\python.exe+`)
+
+NOTE: See below about kbd:[Ctrl+B] no longer being the shortcut key for the build system.
 
 
 == Usage
+
 * Create a new file, and save it as [role="filename"]`<filename>.adoc`.
 * Start typing AsciiDoc!
 
@@ -107,20 +114,20 @@ automatically left out of the tag.
 Basic support for some handy shortcuts are now available:
 
 *Bold* selection::
-Select some text and then press kbd:[Ctrl+B].
+  Select some text and then press kbd:[Ctrl+B].
 _Italicize_ selection::
-Select some text and then press kbd:[Ctrl+I].
+  Select some text and then press kbd:[Ctrl+I].
 Mark selection as Code literal::
-Select some text and then press kbd:[Ctrl+K], kbd:[Ctrl+K].
+  Select some text and then press kbd:[Ctrl+K], kbd:[Ctrl+K].
 Mark selection as filename::
-Select some text and then press kbd:[Ctrl+K], kbd:[Ctrl+F].
+  Select some text and then press kbd:[Ctrl+K], kbd:[Ctrl+F].
 
-*Note*: kbd:[Ctrl+B] overrides
-the standard key binding of menu:Tools[Build System].
+NOTE: kbd:[Ctrl+B] overrides the standard key binding
+of menu:Tools[Build System].
 If this bothers you, you can edit the `.sublime-keymap` files
 under the [role="filename"]`+Packages\AsciiDoc+` folder.
 
-Time permitting, I'll add more shortcuts but meanwhile if you come upon something useful, feel free to submit a patch!
+If you come upon something useful, feel free to submit a patch!
 
 
 === Enhancements
@@ -136,6 +143,7 @@ Your suggestions are welcome.
 == Author & Credits
 * Created by Hrusikesh Panda.
 * Syntax rewrite by Michael Lyons.
-* Credit goes to Christian Zuckschwerdt for his original work on
+* Credit goes to Christian Zuckschwerdt for his original work
+  on the
 link:https://github.com/zuckschwerdt/asciidoc.tmbundle[AsciiDoc TextMate bundle].
 * The Article, Definition, and Definition Link snippets were written by Craig Jones.
