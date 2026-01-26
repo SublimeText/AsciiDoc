@@ -257,3 +257,13 @@ All usual spellings for Boolean value `true` are taken as `normal`
 and `false` as `no`.
 This variable can be overridden with the -u|--untracked-files option
 of linkgit:git-status[1] and linkgit:git-commit[1].
+
+    *** If unset (i.e. `offset & ((uint64_t)1<<63) == 0`), the offset
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.list.asciidoc
+//  ^^^ punctuation.definition.list_item.asciidoc
+//                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ markup.raw.inline.asciidoc
+//                     ^ punctuation.definition.raw.begin.asciidoc
+punctuation.definition.raw.end.asciidoc
+  (relative to the beginning of the `.bitmap` file) at which the
+  pseudo-merge bitmap for this commit can be read. This indicates
+  only a single pseudo-merge bitmap contains this commit.

@@ -300,7 +300,7 @@ contexts:
   flow-index-terms:
     - match: \\\((?=\()
       scope: constant.character.escape.asciidoc
-    - match: \({2}
+    - match: \({2}(?=.+\){2})
       scope: punctuation.definition.reference.begin.asciidoc
       push: flow-index-term-body
     - match: \b(indexterm2)(:)(\[)
@@ -328,7 +328,7 @@ contexts:
   concealed-index-terms:
     - match: \\\((?=\(\()
       scope: constant.character.escape.asciidoc
-    - match: \({3}
+    - match: \({3}(?=.+\){3})
       scope: punctuation.definition.reference.begin.asciidoc
       push: concealed-index-term-body
     - match: \b(indexterm)(:)(\[)
