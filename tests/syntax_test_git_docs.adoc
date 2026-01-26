@@ -215,3 +215,18 @@ if the URL is `https://user@example.com/foo/bar` a config key match of
 //    ^ punctuation.separator.sequence.asciidoc
 //           ^ punctuation.separator.sequence.asciidoc
 //                       ^ punctuation.definition.raw.end.asciidoc
+
+
+`lines`;;
+  Compute the dirstat numbers by doing the regular line-based diff
+  analysis, and summing the removed/added line counts. (For binary
+  files, count 64-byte chunks instead, since binary files have no
+  natural concept of lines). This is a more expensive `--dirstat`
+  behavior than the `changes` behavior, but it does count rearranged
+  lines within a file as much as other changes. The resulting output
+  is consistent with what you get from the other `--*stat` options.
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.mapping.value.asciidoc
+//                                               ^^^^^^^^^ markup.raw.inline.asciidoc
+//                                               ^ punctuation.definition.raw.begin.asciidoc
+//                                                ^^ constant.character.asciidoc
+//                                                       ^ punctuation.definition.raw.end.asciidoc

@@ -605,8 +605,10 @@ contexts:
     - match: \'{{constrained_break}}
       scope: constant.character.asciidoc
       pop: 1
-    - match: \S?[`*_#~^]{{constrained_break}}
+    - match: \S?[`*_#~^]
       fail: monospace-or-single-curly
+    - include: pop-blank-line-illegal
+    - include: pop-end-of-definition
     - include: inlines
 
   text-monospace:
@@ -718,8 +720,10 @@ contexts:
     - match: \'\'{{constrained_break}}
       scope: constant.character.asciidoc
       pop: 1
-    - match: \S?[`*_#~^]{{constrained_break}}
+    - match: \S?[`*_#~^]
       fail: monospace-or-double-curly
+    - include: pop-blank-line-illegal
+    - include: pop-end-of-definition
     - include: inlines
 
   text-highlight-unconstrained:
