@@ -1586,7 +1586,7 @@ variables:
   block_type: \b(?:source|quote|discrete|qanda)\b
   description_list_marker: (?:;;|:{2,4})
   autolink_scheme: \b(?:https?|ftp|irc|mailto)\b
-  link_pop: (?:$|[\s\[\]()'"])
+  link_pop: (?:$|[\s\[\]()'"`])
   doctype: (?:article|book|manpage|inline)
   constraining_char: '[^*_`#~^\s(\\]'
   constrained_break: (?=[\s\p{P}`*+]|{{description_list_marker}}|$)

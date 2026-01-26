@@ -172,6 +172,18 @@ b
 
 c
 
+. Scheme (e.g., `https` in `https://example.com/`). This field
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.list.asciidoc
+//              ^^^^^^^ markup.raw.inline.asciidoc
+//              ^ punctuation.definition.raw.begin.asciidoc
+//                    ^ punctuation.definition.raw.end.asciidoc
+//                         ^^^^^^^^^^^^^^^^^^^^^^ markup.raw.inline.asciidoc
+//                         ^ punctuation.definition.raw.begin.asciidoc
+//                          ^^^^^^^^^^^^^^^^^^^^ markup.underline.link.asciidoc
+//                               ^ punctuation.separator.sequence.asciidoc
+//                                              ^ punctuation.definition.raw.end.asciidoc
+  must match exactly between the config key and the URL.
+
 
 DESCRIPTION
 -----------
@@ -193,3 +205,13 @@ OPTIONS
 --quiet::
   Don't output anything, just set exit status.  This is only
   valid with a single pathname.
+
+if the URL is `https://user@example.com/foo/bar` a config key match of
+`https://example.com/foo` will be preferred over a config key match of
+`https://user@example.com`.
+//^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.paragraph.asciidoc
+//^^^^^^^^^^^^^^^^^^^^^^^^ markup.raw.inline.asciidoc
+//^^^^^^^^^^^^^^^^^^^^^^^ markup.underline.link.asciidoc
+//    ^ punctuation.separator.sequence.asciidoc
+//           ^ punctuation.separator.sequence.asciidoc
+//                       ^ punctuation.definition.raw.end.asciidoc
