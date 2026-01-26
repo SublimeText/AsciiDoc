@@ -1270,7 +1270,7 @@ contexts:
 ###[ OPEN BLOCKS ]#############################################################
 
   open-blocks:
-    - match: '{{bol}}\-(?=-$)'
+    - match: '{{bol}}\\-(?=-$)'
       scope: constant.character.escape.asciidoc
     - match: '{{bol}}--$'
       scope: punctuation.section.block.begin.asciidoc

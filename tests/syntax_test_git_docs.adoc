@@ -25,6 +25,11 @@ core.worktree::
 //                                                     ^ punctuation.definition.raw.end.asciidoc
   and between hunks (`--`)
 --
+foo
+//^^ meta.block.open.asciidoc meta.paragraph.asciidoc
+--
+// <- meta.block.open.asciidoc punctuation.section.block.end.asciidoc
+//^ - meta.block
 
 credential.useHttpPath::
   When acquiring credentials, consider the "path" component of an http
@@ -230,3 +235,25 @@ if the URL is `https://user@example.com/foo/bar` a config key match of
 //                                               ^ punctuation.definition.raw.begin.asciidoc
 //                                                ^^ constant.character.asciidoc
 //                                                       ^ punctuation.definition.raw.end.asciidoc
+
+status.showUntrackedFiles::
+  By default, linkgit:git-status[1] and linkgit:git-commit[1] show
+  files which are not currently tracked by Git. Directories which
+  contain only untracked files, are shown with the directory name
+  only. Showing untracked files means that Git needs to lstat() all
+  the files in the whole repository, which might be slow on some
+  systems. So, this variable controls how the commands display
+  the untracked files. Possible values are:
++
+--
+// <- meta.block.open.asciidoc punctuation.section.block.begin.asciidoc
+* `no` - Show no untracked files.
+* `normal` - Show untracked files and directories.
+* `all` - Show also individual files in untracked directories.
+--
++
+If this variable is not specified, it defaults to 'normal'.
+All usual spellings for Boolean value `true` are taken as `normal`
+and `false` as `no`.
+This variable can be overridden with the -u|--untracked-files option
+of linkgit:git-status[1] and linkgit:git-commit[1].
