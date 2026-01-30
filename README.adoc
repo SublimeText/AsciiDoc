@@ -88,18 +88,20 @@ A few tab completion examples are:
 * Headings (type `h1` kbd:[Tab] to `h4` kbd:[Tab] for one-liner versions)
 * Table generation (type `|=` kbd:[Tab])
 * Tab expansion for blocks (type `==` kbd:[Tab])
-* Sidebar block (type `+**+` kbd:[Tab])
+* Sidebar block (type `**` kbd:[Tab])
 * Add a definition to a glossary (type `::` kbd:[Tab])
-* Refer to a glossary definition elsewhere (type `+<<+` kbd:[Tab])
+* Refer to a glossary definition elsewhere (type `<<` kbd:[Tab])
 
 === Article
-When you first invoke the Article snippet, "Title" will be highlighted.
-Type over it with the actual title you want.
-(Notice that the new title will be automatically underlined to length.)
-Hit tab to move off the title, and the backend choices will be highlighted.
-These are only the 3 most popular backends.
-Either delete 2 of them or type over the whole thing with a 4th choice (e.g. manpage).
-Hit tab to move to the end.
+* When you first invoke the Article snippet, "Title" will be highlighted.
+* Type over it with the actual title you want.
+  (Notice that the new title will be automatically underlined to length.)
+* Hit kbd:[Tab] to move off the title,
+  and the backend choices will be highlighted.
+  These are only the 3 most popular backends.
+  Either delete 2 of them, or type over the whole thing
+  with a 4th choice (e.g. manpage).
+* Hit kbd:[Tab] to move to the end.
 
 === Definition and Definition Link
 Use these to create glossary definitions
@@ -125,7 +127,7 @@ Mark selection as filename::
 NOTE: kbd:[Ctrl+B] overrides the standard key binding
 of menu:Tools[Build System].
 If this bothers you, you can edit the `.sublime-keymap` files
-under the [role="filename"]`+Packages\AsciiDoc+` folder.
+under the [role="filename"]`Packages/AsciiDoc` folder.
 
 If you come upon something useful, feel free to submit a patch!
 
