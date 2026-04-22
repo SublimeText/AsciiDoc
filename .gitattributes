@@ -1,3 +1,2 @@
 /.git*  export-ignore
-/tests/  export-ignore
-/README.adoc export-ignore
+/.github/**  export-ignore
